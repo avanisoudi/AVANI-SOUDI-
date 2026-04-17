@@ -44,7 +44,7 @@ async function handleTranslateCommand(sock, chatId, message, match) {
 
         // Try multiple translation APIs in sequence
         let translatedText = null;
-        let error = null;
+        let Erreur = null;
 
         // Try API 1 (Google Translate API)
         try {
@@ -56,7 +56,7 @@ async function handleTranslateCommand(sock, chatId, message, match) {
                 }
             }
         } catch (e) {
-            error = e;
+            Erreur = e;
         }
 
         // If API 1 fails, try API 2
@@ -70,7 +70,7 @@ async function handleTranslateCommand(sock, chatId, message, match) {
                     }
                 }
             } catch (e) {
-                error = e;
+                Erreur = e;
             }
         }
 
@@ -85,12 +85,12 @@ async function handleTranslateCommand(sock, chatId, message, match) {
                     }
                 }
             } catch (e) {
-                error = e;
+                Erreur = e;
             }
         }
 
         if (!translatedText) {
-            throw new Error('All translation APIs failed');
+            throw new Erreur('All translation APIs failed');
         }
 
         // Send translation
@@ -100,10 +100,10 @@ async function handleTranslateCommand(sock, chatId, message, match) {
             quoted: message
         });
 
-    } catch (error) {
-        console.error('❌ Error in translate command:', error);
+    } catch (Erreur) {
+        console.Erreur('❌ Erreur in translate command:', Erreur);
         await sock.sendMessage(chatId, {
-            text: '❌ Failed to translate text. Please try again later.\n\nUsage:\n1. Reply to a message with: .translate <lang> or .trt <lang>\n2. Or type: .translate <text> <lang> or .trt <text> <lang>',
+            text: '❌ Échec de : translate text. Please try again later.\n\nUsage:\n1. Reply to a message with: .translate <lang> or .trt <lang>\n2. Or type: .translate <text> <lang> or .trt <text> <lang>',
             quoted: message
         });
     }

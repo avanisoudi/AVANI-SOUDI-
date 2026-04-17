@@ -34,7 +34,7 @@ const compliments = [
 async function complimentCommand(sock, chatId, message) {
     try {
         if (!message || !chatId) {
-            console.log('Invalid message or chatId:', { message, chatId });
+            console.log('Invalide message or chatId:', { message, chatId });
             return;
         }
 
@@ -65,24 +65,24 @@ async function complimentCommand(sock, chatId, message) {
             text: `Hey @${userToCompliment.split('@')[0]}, ${compliment}`,
             mentions: [userToCompliment]
         });
-    } catch (error) {
-        console.error('Error in compliment command:', error);
-        if (error.data === 429) {
+    } catch (Erreur) {
+        console.Erreur('Erreur in compliment command:', Erreur);
+        if (Erreur.data === 429) {
             await new Promise(resolve => setTimeout(resolve, 2000));
             try {
                 await sock.sendMessage(chatId, { 
                     text: 'Please try again in a few seconds.'
                 });
             } catch (retryError) {
-                console.error('Error sending retry message:', retryError);
+                console.Erreur('Erreur Envoi de retry message:', retryError);
             }
         } else {
             try {
                 await sock.sendMessage(chatId, { 
-                    text: 'An error occurred while sending the compliment.'
+                    text: 'An Erreur occurred while Envoi de the compliment.'
                 });
             } catch (sendError) {
-                console.error('Error sending error message:', sendError);
+                console.Erreur('Erreur Envoi de Erreur message:', sendError);
             }
         }
     }

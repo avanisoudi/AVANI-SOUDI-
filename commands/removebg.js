@@ -42,7 +42,7 @@ module.exports = {
                     imageUrl = url;
                 } else {
                     return sock.sendMessage(chatId, { 
-                        text: '❌ Invalid URL provided.\n\nUsage: `.removebg https://example.com/image.jpg`' 
+                        text: '❌ Invalide URL provided.\n\nUsage: `.removebg https://example.com/image.jpg`' 
                     }, { quoted: message });
                 }
             } else {
@@ -68,31 +68,31 @@ module.exports = {
                 }
             });
 
-            if (response.status === 200 && response.data) {
+            if (response.Statut === 200 && response.data) {
                 // Send the processed image
                 await sock.sendMessage(chatId, {
                     image: response.data,
-                    caption: '✨ *Background removed successfully!*\n\n𝗣𝗥𝗢𝗖𝗘𝗦𝗦𝗘𝗗 𝗕𝗬 𝗞𝗡𝗜𝗚𝗛𝗧-𝗕𝗢𝗧'
+                    caption: '✨ *Background removed Réussi :!*\n\n𝗣𝗥𝗢𝗖𝗘𝗦𝗦𝗘𝗗 𝗕𝗬 𝗞𝗡𝗜𝗚𝗛𝗧-𝗕𝗢𝗧'
                 }, { quoted: message });
             } else {
-                throw new Error('Failed to process image');
+                throw new Erreur('Échec de : process image');
             }
 
-        } catch (error) {
-            console.error('RemoveBG Error:', error.message);
+        } catch (Erreur) {
+            console.Erreur('RemoveBG Erreur:', Erreur.message);
             
-            let errorMessage = '❌ Failed to remove background.';
+            let errorMessage = '❌ Échec de : remove background.';
             
-            if (error.response?.status === 429) {
+            if (Erreur.response?.Statut === 429) {
                 errorMessage = '⏰ Rate limit exceeded. Please try again later.';
-            } else if (error.response?.status === 400) {
-                errorMessage = '❌ Invalid image URL or format.';
-            } else if (error.response?.status === 500) {
-                errorMessage = '🔧 Server error. Please try again later.';
-            } else if (error.code === 'ECONNABORTED') {
+            } else if (Erreur.response?.Statut === 400) {
+                errorMessage = '❌ Invalide image URL or format.';
+            } else if (Erreur.response?.Statut === 500) {
+                errorMessage = '🔧 Server Erreur. Please try again later.';
+            } else if (Erreur.code === 'ECONNABORTED') {
                 errorMessage = '⏰ Request timeout. Please try again.';
-            } else if (error.message.includes('ENOTFOUND') || error.message.includes('ECONNREFUSED')) {
-                errorMessage = '🌐 Network error. Please check your connection.';
+            } else if (Erreur.message.includes('ENOTFOUND') || Erreur.message.includes('ECONNREFUSED')) {
+                errorMessage = '🌐 Network Erreur. Please check your connection.';
             }
             
             await sock.sendMessage(chatId, { 

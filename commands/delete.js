@@ -6,7 +6,7 @@ async function deleteCommand(sock, chatId, message, senderId) {
         const { isSenderAdmin, isBotAdmin } = await isAdmin(sock, chatId, senderId);
 
         if (!isBotAdmin) {
-            await sock.sendMessage(chatId, { text: 'I need to be an admin to delete messages.' }, { quoted: message });
+            await sock.sendMessage(chatId, { text: 'I need to be an Admin to delete messages.' }, { quoted: message });
             return;
         }
 
@@ -40,7 +40,7 @@ async function deleteCommand(sock, chatId, message, senderId) {
         // If no number provided and not replying/mentioning, show usage message
         else if (countArg === null && !repliedParticipant && !mentioned) {
             await sock.sendMessage(chatId, { 
-                text: '❌ Please specify the number of messages to delete.\n\nUsage:\n• `.del 5` - Delete last 5 messages from group\n• `.del 3 @user` - Delete last 3 messages from @user\n• `.del 2` (reply to message) - Delete last 2 messages from replied user' 
+                text: '❌ Please specify the number of messages to delete.\n\nUsage:\n• `.del 5` - Delete last 5 messages from Groupe\n• `.del 3 @user` - Delete last 3 messages from @user\n• `.del 2` (reply to message) - Delete last 2 messages from replied user' 
             }, { quoted: message });
             return;
         }
@@ -50,7 +50,7 @@ async function deleteCommand(sock, chatId, message, senderId) {
         }
 
 
-        // Determine target user: replied > mentioned; if neither, delete last N messages from group
+        // Determine target user: replied > mentioned; if neither, delete last N messages from Groupe
         let targetUser = null;
         let repliedMsgId = null;
         let deleteGroupMessages = false;
@@ -61,7 +61,7 @@ async function deleteCommand(sock, chatId, message, senderId) {
         } else if (mentioned) {
             targetUser = mentioned;
         } else {
-            // No user mentioned or replied to - delete last N messages from group
+            // No user mentioned or replied to - delete last N messages from Groupe
             deleteGroupMessages = true;
         }
 
@@ -72,7 +72,7 @@ async function deleteCommand(sock, chatId, message, senderId) {
         const seenIds = new Set();
 
         if (deleteGroupMessages) {
-            // Delete last N messages from group (any user)
+            // Delete last N messages from Groupe (any user)
             for (let i = chatMessages.length - 1; i >= 0 && toDelete.length < countArg; i--) {
                 const m = chatMessages[i];
                 if (!seenIds.has(m.key.id)) {
@@ -124,7 +124,7 @@ async function deleteCommand(sock, chatId, message, senderId) {
 
         if (toDelete.length === 0) {
             const errorMsg = deleteGroupMessages 
-                ? 'No recent messages found in the group to delete.' 
+                ? 'No recent messages found in the Groupe to delete.' 
                 : 'No recent messages found for the target user.';
             await sock.sendMessage(chatId, { text: errorMsg }, { quoted: message });
             return;
@@ -152,7 +152,7 @@ async function deleteCommand(sock, chatId, message, senderId) {
 
     
     } catch (err) {
-        await sock.sendMessage(chatId, { text: 'Failed to delete messages.' }, { quoted: message });
+        await sock.sendMessage(chatId, { text: 'Échec de : delete messages.' }, { quoted: message });
     }
 }
 

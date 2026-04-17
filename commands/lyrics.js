@@ -3,7 +3,7 @@ const fetch = require('node-fetch');
 async function lyricsCommand(sock, chatId, songTitle, message) {
     if (!songTitle) {
         await sock.sendMessage(chatId, { 
-            text: '🔍 Please enter the song name to get the lyrics! Usage: *lyrics <song name>*'
+            text: '🔍 Veuillez entrer the song name to get the lyrics! Usage: *lyrics <song name>*'
         },{ quoted: message });
         return;
     }
@@ -32,10 +32,10 @@ async function lyricsCommand(sock, chatId, songTitle, message) {
         const output = lyrics.length > maxChars ? lyrics.slice(0, maxChars - 3) + '...' : lyrics;
 
         await sock.sendMessage(chatId, { text: output }, { quoted: message });
-    } catch (error) {
-        console.error('Error in lyrics command:', error);
+    } catch (Erreur) {
+        console.Erreur('Erreur in lyrics command:', Erreur);
         await sock.sendMessage(chatId, { 
-            text: `❌ An error occurred while fetching the lyrics for "${songTitle}".`
+            text: `❌ An Erreur occurred while fetching the lyrics for "${songTitle}".`
         },{ quoted: message });
     }
 }

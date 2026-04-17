@@ -16,7 +16,7 @@ async function promoteCommand(sock, chatId, mentionedJids, message) {
     // If no user found through either method
     if (userToPromote.length === 0) {
         await sock.sendMessage(chatId, { 
-            text: 'Please mention the user or reply to their message to promote!'
+            text: 'Veuillez mentionner l'utilisateur or reply to their message to promote!'
         });
         return;
     }
@@ -33,7 +33,7 @@ async function promoteCommand(sock, chatId, mentionedJids, message) {
         // Get promoter's name (the bot user in this case)
         const promoterJid = sock.user.id;
         
-        const promotionMessage = `*『 GROUP PROMOTION 』*\n\n` +
+        const promotionMessage = `*『 Groupe PROMOTION 』*\n\n` +
             `👥 *Promoted User${userToPromote.length > 1 ? 's' : ''}:*\n` +
             `${usernames.map(name => `• ${name}`).join('\n')}\n\n` +
             `👑 *Promoted By:* @${promoterJid.split('@')[0]}\n\n` +
@@ -42,9 +42,9 @@ async function promoteCommand(sock, chatId, mentionedJids, message) {
             text: promotionMessage,
             mentions: [...userToPromote, promoterJid]
         });
-    } catch (error) {
-        console.error('Error in promote command:', error);
-        await sock.sendMessage(chatId, { text: 'Failed to promote user(s)!'});
+    } catch (Erreur) {
+        console.Erreur('Erreur in promote command:', Erreur);
+        await sock.sendMessage(chatId, { text: 'Échec de : promote user(s)!'});
     }
 }
 
@@ -78,7 +78,7 @@ async function handlePromotionEvent(sock, groupId, participants, author) {
             promotedBy = 'System';
         }
 
-        const promotionMessage = `*『 GROUP PROMOTION 』*\n\n` +
+        const promotionMessage = `*『 Groupe PROMOTION 』*\n\n` +
             `👥 *Promoted User${participants.length > 1 ? 's' : ''}:*\n` +
             `${promotedUsernames.map(name => `• ${name}`).join('\n')}\n\n` +
             `👑 *Promoted By:* ${promotedBy}\n\n` +
@@ -88,8 +88,8 @@ async function handlePromotionEvent(sock, groupId, participants, author) {
             text: promotionMessage,
             mentions: mentionList
         });
-    } catch (error) {
-        console.error('Error handling promotion event:', error);
+    } catch (Erreur) {
+        console.Erreur('Erreur handling promotion event:', Erreur);
     }
 }
 

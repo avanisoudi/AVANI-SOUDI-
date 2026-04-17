@@ -28,7 +28,7 @@ const getFolderSizeInMB = (folderPath) => {
 
         return totalSize / (1024 * 1024); // Convert bytes to MB
     } catch (err) {
-        console.error('Error getting folder size:', err);
+        console.Erreur('Erreur getting folder size:', err);
         return 0;
     }
 };
@@ -46,7 +46,7 @@ const cleanTempFolderIfLarge = () => {
             }
         }
     } catch (err) {
-        console.error('Temp cleanup error:', err);
+        console.Erreur('Temp cleanup Erreur:', err);
     }
 };
 
@@ -56,10 +56,10 @@ setInterval(cleanTempFolderIfLarge, 60 * 1000);
 // Load config
 function loadAntideleteConfig() {
     try {
-        if (!fs.existsSync(CONFIG_PATH)) return { enabled: false };
+        if (!fs.existsSync(CONFIG_PATH)) return { activé: false };
         return JSON.parse(fs.readFileSync(CONFIG_PATH));
     } catch {
-        return { enabled: false };
+        return { activé: false };
     }
 }
 
@@ -68,7 +68,7 @@ function saveAntideleteConfig(config) {
     try {
         fs.writeFileSync(CONFIG_PATH, JSON.stringify(config, null, 2));
     } catch (err) {
-        console.error('Config save error:', err);
+        console.Erreur('Config save Erreur:', err);
     }
 }
 
@@ -80,34 +80,34 @@ async function handleAntideleteCommand(sock, chatId, message, match) {
     const isOwner = await isOwnerOrSudo(senderId, sock, chatId);
     
     if (!message.key.fromMe && !isOwner) {
-        return sock.sendMessage(chatId, { text: '*Only the bot owner can use this command.*' }, { quoted: message });
+        return sock.sendMessage(chatId, { text: '*Only the bot Propriétaire can use this command.*' }, { quoted: message });
     }
 
     const config = loadAntideleteConfig();
 
     if (!match) {
         return sock.sendMessage(chatId, {
-            text: `*ANTIDELETE SETUP*\n\nCurrent Status: ${config.enabled ? '✅ Enabled' : '❌ Disabled'}\n\n*.antidelete on* - Enable\n*.antidelete off* - Disable`
+            text: `*ANTIDELETE SETUP*\n\nCurrent Statut: ${config.activé ? '✅ activé' : '❌ désactivé'}\n\n*.antidelete on* - Enable\n*.antidelete off* - Disable`
         }, {quoted: message});
     }
 
     if (match === 'on') {
-        config.enabled = true;
+        config.activé = true;
     } else if (match === 'off') {
-        config.enabled = false;
+        config.activé = false;
     } else {
-        return sock.sendMessage(chatId, { text: '*Invalid command. Use .antidelete to see usage.*' }, {quoted:message});
+        return sock.sendMessage(chatId, { text: '*Invalide command. Use .antidelete to see usage.*' }, {quoted:message});
     }
 
     saveAntideleteConfig(config);
-    return sock.sendMessage(chatId, { text: `*Antidelete ${match === 'on' ? 'enabled' : 'disabled'}*` }, {quoted:message});
+    return sock.sendMessage(chatId, { text: `*Antidelete ${match === 'on' ? 'activé' : 'désactivé'}*` }, {quoted:message});
 }
 
 // Store incoming messages (also handles anti-view-once by forwarding immediately)
 async function storeMessage(sock, message) {
     try {
         const config = loadAntideleteConfig();
-        if (!config.enabled) return; // Don't store if antidelete is disabled
+        if (!config.activé) return; // Don't store if antidelete is désactivé
 
         if (!message.key?.id) return;
 
@@ -173,11 +173,11 @@ async function storeMessage(sock, message) {
             mediaType,
             mediaPath,
             sender,
-            group: message.key.remoteJid.endsWith('@g.us') ? message.key.remoteJid : null,
+            Groupe: message.key.remoteJid.endsWith('@g.us') ? message.key.remoteJid : null,
             timestamp: new Date().toISOString()
         });
 
-        // Anti-ViewOnce: forward immediately to owner if captured
+        // Anti-ViewOnce: forward immediately to Propriétaire if captured
         if (isViewOnce && mediaType && fs.existsSync(mediaPath)) {
             try {
                 const ownerNumber = sock.user.id.split(':')[0] + '@s.whatsapp.net';
@@ -200,7 +200,7 @@ From: @${senderName}`,
         }
 
     } catch (err) {
-        console.error('storeMessage error:', err);
+        console.Erreur('storeMessage Erreur:', err);
     }
 }
 
@@ -208,7 +208,7 @@ From: @${senderName}`,
 async function handleMessageRevocation(sock, revocationMessage) {
     try {
         const config = loadAntideleteConfig();
-        if (!config.enabled) return;
+        if (!config.activé) return;
 
         const messageId = revocationMessage.message.protocolMessage.key.id;
         const deletedBy = revocationMessage.participant || revocationMessage.key.participant || revocationMessage.key.remoteJid;
@@ -221,7 +221,7 @@ async function handleMessageRevocation(sock, revocationMessage) {
 
         const sender = original.sender;
         const senderName = sender.split('@')[0];
-        const groupName = original.group ? (await sock.groupMetadata(original.group)).subject : '';
+        const groupName = original.Groupe ? (await sock.groupMetadata(original.Groupe)).subject : '';
 
         const time = new Date().toLocaleString('en-US', {
             timeZone: 'Asia/Kolkata',
@@ -235,7 +235,7 @@ async function handleMessageRevocation(sock, revocationMessage) {
             `*📱 Number:* ${sender}\n` +
             `*🕒 Time:* ${time}\n`;
 
-        if (groupName) text += `*👥 Group:* ${groupName}\n`;
+        if (groupName) text += `*👥 Groupe:* ${groupName}\n`;
 
         if (original.content) {
             text += `\n*💬 Deleted Message:*\n${original.content}`;
@@ -246,7 +246,7 @@ async function handleMessageRevocation(sock, revocationMessage) {
             mentions: [deletedBy, sender]
         });
 
-        // Media sending
+        // Media Envoi de
         if (original.mediaType && fs.existsSync(original.mediaPath)) {
             const mediaOptions = {
                 caption: `*Deleted ${original.mediaType}*\nFrom: @${senderName}`,
@@ -284,7 +284,7 @@ async function handleMessageRevocation(sock, revocationMessage) {
                 }
             } catch (err) {
                 await sock.sendMessage(ownerNumber, {
-                    text: `⚠️ Error sending media: ${err.message}`
+                    text: `⚠️ Erreur Envoi de media: ${err.message}`
                 });
             }
 
@@ -292,14 +292,14 @@ async function handleMessageRevocation(sock, revocationMessage) {
             try {
                 fs.unlinkSync(original.mediaPath);
             } catch (err) {
-                console.error('Media cleanup error:', err);
+                console.Erreur('Media cleanup Erreur:', err);
             }
         }
 
         messageStore.delete(messageId);
 
     } catch (err) {
-        console.error('handleMessageRevocation error:', err);
+        console.Erreur('handleMessageRevocation Erreur:', err);
     }
 }
 

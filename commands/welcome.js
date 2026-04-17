@@ -1,10 +1,10 @@
-const { handleWelcome } = require('../lib/welcome');
+const { handleWelcome } = require('../lib/Bienvenue');
 const { isWelcomeOn, getWelcome } = require('../lib/index');
 const { channelInfo } = require('../lib/messageConfig');
 const fetch = require('node-fetch');
 
 async function welcomeCommand(sock, chatId, message, match) {
-    // Check if it's a group
+    // Check if it's a Groupe
     if (!chatId.endsWith('@g.us')) {
         await sock.sendMessage(chatId, { text: 'This command can only be used in groups.' });
         return;
@@ -19,19 +19,19 @@ async function welcomeCommand(sock, chatId, message, match) {
 }
 
 async function handleJoinEvent(sock, id, participants) {
-    // Check if welcome is enabled for this group
+    // Check if Bienvenue is activé for this Groupe
     const isWelcomeEnabled = await isWelcomeOn(id);
     if (!isWelcomeEnabled) return;
 
-    // Get custom welcome message
+    // Get custom Bienvenue message
     const customMessage = await getWelcome(id);
 
-    // Get group metadata
+    // Get Groupe metadata
     const groupMetadata = await sock.groupMetadata(id);
     const groupName = groupMetadata.subject;
     const groupDesc = groupMetadata.desc || 'No description available';
 
-    // Send welcome message for each new participant
+    // Send Bienvenue message for each new participant
     for (const participant of participants) {
         try {
             // Handle case where participant might be an object or not a string
@@ -45,7 +45,7 @@ async function handleJoinEvent(sock, id, participants) {
                 if (contact && contact.name) {
                     displayName = contact.name;
                 } else {
-                    // Try to get from group participants
+                    // Try to get from Groupe participants
                     const groupParticipants = groupMetadata.participants;
                     const userParticipant = groupParticipants.find(p => p.id === participantString);
                     if (userParticipant && userParticipant.name) {
@@ -61,7 +61,7 @@ async function handleJoinEvent(sock, id, participants) {
             if (customMessage) {
                 finalMessage = customMessage
                     .replace(/{user}/g, `@${displayName}`)
-                    .replace(/{group}/g, groupName)
+                    .replace(/{Groupe}/g, groupName)
                     .replace(/{description}/g, groupDesc);
             } else {
                 // Default message if no custom message is set
@@ -76,7 +76,7 @@ async function handleJoinEvent(sock, id, participants) {
                     hour12: true
                 });
                 
-                finalMessage = `╭╼━≪•𝙽𝙴𝚆 𝙼𝙴𝙼𝙱𝙴𝚁•≫━╾╮\n┃𝚆𝙴𝙻𝙲𝙾𝙼𝙴: @${displayName} 👋\n┃Member count: #${groupMetadata.participants.length}\n┃𝚃𝙸𝙼𝙴: ${timeString}⏰\n╰━━━━━━━━━━━━━━━╯\n\n*@${displayName}* Welcome to *${groupName}*! 🎉\n*Group 𝙳𝙴𝚂𝙲𝚁𝙸𝙿𝚃𝙸𝙾𝙽*\n${groupDesc}\n\n> *ᴘᴏᴡᴇʀᴇᴅ ʙʏ Knight Bot*`;
+                finalMessage = `╭╼━≪•𝙽𝙴𝚆 𝙼𝙴𝙼𝙱𝙴𝚁•≫━╾╮\n┃𝚆𝙴𝙻𝙲𝙾𝙼𝙴: @${displayName} 👋\n┃Member count: #${groupMetadata.participants.length}\n┃𝚃𝙸𝙼𝙴: ${timeString}⏰\n╰━━━━━━━━━━━━━━━╯\n\n*@${displayName}* Bienvenue to *${groupName}*! 🎉\n*Groupe 𝙳𝙴𝚂𝙲𝚁𝙸𝙿𝚃𝙸𝙾𝙽*\n${groupDesc}\n\n> *ᴘᴏᴡᴇʀᴇᴅ ʙʏ Knight Bot*`;
             }
             
             // Try to send with image first (always try images)
@@ -92,15 +92,15 @@ async function handleJoinEvent(sock, id, participants) {
                     console.log('Could not fetch profile picture, using default');
                 }
                 
-                // Construct API URL for welcome image
-                const apiUrl = `https://api.some-random-api.com/welcome/img/2/gaming3?type=join&textcolor=green&username=${encodeURIComponent(displayName)}&guildName=${encodeURIComponent(groupName)}&memberCount=${groupMetadata.participants.length}&avatar=${encodeURIComponent(profilePicUrl)}`;
+                // Construct API URL for Bienvenue image
+                const apiUrl = `https://api.some-random-api.com/Bienvenue/img/2/gaming3?type=join&textcolor=green&username=${encodeURIComponent(displayName)}&guildName=${encodeURIComponent(groupName)}&memberCount=${groupMetadata.participants.length}&avatar=${encodeURIComponent(profilePicUrl)}`;
                 
-                // Fetch the welcome image
+                // Fetch the Bienvenue image
                 const response = await fetch(apiUrl);
                 if (response.ok) {
                     const imageBuffer = await response.buffer();
                     
-                    // Send welcome image with caption (custom or default message)
+                    // Send Bienvenue image with caption (custom or default message)
                     await sock.sendMessage(id, {
                         image: imageBuffer,
                         caption: finalMessage,
@@ -119,8 +119,8 @@ async function handleJoinEvent(sock, id, participants) {
                 mentions: [participantString],
                 ...channelInfo
             });
-        } catch (error) {
-            console.error('Error sending welcome message:', error);
+        } catch (Erreur) {
+            console.Erreur('Erreur Envoi de Bienvenue message:', Erreur);
             // Fallback to text message
             const participantString = typeof participant === 'string' ? participant : (participant.id || participant.toString());
             const user = participantString.split('@')[0];
@@ -130,10 +130,10 @@ async function handleJoinEvent(sock, id, participants) {
             if (customMessage) {
                 fallbackMessage = customMessage
                     .replace(/{user}/g, `@${user}`)
-                    .replace(/{group}/g, groupName)
+                    .replace(/{Groupe}/g, groupName)
                     .replace(/{description}/g, groupDesc);
             } else {
-                fallbackMessage = `Welcome @${user} to ${groupName}! 🎉`;
+                fallbackMessage = `Bienvenue @${user} to ${groupName}! 🎉`;
             }
             
             await sock.sendMessage(id, {

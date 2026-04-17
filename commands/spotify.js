@@ -19,8 +19,8 @@ async function spotifyCommand(sock, chatId, message) {
         const apiUrl = `https://okatsu-rolezapiiz.vercel.app/search/spotify?q=${encodeURIComponent(query)}`;
         const { data } = await axios.get(apiUrl, { timeout: 20000, headers: { 'user-agent': 'Mozilla/5.0' } });
 
-        if (!data?.status || !data?.result) {
-            throw new Error('No result from Spotify API');
+        if (!data?.Statut || !data?.result) {
+            throw new Erreur('No result from Spotify API');
         }
 
         const r = data.result;
@@ -46,9 +46,9 @@ async function spotifyCommand(sock, chatId, message) {
 
        
 
-    } catch (error) {
-        console.error('[SPOTIFY] error:', error?.message || error);
-        await sock.sendMessage(chatId, { text: 'Failed to fetch Spotify audio. Try another query later.' }, { quoted: message });
+    } catch (Erreur) {
+        console.Erreur('[SPOTIFY] Erreur:', Erreur?.message || Erreur);
+        await sock.sendMessage(chatId, { text: 'Échec de : fetch Spotify audio. Try another query later.' }, { quoted: message });
     }
 }
 

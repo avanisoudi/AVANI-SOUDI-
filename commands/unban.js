@@ -5,24 +5,24 @@ const isAdmin = require('../lib/isAdmin');
 const { isSudo } = require('../lib/index');
 
 async function unbanCommand(sock, chatId, message) {
-    // Restrict in groups to admins; in private to owner/sudo
+    // Restrict in groups to admins; in Privé to Propriétaire/sudo
     const isGroup = chatId.endsWith('@g.us');
     if (isGroup) {
         const senderId = message.key.participant || message.key.remoteJid;
         const { isSenderAdmin, isBotAdmin } = await isAdmin(sock, chatId, senderId);
         if (!isBotAdmin) {
-            await sock.sendMessage(chatId, { text: 'Please make the bot an admin to use .unban', ...channelInfo }, { quoted: message });
+            await sock.sendMessage(chatId, { text: 'Veuillez nommer le bot administrateur pour utiliser .unban', ...channelInfo }, { quoted: message });
             return;
         }
         if (!isSenderAdmin && !message.key.fromMe) {
-            await sock.sendMessage(chatId, { text: 'Only group admins can use .unban', ...channelInfo }, { quoted: message });
+            await sock.sendMessage(chatId, { text: 'Seuls les administrateurs du groupe peuvent utiliser .unban', ...channelInfo }, { quoted: message });
             return;
         }
     } else {
         const senderId = message.key.participant || message.key.remoteJid;
         const senderIsSudo = await isSudo(senderId);
         if (!message.key.fromMe && !senderIsSudo) {
-            await sock.sendMessage(chatId, { text: 'Only owner/sudo can use .unban in private chat', ...channelInfo }, { quoted: message });
+            await sock.sendMessage(chatId, { text: 'Seul le propriétaire/sudo peut utiliser .unban in Privé chat', ...channelInfo }, { quoted: message });
             return;
         }
     }
@@ -39,7 +39,7 @@ async function unbanCommand(sock, chatId, message) {
     
     if (!userToUnban) {
         await sock.sendMessage(chatId, { 
-            text: 'Please mention the user or reply to their message to unban!', 
+            text: 'Veuillez mentionner l'utilisateur or reply to their message to unban!', 
             ...channelInfo 
         }, { quoted: message });
         return;
@@ -53,7 +53,7 @@ async function unbanCommand(sock, chatId, message) {
             fs.writeFileSync('./data/banned.json', JSON.stringify(bannedUsers, null, 2));
             
             await sock.sendMessage(chatId, { 
-                text: `Successfully unbanned ${userToUnban.split('@')[0]}!`,
+                text: `Réussi : unbanned ${userToUnban.split('@')[0]}!`,
                 mentions: [userToUnban],
                 ...channelInfo 
             });
@@ -64,9 +64,9 @@ async function unbanCommand(sock, chatId, message) {
                 ...channelInfo 
             });
         }
-    } catch (error) {
-        console.error('Error in unban command:', error);
-        await sock.sendMessage(chatId, { text: 'Failed to unban user!', ...channelInfo }, { quoted: message });
+    } catch (Erreur) {
+        console.Erreur('Erreur in unban command:', Erreur);
+        await sock.sendMessage(chatId, { text: 'Échec de : unban user!', ...channelInfo }, { quoted: message });
     }
 }
 

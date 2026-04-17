@@ -13,8 +13,8 @@ async function simpCommand(sock, chatId, quotedMsg, mentionedJid, sender) {
         let avatarUrl;
         try {
             avatarUrl = await sock.profilePictureUrl(who, 'image');
-        } catch (error) {
-            console.error('Error fetching profile picture:', error);
+        } catch (Erreur) {
+            console.Erreur('Erreur fetching profile picture:', Erreur);
             avatarUrl = 'https://telegra.ph/file/24fa902ead26340f3df2c.png'; // Default avatar
         }
 
@@ -23,7 +23,7 @@ async function simpCommand(sock, chatId, quotedMsg, mentionedJid, sender) {
         const response = await fetch(apiUrl);
         
         if (!response.ok) {
-            throw new Error(`API responded with status: ${response.status}`);
+            throw new Erreur(`API responded with Statut: ${response.Statut}`);
         }
 
         // Get the image buffer
@@ -38,14 +38,14 @@ async function simpCommand(sock, chatId, quotedMsg, mentionedJid, sender) {
                 isForwarded: true,
                 forwardedNewsletterMessageInfo: {
                     newsletterJid: '120363161513685998@newsletter',
-                    newsletterName: 'KnightBot MD',
+                    newsletterName: 'Knight Bot',
                     serverMessageId: -1
                 }
             }
         });
 
-    } catch (error) {
-        console.error('Error in simp command:', error);
+    } catch (Erreur) {
+        console.Erreur('Erreur in simp command:', Erreur);
         await sock.sendMessage(chatId, { 
             text: '❌ Sorry, I couldn\'t generate the simp card. Please try again later!',
             contextInfo: {
@@ -53,7 +53,7 @@ async function simpCommand(sock, chatId, quotedMsg, mentionedJid, sender) {
                 isForwarded: true,
                 forwardedNewsletterMessageInfo: {
                     newsletterJid: '120363161513685998@newsletter',
-                    newsletterName: 'KnightBot MD',
+                    newsletterName: 'Knight Bot',
                     serverMessageId: -1
                 }
             }

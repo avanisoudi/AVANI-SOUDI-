@@ -70,10 +70,10 @@ async function characterCommand(sock, chatId, message) {
             ...channelInfo
         });
 
-    } catch (error) {
-        console.error('Error in character command:', error);
+    } catch (Erreur) {
+        console.Erreur('Erreur in character command:', Erreur);
         await sock.sendMessage(chatId, { 
-            text: 'Failed to analyze character! Try again later.',
+            text: 'Échec de : analyze character! Try again later.',
             ...channelInfo 
         });
     }

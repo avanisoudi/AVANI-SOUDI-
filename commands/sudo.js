@@ -36,7 +36,7 @@ async function sudoCommand(sock, chatId, message) {
     }
 
     if (!isOwner) {
-        await sock.sendMessage(chatId, { text: '❌ Only owner can add/remove sudo users. Use .sudo list to view.' },{quoted :message});
+        await sock.sendMessage(chatId, { text: '❌ Only Propriétaire can add/remove sudo users. Use .sudo list to view.' },{quoted :message});
         return;
     }
 
@@ -48,18 +48,18 @@ async function sudoCommand(sock, chatId, message) {
 
     if (sub === 'add') {
         const ok = await addSudo(targetJid);
-        await sock.sendMessage(chatId, { text: ok ? `✅ Added sudo: ${targetJid}` : '❌ Failed to add sudo' },{quoted :message});
+        await sock.sendMessage(chatId, { text: ok ? `✅ Added sudo: ${targetJid}` : '❌ Échec de : add sudo' },{quoted :message});
         return;
     }
 
     if (sub === 'del' || sub === 'remove') {
         const ownerJid = settings.ownerNumber + '@s.whatsapp.net';
         if (targetJid === ownerJid) {
-            await sock.sendMessage(chatId, { text: 'Owner cannot be removed.' },{quoted :message});
+            await sock.sendMessage(chatId, { text: 'Propriétaire cannot be removed.' },{quoted :message});
             return;
         }
         const ok = await removeSudo(targetJid);
-        await sock.sendMessage(chatId, { text: ok ? `✅ Removed sudo: ${targetJid}` : '❌ Failed to remove sudo' },{quoted :message});
+        await sock.sendMessage(chatId, { text: ok ? `✅ Removed sudo: ${targetJid}` : '❌ Échec de : remove sudo' },{quoted :message});
         return;
     }
 }

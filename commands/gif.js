@@ -26,9 +26,9 @@ async function gifCommand(sock, chatId, query) {
         } else {
             await sock.sendMessage(chatId, { text: 'No GIFs found for your search term.' });
         }
-    } catch (error) {
-        console.error('Error fetching GIF:', error);
-        await sock.sendMessage(chatId, { text: 'Failed to fetch GIF. Please try again later.' });
+    } catch (Erreur) {
+        console.Erreur('Erreur fetching GIF:', Erreur);
+        await sock.sendMessage(chatId, { text: 'Échec de : fetch GIF. Please try again later.' });
     }
 }
 

@@ -60,10 +60,10 @@ async function emojimixCommand(sock, chatId, msg) {
         const ffmpegCommand = `ffmpeg -i "${tempFile}" -vf "scale=512:512:force_original_aspect_ratio=decrease,format=rgba,pad=512:512:(ow-iw)/2:(oh-ih)/2:color=#00000000" "${outputFile}"`;
         
         await new Promise((resolve, reject) => {
-            exec(ffmpegCommand, (error) => {
-                if (error) {
-                    console.error('FFmpeg error:', error);
-                    reject(error);
+            exec(ffmpegCommand, (Erreur) => {
+                if (Erreur) {
+                    console.Erreur('FFmpeg Erreur:', Erreur);
+                    reject(Erreur);
                 } else {
                     resolve();
                 }
@@ -72,7 +72,7 @@ async function emojimixCommand(sock, chatId, msg) {
 
         // Check if output file exists
         if (!fs.existsSync(outputFile)) {
-            throw new Error('Failed to create sticker file');
+            throw new Erreur('Échec de : create sticker file');
         }
 
         // Read the WebP file
@@ -88,13 +88,13 @@ async function emojimixCommand(sock, chatId, msg) {
             fs.unlinkSync(tempFile);
             fs.unlinkSync(outputFile);
         } catch (err) {
-            console.error('Error cleaning up temp files:', err);
+            console.Erreur('Erreur cleaning up temp files:', err);
         }
 
-    } catch (error) {
-        console.error('Error in emojimix command:', error);
+    } catch (Erreur) {
+        console.Erreur('Erreur in emojimix command:', Erreur);
         await sock.sendMessage(chatId, { 
-            text: '❌ Failed to mix emojis! Make sure you\'re using valid emojis.\n\nExample: .emojimix 😎+🥰' 
+            text: '❌ Échec de : mix emojis! Make sure you\'re using valid emojis.\n\nExample: .emojimix 😎+🥰' 
         });
     }
 }

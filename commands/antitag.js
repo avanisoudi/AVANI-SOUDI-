@@ -4,7 +4,7 @@ const isAdmin = require('../lib/isAdmin');
 async function handleAntitagCommand(sock, chatId, userMessage, senderId, isSenderAdmin, message) {
     try {
         if (!isSenderAdmin) {
-            await sock.sendMessage(chatId, { text: '```For Group Admins Only!```' },{quoted :message});
+            await sock.sendMessage(chatId, { text: '```For Groupe Admins Only!```' },{quoted :message});
             return;
         }
 
@@ -21,8 +21,8 @@ async function handleAntitagCommand(sock, chatId, userMessage, senderId, isSende
         switch (action) {
             case 'on':
                 const existingConfig = await getAntitag(chatId, 'on');
-                if (existingConfig?.enabled) {
-                    await sock.sendMessage(chatId, { text: '*_Antitag is already on_*' },{quoted :message});
+                if (existingConfig?.activé) {
+                    await sock.sendMessage(chatId, { text: '*_Antitag est déjà on_*' },{quoted :message});
                     return;
                 }
                 const result = await setAntitag(chatId, 'on', 'delete');
@@ -57,18 +57,18 @@ async function handleAntitagCommand(sock, chatId, userMessage, senderId, isSende
                 break;
 
             case 'get':
-                const status = await getAntitag(chatId, 'on');
+                const Statut = await getAntitag(chatId, 'on');
                 const actionConfig = await getAntitag(chatId, 'on');
                 await sock.sendMessage(chatId, { 
-                    text: `*_Antitag Configuration:_*\nStatus: ${status ? 'ON' : 'OFF'}\nAction: ${actionConfig ? actionConfig.action : 'Not set'}` 
+                    text: `*_Antitag Configuration:_*\nStatus: ${Statut ? 'ON' : 'OFF'}\nAction: ${actionConfig ? actionConfig.action : 'Not set'}` 
                 },{quoted :message});
                 break;
 
             default:
                 await sock.sendMessage(chatId, { text: `*_Use ${prefix}antitag for usage._*` },{quoted :message});
         }
-    } catch (error) {
-        console.error('Error in antitag command:', error);
+    } catch (Erreur) {
+        console.Erreur('Erreur in antitag command:', Erreur);
         await sock.sendMessage(chatId, { text: '*_Error processing antitag command_*' },{quoted :message});
     }
 }
@@ -76,7 +76,7 @@ async function handleAntitagCommand(sock, chatId, userMessage, senderId, isSende
 async function handleTagDetection(sock, chatId, message, senderId) {
     try {
         const antitagSetting = await getAntitag(chatId, 'on');
-        if (!antitagSetting || !antitagSetting.enabled) return;
+        if (!antitagSetting || !antitagSetting.activé) return;
 
         // Get mentioned JIDs from contextInfo (proper mentions)
         const mentionedJids = message.message?.extendedTextMessage?.contextInfo?.mentionedJid || [];
@@ -117,13 +117,13 @@ async function handleTagDetection(sock, chatId, message, senderId) {
         // This ensures we catch both standard mentions and bot tagall patterns
         const totalMentions = Math.max(mentionedJidCount, numericMentionCount);
 
-        // Check if it's a group message and has multiple mentions
+        // Check if it's a Groupe message and has multiple mentions
         if (totalMentions >= 3) {
-            // Get group participants to check if it's tagging most/all members
+            // Get Groupe participants to check if it's tagging most/all members
             const groupMetadata = await sock.groupMetadata(chatId);
             const participants = groupMetadata.participants || [];
             
-            // If mentions are more than 50% of group members, consider it as tagall
+            // If mentions are more than 50% of Groupe members, consider it as tagall
             const mentionThreshold = Math.ceil(participants.length * 0.5);
             
             // Also check if there are many numeric mentions in the text (bot tagall pattern)
@@ -175,8 +175,8 @@ async function handleTagDetection(sock, chatId, message, senderId) {
                 }
             }
         }
-    } catch (error) {
-        console.error('Error in tag detection:', error);
+    } catch (Erreur) {
+        console.Erreur('Erreur in tag detection:', Erreur);
     }
 }
 

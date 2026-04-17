@@ -4,7 +4,7 @@ let triviaGames = {};
 
 async function startTrivia(sock, chatId) {
     if (triviaGames[chatId]) {
-        sock.sendMessage(chatId, { text: 'A trivia game is already in progress!' });
+        sock.sendMessage(chatId, { text: 'A trivia game est déjà in progress!' });
         return;
     }
 
@@ -21,8 +21,8 @@ async function startTrivia(sock, chatId) {
         sock.sendMessage(chatId, {
             text: `Trivia Time!\n\nQuestion: ${triviaGames[chatId].question}\nOptions:\n${triviaGames[chatId].options.join('\n')}`
         });
-    } catch (error) {
-        sock.sendMessage(chatId, { text: 'Error fetching trivia question. Try again later.' });
+    } catch (Erreur) {
+        sock.sendMessage(chatId, { text: 'Erreur fetching trivia question. Try again later.' });
     }
 }
 

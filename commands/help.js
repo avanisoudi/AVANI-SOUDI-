@@ -7,47 +7,46 @@ async function helpCommand(sock, chatId, message) {
 ╔═══════════════════╗
    *🤖 ${settings.botName || 'KnightBot-MD'}*  
    Version: *${settings.version || '3.0.0'}*
-   by ${settings.botOwner || 'Mr Unique Hacker'}
-   YT : ${global.ytch}
+   par ${settings.botOwner || 'Professeur'}
 ╚═══════════════════╝
 
-*Available Commands:*
+*Commandes Disponibles :*
 
 ╔═══════════════════╗
-🌐 *General Commands*:
-║ ➤ .help or .menu
+🌐 *Commandes Générales*:
+║ ➤ .help ou .menu
 ║ ➤ .ping
 ║ ➤ .alive
-║ ➤ .tts <text>
+║ ➤ .tts <texte>
 ║ ➤ .owner
 ║ ➤ .joke
 ║ ➤ .quote
 ║ ➤ .fact
-║ ➤ .weather <city>
+║ ➤ .weather <ville>
 ║ ➤ .news
-║ ➤ .attp <text>
-║ ➤ .lyrics <song_title>
+║ ➤ .attp <texte>
+║ ➤ .lyrics <titre>
 ║ ➤ .8ball <question>
 ║ ➤ .groupinfo
-║ ➤ .staff or .admins 
+║ ➤ .staff ou .admins 
 ║ ➤ .vv
-║ ➤ .trt <text> <lang>
-║ ➤ .ss <link>
+║ ➤ .trt <texte> <langue>
+║ ➤ .ss <lien>
 ║ ➤ .jid
 ║ ➤ .url
 ╚═══════════════════╝ 
 
 ╔═══════════════════╗
-👮‍♂️ *Admin Commands*:
-║ ➤ .ban @user
-║ ➤ .promote @user
-║ ➤ .demote @user
+👮‍♂️ *Commandes Admin*:
+║ ➤ .ban @utilisateur
+║ ➤ .promote @utilisateur
+║ ➤ .demote @utilisateur
 ║ ➤ .mute <minutes>
 ║ ➤ .unmute
-║ ➤ .delete or .del
-║ ➤ .kick @user
-║ ➤ .warnings @user
-║ ➤ .warn @user
+║ ➤ .delete ou .del
+║ ➤ .kick @utilisateur
+║ ➤ .warnings @utilisateur
+║ ➤ .warn @utilisateur
 ║ ➤ .antilink
 ║ ➤ .antibadword
 ║ ➤ .clear
@@ -61,19 +60,19 @@ async function helpCommand(sock, chatId, message) {
 ║ ➤ .welcome <on/off>
 ║ ➤ .goodbye <on/off>
 ║ ➤ .setgdesc <description>
-║ ➤ .setgname <new name>
-║ ➤ .setgpp (reply to image)
+║ ➤ .setgname <nouveau nom>
+║ ➤ .setgpp (répondre à une image)
 ╚═══════════════════╝
 
 ╔═══════════════════╗
-🔒 *Owner Commands*:
+🔒 *Commandes Owner*:
 ║ ➤ .mode <public/private>
 ║ ➤ .clearsession
 ║ ➤ .antidelete
 ║ ➤ .cleartmp
 ║ ➤ .update
 ║ ➤ .settings
-║ ➤ .setpp <reply to image>
+║ ➤ .setpp <répondre à une image>
 ║ ➤ .autoreact <on/off>
 ║ ➤ .autostatus <on/off>
 ║ ➤ .autostatus react <on/off>
@@ -81,30 +80,30 @@ async function helpCommand(sock, chatId, message) {
 ║ ➤ .autoread <on/off>
 ║ ➤ .anticall <on/off>
 ║ ➤ .pmblocker <on/off/status>
-║ ➤ .pmblocker setmsg <text>
-║ ➤ .setmention <reply to msg>
+║ ➤ .pmblocker setmsg <texte>
+║ ➤ .setmention <répondre au msg>
 ║ ➤ .mention <on/off>
 ╚═══════════════════╝
 
 ╔═══════════════════╗
-🎨 *Image/Sticker Commands*:
+🎨 *Images/Stickers*:
 ║ ➤ .blur <image>
-║ ➤ .simage <reply to sticker>
-║ ➤ .sticker <reply to image>
+║ ➤ .simage <sticker>
+║ ➤ .sticker <image>
 ║ ➤ .removebg
 ║ ➤ .remini
-║ ➤ .crop <reply to image>
-║ ➤ .tgsticker <Link>
+║ ➤ .crop <image>
+║ ➤ .tgsticker <lien>
 ║ ➤ .meme
-║ ➤ .take <packname> 
+║ ➤ .take <nom_pack> 
 ║ ➤ .emojimix <emj1>+<emj2>
-║ ➤ .igs <insta link>
-║ ➤ .igsc <insta link>
+║ ➤ .igs <lien_insta>
+║ ➤ .igsc <lien_insta>
 ╚═══════════════════╝  
 
 ╔═══════════════════╗
-🖼️ *Pies Commands*:
-║ ➤ .pies <country>
+🖼️ *Commandes Pies*:
+║ ➤ .pies <pays>
 ║ ➤ .china 
 ║ ➤ .indonesia 
 ║ ➤ .japan 
@@ -113,18 +112,18 @@ async function helpCommand(sock, chatId, message) {
 ╚═══════════════════╝
 
 ╔═══════════════════╗
-🎮 *Game Commands*:
-║ ➤ .tictactoe @user
+🎮 *Jeux*:
+║ ➤ .tictactoe @utilisateur
 ║ ➤ .hangman
-║ ➤ .guess <letter>
+║ ➤ .guess <lettre>
 ║ ➤ .trivia
-║ ➤ .answer <answer>
+║ ➤ .answer <réponse>
 ║ ➤ .truth
 ║ ➤ .dare
 ╚═══════════════════╝
 
 ╔═══════════════════╗
-🤖 *AI Commands*:
+🤖 *IA*:
 ║ ➤ .gpt <question>
 ║ ➤ .gemini <question>
 ║ ➤ .imagine <prompt>
@@ -133,56 +132,56 @@ async function helpCommand(sock, chatId, message) {
 ╚═══════════════════╝
 
 ╔═══════════════════╗
-🎯 *Fun Commands*:
-║ ➤ .compliment @user
-║ ➤ .insult @user
+🎯 *Fun*:
+║ ➤ .compliment @utilisateur
+║ ➤ .insult @utilisateur
 ║ ➤ .flirt 
 ║ ➤ .shayari
 ║ ➤ .goodnight
 ║ ➤ .roseday
-║ ➤ .character @user
-║ ➤ .wasted @user
-║ ➤ .ship @user
-║ ➤ .simp @user
-║ ➤ .stupid @user [text]
+║ ➤ .character @utilisateur
+║ ➤ .wasted @utilisateur
+║ ➤ .ship @utilisateur
+║ ➤ .simp @utilisateur
+║ ➤ .stupid @utilisateur [texte]
 ╚═══════════════════╝
 
 ╔═══════════════════╗
-🔤 *Textmaker*:
-║ ➤ .metallic <text>
-║ ➤ .ice <text>
-║ ➤ .snow <text>
-║ ➤ .impressive <text>
-║ ➤ .matrix <text>
-║ ➤ .light <text>
-║ ➤ .neon <text>
-║ ➤ .devil <text>
-║ ➤ .purple <text>
-║ ➤ .thunder <text>
-║ ➤ .leaves <text>
-║ ➤ .1917 <text>
-║ ➤ .arena <text>
-║ ➤ .hacker <text>
-║ ➤ .sand <text>
-║ ➤ .blackpink <text>
-║ ➤ .glitch <text>
-║ ➤ .fire <text>
+🔤 *Éditeur de Texte*:
+║ ➤ .metallic <texte>
+║ ➤ .ice <texte>
+║ ➤ .snow <texte>
+║ ➤ .impressive <texte>
+║ ➤ .matrix <texte>
+║ ➤ .light <texte>
+║ ➤ .neon <texte>
+║ ➤ .devil <texte>
+║ ➤ .purple <texte>
+║ ➤ .thunder <texte>
+║ ➤ .leaves <texte>
+║ ➤ .1917 <texte>
+║ ➤ .arena <texte>
+║ ➤ .hacker <texte>
+║ ➤ .sand <texte>
+║ ➤ .blackpink <texte>
+║ ➤ .glitch <texte>
+║ ➤ .fire <texte>
 ╚═══════════════════╝
 
 ╔═══════════════════╗
-📥 *Downloader*:
-║ ➤ .play <song_name>
-║ ➤ .song <song_name>
-║ ➤ .spotify <query>
-║ ➤ .instagram <link>
-║ ➤ .facebook <link>
-║ ➤ .tiktok <link>
-║ ➤ .video <song name>
-║ ➤ .ytmp4 <Link>
+📥 *Téléchargeur*:
+║ ➤ .play <musique>
+║ ➤ .song <musique>
+║ ➤ .spotify <recherche>
+║ ➤ .instagram <lien>
+║ ➤ .facebook <lien>
+║ ➤ .tiktok <lien>
+║ ➤ .video <musique>
+║ ➤ .ytmp4 <lien>
 ╚═══════════════════╝
 
 ╔═══════════════════╗
-🧩 *MISC*:
+🧩 *DIVERS*:
 ║ ➤ .heart
 ║ ➤ .horny
 ║ ➤ .circle
@@ -214,7 +213,7 @@ async function helpCommand(sock, chatId, message) {
 ╚═══════════════════╝
 
 ╔═══════════════════╗
-💻 *Github Commands:*
+💻 *Github :*
 ║ ➤ .git
 ║ ➤ .github
 ║ ➤ .sc
@@ -222,7 +221,7 @@ async function helpCommand(sock, chatId, message) {
 ║ ➤ .repo
 ╚═══════════════════╝
 
-Join our channel for updates:`;
+*Bot actif et prêt !*`;
 
     try {
         const imagePath = path.join(__dirname, '../assets/bot_image.jpg');
@@ -238,7 +237,7 @@ Join our channel for updates:`;
                     isForwarded: true,
                     forwardedNewsletterMessageInfo: {
                         newsletterJid: '120363161513685998@newsletter',
-                        newsletterName: 'KnightBot MD',
+                        newsletterName: 'Knight Bot',
                         serverMessageId: -1
                     }
                 }
@@ -252,7 +251,7 @@ Join our channel for updates:`;
                     isForwarded: true,
                     forwardedNewsletterMessageInfo: {
                         newsletterJid: '120363161513685998@newsletter',
-                        newsletterName: 'KnightBot MD by Mr Unique Hacker',
+                        newsletterName: 'Knight Bot',
                         serverMessageId: -1
                     } 
                 }

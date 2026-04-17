@@ -1,6 +1,6 @@
 async function shipCommand(sock, chatId, msg, groupMetadata) {
     try {
-        // Get all participants from the group
+        // Get all participants from the Groupe
         const participants = await sock.groupMetadata(chatId);
         const ps = participants.participants.map(v => v.id);
         
@@ -24,9 +24,9 @@ async function shipCommand(sock, chatId, msg, groupMetadata) {
             mentions: [firstUser, secondUser]
         });
 
-    } catch (error) {
-        console.error('Error in ship command:', error);
-        await sock.sendMessage(chatId, { text: '❌ Failed to ship! Make sure this is a group.' });
+    } catch (Erreur) {
+        console.Erreur('Erreur in ship command:', Erreur);
+        await sock.sendMessage(chatId, { text: '❌ Échec de : ship! Make sure this is a Groupe.' });
     }
 }
 

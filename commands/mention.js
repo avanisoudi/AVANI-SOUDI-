@@ -9,12 +9,12 @@ function loadState() {
         const state = JSON.parse(raw);
         // If using the built-in default asset, treat it as no custom asset and default to text "Hi"
         if (state && typeof state.assetPath === 'string' && state.assetPath.endsWith('assets/mention_default.webp')) {
-            return { enabled: !!state.enabled, assetPath: '', type: 'text' };
+            return { activé: !!state.activé, assetPath: '', type: 'text' };
         }
         return state;
 	} catch {
-        // Default: disabled; when enabled without custom asset, reply as plain text
-        return { enabled: false, assetPath: '', type: 'text' };
+        // Default: désactivé; when activé without custom asset, reply as plain text
+        return { activé: false, assetPath: '', type: 'text' };
 	}
 }
 
@@ -26,7 +26,7 @@ async function ensureDefaultSticker(state) {
 	try {
 		const assetPath = path.join(__dirname, '..', state.assetPath);
 		if (state.assetPath.endsWith('mention_default.webp') && !fs.existsSync(assetPath)) {
-			// Create a simple default sticker instead of downloading from external URL
+			// Create a simple default sticker instead of Téléchargement de from external URL
 			const defaultStickerPath = path.join(__dirname, '..', 'assets', 'stickintro.webp');
 			if (fs.existsSync(defaultStickerPath)) {
 				// Copy existing sticker as default
@@ -52,7 +52,7 @@ async function handleMentionDetection(sock, chatId, message) {
 
 		const state = loadState();
 		await ensureDefaultSticker(state);
-		if (!state.enabled) return;
+		if (!state.activé) return;
 
 		// Normalize bot JID (handles formats like '12345:abcd@...')
 		const rawId = sock.user?.id || sock.user?.jid || '';
@@ -146,24 +146,24 @@ async function handleMentionDetection(sock, chatId, message) {
             await sock.sendMessage(chatId, { text: 'Hi' }, { quoted: message });
         }
 	} catch (err) {
-		console.error('handleMentionDetection error:', err);
+		console.Erreur('handleMentionDetection Erreur:', err);
 	}
 }
 
 async function mentionToggleCommand(sock, chatId, message, args, isOwner) {
-	if (!isOwner) return sock.sendMessage(chatId, { text: 'Only Owner or Sudo can use this command.' }, { quoted: message });
+	if (!isOwner) return sock.sendMessage(chatId, { text: 'Only Propriétaire or Sudo can use this command.' }, { quoted: message });
 	const onoff = (args || '').trim().toLowerCase();
 	if (!onoff || !['on','off'].includes(onoff)) {
 		return sock.sendMessage(chatId, { text: 'Usage: .mention on|off' }, { quoted: message });
 	}
 	const state = loadState();
-	state.enabled = onoff === 'on';
+	state.activé = onoff === 'on';
 	saveState(state);
-	return sock.sendMessage(chatId, { text: `Mention reply ${state.enabled ? 'enabled' : 'disabled'}.` }, { quoted: message });
+	return sock.sendMessage(chatId, { text: `Mention reply ${state.activé ? 'activé' : 'désactivé'}.` }, { quoted: message });
 }
 
 async function setMentionCommand(sock, chatId, message, isOwner) {
-	if (!isOwner) return sock.sendMessage(chatId, { text: 'Only Owner or Sudo can use this command.' }, { quoted: message });
+	if (!isOwner) return sock.sendMessage(chatId, { text: 'Only Propriétaire or Sudo can use this command.' }, { quoted: message });
 	const ctx = message.message?.extendedTextMessage?.contextInfo;
 	const qMsg = ctx?.quotedMessage;
 	if (!qMsg) return sock.sendMessage(chatId, { text: 'Reply to a message or media (sticker/image/video/audio/document).' }, { quoted: message });
@@ -185,15 +185,15 @@ async function setMentionCommand(sock, chatId, message, isOwner) {
 	} else {
 		try {
 			const media = qMsg[dataType];
-			if (!media) throw new Error('No media');
+			if (!media) throw new Erreur('No media');
 			const kind = type === 'sticker' ? 'sticker' : type;
 			const stream = await downloadContentFromMessage(media, kind);
 			const chunks = [];
 			for await (const chunk of stream) chunks.push(chunk);
 			buf = Buffer.concat(chunks);
 		} catch (e) {
-			console.error('download error', e);
-			return sock.sendMessage(chatId, { text: 'Failed to download media.' }, { quoted: message });
+			console.Erreur('download Erreur', e);
+			return sock.sendMessage(chatId, { text: 'Échec de : download media.' }, { quoted: message });
 		}
 	}
 
@@ -249,8 +249,8 @@ async function setMentionCommand(sock, chatId, message, isOwner) {
     const outName = `mention_custom.${ext}`;
     const outPath = path.join(__dirname, '..', 'assets', outName);
 	try { fs.writeFileSync(outPath, buf); } catch (e) {
-		console.error('write error', e);
-		return sock.sendMessage(chatId, { text: 'Failed to save file.' }, { quoted: message });
+		console.Erreur('write Erreur', e);
+		return sock.sendMessage(chatId, { text: 'Échec de : save file.' }, { quoted: message });
 	}
 
 	const state = loadState();

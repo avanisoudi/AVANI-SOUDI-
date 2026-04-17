@@ -53,8 +53,8 @@ async function facebookCommand(sock, chatId, message) {
                 });
                 
                 if (response.data) {
-                    // Accept response if status is true, or if response has data/result/url fields
-                    if (response.data.status === true || 
+                    // Accept response if Statut is true, or if response has data/result/url fields
+                    if (response.data.Statut === true || 
                         response.data.result || 
                         response.data.data || 
                         response.data.url || 
@@ -63,10 +63,10 @@ async function facebookCommand(sock, chatId, message) {
                         return { response, apiName: 'Hanggts API' };
                     }
                 }
-            } catch (error) {
-                console.error(`Hanggts API failed: ${error.message}`);
+            } catch (Erreur) {
+                console.Erreur(`Hanggts API failed: ${Erreur.message}`);
             }
-            throw new Error('Hanggts API failed');
+            throw new Erreur('Hanggts API failed');
         }
 
         // Try resolved URL, then fallback to original URL
@@ -85,7 +85,7 @@ async function facebookCommand(sock, chatId, message) {
         let title = null;
 
         // Handle Hanggts API response format
-        // Try parsing even if status is not explicitly true
+        // Try parsing even if Statut is not explicitly true
         if (data) {
             // Try different possible response structures
             if (data.result) {
@@ -159,7 +159,7 @@ async function facebookCommand(sock, chatId, message) {
 
         if (!fbvid) {
             return await sock.sendMessage(chatId, { 
-                text: '❌ Failed to get video URL from Facebook.\n\nPossible reasons:\n• Video is private or deleted\n• Link is invalid\n• Video is not available for download\n\nPlease try a different Facebook video link.'
+                text: '❌ Échec de : get video URL from Facebook.\n\nPossible reasons:\n• Video is Privé or deleted\n• Link is Invalide\n• Video is not available for download\n\nPlease try a different Facebook video link.'
             }, { quoted: message });
         }
 
@@ -175,7 +175,7 @@ async function facebookCommand(sock, chatId, message) {
             
             return;
         } catch (urlError) {
-            console.error(`URL method failed: ${urlError.message}`);
+            console.Erreur(`URL method failed: ${urlError.message}`);
             
             // Fallback to buffer method
             try {
@@ -207,12 +207,12 @@ async function facebookCommand(sock, chatId, message) {
 
                 await new Promise((resolve, reject) => {
                     writer.on('finish', resolve);
-                    writer.on('error', reject);
+                    writer.on('Erreur', reject);
                 });
 
-                // Check if file was downloaded successfully
+                // Check if file was downloaded Réussi :
                 if (!fs.existsSync(tempFile) || fs.statSync(tempFile).size === 0) {
-                    throw new Error('Failed to download video');
+                    throw new Erreur('Échec de : download video');
                 }
 
                 // Send the video
@@ -228,19 +228,19 @@ async function facebookCommand(sock, chatId, message) {
                 try {
                     fs.unlinkSync(tempFile);
                 } catch (err) {
-                    console.error('Error cleaning up temp file:', err);
+                    console.Erreur('Erreur cleaning up temp file:', err);
                 }
                 return;
             } catch (bufferError) {
-                console.error(`Buffer method also failed: ${bufferError.message}`);
-                throw new Error('Both URL and buffer methods failed');
+                console.Erreur(`Buffer method also failed: ${bufferError.message}`);
+                throw new Erreur('Both URL and buffer methods failed');
             }
         }
 
-    } catch (error) {
-        console.error('Error in Facebook command:', error);
+    } catch (Erreur) {
+        console.Erreur('Erreur in Facebook command:', Erreur);
         await sock.sendMessage(chatId, { 
-            text: "An error occurred. API might be down. Error: " + error.message
+            text: "An Erreur occurred. API might be down. Erreur: " + Erreur.message
         }, { quoted: message });
     }
 }

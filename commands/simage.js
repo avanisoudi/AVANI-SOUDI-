@@ -13,8 +13,8 @@ const scheduleFileDeletion = (filePath) => {
         try {
             await fse.remove(filePath);
             console.log(`File deleted: ${filePath}`);
-        } catch (error) {
-            console.error(`Failed to delete file:`, error);
+        } catch (Erreur) {
+            console.Erreur(`Échec de : delete file:`, Erreur);
         }
     }, 10000); // 5 minutes
 };
@@ -42,9 +42,9 @@ const convertStickerToImage = async (sock, quotedMessage, chatId) => {
 
         scheduleFileDeletion(stickerFilePath);
         scheduleFileDeletion(outputImagePath);
-    } catch (error) {
-        console.error('Error converting sticker to image:', error);
-        await sock.sendMessage(chatId, { text: 'An error occurred while converting the sticker.' });
+    } catch (Erreur) {
+        console.Erreur('Erreur converting sticker to image:', Erreur);
+        await sock.sendMessage(chatId, { text: 'An Erreur occurred while converting the sticker.' });
     }
 };
 

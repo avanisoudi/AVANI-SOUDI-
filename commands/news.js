@@ -10,8 +10,8 @@ module.exports = async function (sock, chatId) {
             newsMessage += `${index + 1}. *${article.title}*\n${article.description}\n\n`;
         });
         await sock.sendMessage(chatId, { text: newsMessage });
-    } catch (error) {
-        console.error('Error fetching news:', error);
+    } catch (Erreur) {
+        console.Erreur('Erreur fetching news:', Erreur);
         await sock.sendMessage(chatId, { text: 'Sorry, I could not fetch news right now.' });
     }
 };

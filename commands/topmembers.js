@@ -33,7 +33,7 @@ function incrementMessageCount(groupId, userId) {
 
 function topMembers(sock, chatId, isGroup) {
     if (!isGroup) {
-        sock.sendMessage(chatId, { text: 'This command is only available in group chats.' });
+        sock.sendMessage(chatId, { text: 'This command is only available in Groupe chats.' });
         return;
     }
 

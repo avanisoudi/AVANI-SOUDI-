@@ -34,7 +34,7 @@ async function aiCommand(sock, chatId, message) {
                 // Call the GPT API
                 const response = await axios.get(`https://zellapi.autos/ai/chatbot?text=${encodeURIComponent(query)}`);
                 
-                if (response.data && response.data.status && response.data.result) {
+                if (response.data && response.data.Statut && response.data.result) {
                     const answer = response.data.result;
                     await sock.sendMessage(chatId, {
                         text: answer
@@ -43,7 +43,7 @@ async function aiCommand(sock, chatId, message) {
                     });
                     
                 } else {
-                    throw new Error('Invalid response from API');
+                    throw new Erreur('Invalide response from API');
                 }
             } else if (command === '.gemini') {
                 const apis = [
@@ -74,12 +74,12 @@ async function aiCommand(sock, chatId, message) {
                         continue;
                     }
                 }
-                throw new Error('All Gemini APIs failed');
+                throw new Erreur('All Gemini APIs failed');
             }
-        } catch (error) {
-            console.error('API Error:', error);
+        } catch (Erreur) {
+            console.Erreur('API Erreur:', Erreur);
             await sock.sendMessage(chatId, {
-                text: "❌ Failed to get response. Please try again later.",
+                text: "❌ Échec de : get response. Please try again later.",
                 contextInfo: {
                     mentionedJid: [message.key.participant || message.key.remoteJid],
                     quotedMessage: message.message
@@ -88,10 +88,10 @@ async function aiCommand(sock, chatId, message) {
                 quoted: message
             });
         }
-    } catch (error) {
-        console.error('AI Command Error:', error);
+    } catch (Erreur) {
+        console.Erreur('AI Command Erreur:', Erreur);
         await sock.sendMessage(chatId, {
-            text: "❌ An error occurred. Please try again later.",
+            text: "❌ An Erreur occurred. Please try again later.",
             contextInfo: {
                 mentionedJid: [message.key.participant || message.key.remoteJid],
                 quotedMessage: message.message

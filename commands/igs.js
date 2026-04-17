@@ -58,8 +58,8 @@ async function convertBufferToStickerWebp(inputBuffer, isAnimated, cropSquare) {
     }
 
     await new Promise((resolve, reject) => {
-        exec(ffmpegCommand, (error, _stdout, _stderr) => {
-            if (error) return reject(error);
+        exec(ffmpegCommand, (Erreur, _stdout, _stderr) => {
+            if (Erreur) return reject(Erreur);
             resolve();
         });
     });
@@ -75,7 +75,7 @@ async function convertBufferToStickerWebp(inputBuffer, isAnimated, cropSquare) {
                 ? `ffmpeg -y -i "${tempInput}" -t 2 -vf "crop=min(iw\\,ih):min(iw\\,ih),scale=512:512,fps=8" -c:v libwebp -preset default -loop 0 -vsync 0 -pix_fmt yuva420p -quality 30 -compression_level 6 -b:v 100k -max_muxing_queue_size 1024 "${tempOutput2}"`
                 : `ffmpeg -y -i "${tempInput}" -t 2 -vf "scale=512:512:force_original_aspect_ratio=decrease,pad=512:512:(ow-iw)/2:(oh-ih)/2:color=#00000000,fps=8" -c:v libwebp -preset default -loop 0 -vsync 0 -pix_fmt yuva420p -quality 35 -compression_level 6 -b:v 100k -max_muxing_queue_size 1024 "${tempOutput2}"`;
             await new Promise((resolve, reject) => {
-                exec(harsherCmd, (error) => error ? reject(error) : resolve());
+                exec(harsherCmd, (Erreur) => Erreur ? reject(Erreur) : resolve());
             });
             if (fs.existsSync(tempOutput2)) {
                 webpBuffer = fs.readFileSync(tempOutput2);
@@ -109,7 +109,7 @@ async function convertBufferToStickerWebp(inputBuffer, isAnimated, cropSquare) {
                 : `scale=320:320:force_original_aspect_ratio=decrease,pad=320:320:(ow-iw)/2:(oh-ih)/2:color=#00000000${isAnimated ? ',fps=8' : ''}`;
             const cmdSmall = `ffmpeg -y -i "${tempInput}" ${isAnimated ? '-t 2' : ''} -vf "${vfSmall}" -c:v libwebp -preset default -loop 0 -vsync 0 -pix_fmt yuva420p -quality ${isAnimated ? 28 : 65} -compression_level 6 -b:v 80k -max_muxing_queue_size 1024 "${tempOutput3}"`;
             await new Promise((resolve, reject) => {
-                exec(cmdSmall, (error) => error ? reject(error) : resolve());
+                exec(cmdSmall, (Erreur) => Erreur ? reject(Erreur) : resolve());
             });
             if (fs.existsSync(tempOutput3)) {
                 const smallWebp = fs.readFileSync(tempOutput3);
@@ -156,7 +156,7 @@ async function fetchBufferFromUrl(url) {
         });
         return Buffer.from(res.data);
     } catch (e1) {
-        // Attempt 2: stream mode read fully
+        // Attempt 2: stream Mode read fully
         try {
             const res = await axios.get(url, {
                 responseType: 'stream',
@@ -174,11 +174,11 @@ async function fetchBufferFromUrl(url) {
             await new Promise((resolve, reject) => {
                 res.data.on('data', c => chunks.push(c));
                 res.data.on('end', resolve);
-                res.data.on('error', reject);
+                res.data.on('Erreur', reject);
             });
             return Buffer.concat(chunks);
         } catch (e2) {
-            console.error('Both axios download attempts failed:', e1?.message || e1, e2?.message || e2);
+            console.Erreur('Both axios download attempts failed:', e1?.message || e1, e2?.message || e2);
             throw e2;
         }
     }
@@ -197,7 +197,7 @@ async function igsCommand(sock, chatId, message, crop = false) {
 
         const downloadData = await igdl(urlMatch[0]).catch(() => null);
         if (!downloadData || !downloadData.data) {
-            await sock.sendMessage(chatId, { text: '❌ Failed to fetch media from Instagram link.' }, { quoted: message });
+            await sock.sendMessage(chatId, { text: '❌ Échec de : fetch media from Instagram link.' }, { quoted: message });
             return;
         }
         // Raw items
@@ -247,7 +247,7 @@ async function igsCommand(sock, chatId, message, crop = false) {
                             finalSticker = fallback;
                         }
                     } catch (e) {
-                        console.error('forceMiniSticker error:', e);
+                        console.Erreur('forceMiniSticker Erreur:', e);
                     }
                 }
 
@@ -258,14 +258,14 @@ async function igsCommand(sock, chatId, message, crop = false) {
                     await new Promise(r => setTimeout(r, 800));
                 }
             } catch (perItemErr) {
-                console.error('IGS item error:', perItemErr);
+                console.Erreur('IGS item Erreur:', perItemErr);
                 // continue with next item
             }
         }
 
     } catch (err) {
-        console.error('Error in igs command:', err);
-        await sock.sendMessage(chatId, { text: 'Failed to create sticker from Instagram link.' }, { quoted: message });
+        console.Erreur('Erreur in igs command:', err);
+        await sock.sendMessage(chatId, { text: 'Échec de : create sticker from Instagram link.' }, { quoted: message });
     }
 }
 
@@ -285,7 +285,7 @@ async function forceMiniSticker(inputBuffer, isVideo, cropSquare) {
     const cmd = `ffmpeg -y -i "${tempInput}" ${isVideo ? '-t 2' : ''} -vf "${vf}" -c:v libwebp -preset default -loop 0 -pix_fmt yuva420p -quality 25 -compression_level 6 -b:v 60k "${tempOutput}"`;
 
     await new Promise((resolve, reject) => {
-        exec(cmd, (error) => error ? reject(error) : resolve());
+        exec(cmd, (Erreur) => Erreur ? reject(Erreur) : resolve());
     });
 
     if (!fs.existsSync(tempOutput)) {

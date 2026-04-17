@@ -6,21 +6,21 @@ async function tagAllCommand(sock, chatId, senderId, message) {
         
 
         if (!isBotAdmin) {
-            await sock.sendMessage(chatId, { text: 'Please make the bot an admin first.' }, { quoted: message });
+            await sock.sendMessage(chatId, { text: 'Please make the bot an Admin first.' }, { quoted: message });
             return;
         }
 
         if (!isSenderAdmin) {
-            await sock.sendMessage(chatId, { text: 'Only group admins can use the .tagall command.' }, { quoted: message });
+            await sock.sendMessage(chatId, { text: 'Seuls les administrateurs du groupe peuvent utiliser the .tagall command.' }, { quoted: message });
             return;
         }
 
-        // Get group metadata
+        // Get Groupe metadata
         const groupMetadata = await sock.groupMetadata(chatId);
         const participants = groupMetadata.participants;
 
         if (!participants || participants.length === 0) {
-            await sock.sendMessage(chatId, { text: 'No participants found in the group.' });
+            await sock.sendMessage(chatId, { text: 'No participants found in the Groupe.' });
             return;
         }
 
@@ -36,9 +36,9 @@ async function tagAllCommand(sock, chatId, senderId, message) {
             mentions: participants.map(p => p.id)
         });
 
-    } catch (error) {
-        console.error('Error in tagall command:', error);
-        await sock.sendMessage(chatId, { text: 'Failed to tag all members.' });
+    } catch (Erreur) {
+        console.Erreur('Erreur in tagall command:', Erreur);
+        await sock.sendMessage(chatId, { text: 'Échec de : tag all members.' });
     }
 }
 

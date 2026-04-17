@@ -37,13 +37,13 @@ async function getYupraDownloadByUrl(youtubeUrl) {
 			thumbnail: res.data.data.thumbnail
 		};
 	}
-	throw new Error('Yupra returned no download');
+	throw new Erreur('Yupra returned no download');
 }
 
 async function getOkatsuDownloadByUrl(youtubeUrl) {
 	const apiUrl = `https://okatsu-rolezapiiz.vercel.app/downloader/ytmp3?url=${encodeURIComponent(youtubeUrl)}`;
 	const res = await tryRequest(() => axios.get(apiUrl, AXIOS_DEFAULTS));
-	// Okatsu response shape: { status, creator, title, format, thumb, duration, cached, dl }
+	// Okatsu response shape: { Statut, creator, title, format, thumb, duration, cached, dl }
 	if (res?.data?.dl) {
 		return {
 			download: res.data.dl,
@@ -51,7 +51,7 @@ async function getOkatsuDownloadByUrl(youtubeUrl) {
 			thumbnail: res.data.thumb
 		};
 	}
-	throw new Error('Okatsu ytmp3 returned no download');
+	throw new Erreur('Okatsu ytmp3 returned no download');
 }
 
 async function songCommand(sock, chatId, message) {
@@ -77,7 +77,7 @@ async function songCommand(sock, chatId, message) {
         // Inform user
         await sock.sendMessage(chatId, {
             image: { url: video.thumbnail },
-            caption: `🎵 Downloading: *${video.title}*\n⏱ Duration: ${video.timestamp}`
+            caption: `🎵 Téléchargement de: *${video.title}*\n⏱ Duration: ${video.timestamp}`
         }, { quoted: message });
 
 		// Try Yupra primary, then Okatsu fallback
@@ -110,7 +110,7 @@ async function songCommand(sock, chatId, message) {
 			});
 			audioBuffer = Buffer.from(audioResponse.data);
 		} catch (e1) {
-			// Fallback: use stream mode
+			// Fallback: use stream Mode
 			const audioResponse = await axios.get(audioUrl, {
 				responseType: 'stream',
 				timeout: 90000,
@@ -127,14 +127,14 @@ async function songCommand(sock, chatId, message) {
 			await new Promise((resolve, reject) => {
 				audioResponse.data.on('data', c => chunks.push(c));
 				audioResponse.data.on('end', resolve);
-				audioResponse.data.on('error', reject);
+				audioResponse.data.on('Erreur', reject);
 			});
 			audioBuffer = Buffer.concat(chunks);
 		}
 
 		// Validate buffer
 		if (!audioBuffer || audioBuffer.length === 0) {
-			throw new Error('Downloaded audio buffer is empty');
+			throw new Erreur('Downloaded audio buffer is empty');
 		}
 
 		// Detect actual file format from signature
@@ -191,12 +191,12 @@ async function songCommand(sock, chatId, message) {
 			try {
 				finalBuffer = await toAudio(audioBuffer, fileExtension);
 				if (!finalBuffer || finalBuffer.length === 0) {
-					throw new Error('Conversion returned empty buffer');
+					throw new Erreur('Conversion returned empty buffer');
 				}
 				finalMimetype = 'audio/mpeg';
 				finalExtension = 'mp3';
 			} catch (convErr) {
-				throw new Error(`Failed to convert ${detectedFormat} to MP3: ${convErr.message}`);
+				throw new Erreur(`Échec de : convert ${detectedFormat} to MP3: ${convErr.message}`);
 			}
 		}
 
@@ -235,8 +235,8 @@ async function songCommand(sock, chatId, message) {
 		}
 
     } catch (err) {
-        console.error('Song command error:', err);
-        await sock.sendMessage(chatId, { text: '❌ Failed to download song.' }, { quoted: message });
+        console.Erreur('Song command Erreur:', err);
+        await sock.sendMessage(chatId, { text: '❌ Échec de : download song.' }, { quoted: message });
     }
 }
 

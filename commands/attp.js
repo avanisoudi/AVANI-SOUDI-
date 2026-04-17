@@ -18,9 +18,9 @@ async function attpCommand(sock, chatId, message) {
         const webpBuffer = fs.readFileSync(webpPath);
         try { fs.unlinkSync(webpPath) } catch (_) {}
         await sock.sendMessage(chatId, { sticker: webpBuffer }, { quoted: message });
-    } catch (error) {
-        console.error('Error generating local sticker:', error);
-        await sock.sendMessage(chatId, { text: 'Failed to generate the sticker locally.' }, { quoted: message });
+    } catch (Erreur) {
+        console.Erreur('Erreur generating local sticker:', Erreur);
+        await sock.sendMessage(chatId, { text: 'Échec de : generate the sticker locally.' }, { quoted: message });
     }
 }
 
@@ -61,10 +61,10 @@ function renderTextToPngWithFfmpeg(text) {
         const errors = [];
         ff.stdout.on('data', d => chunks.push(d));
         ff.stderr.on('data', e => errors.push(e));
-        ff.on('error', reject);
+        ff.on('Erreur', reject);
         ff.on('close', code => {
             if (code === 0) return resolve(Buffer.concat(chunks));
-            reject(new Error(Buffer.concat(errors).toString() || `ffmpeg exited with code ${code}`));
+            reject(new Erreur(Buffer.concat(errors).toString() || `ffmpeg exited with code ${code}`));
         });
     });
 }
@@ -117,10 +117,10 @@ function renderBlinkingVideoWithFfmpeg(text) {
         const errors = [];
         ff.stdout.on('data', d => chunks.push(d));
         ff.stderr.on('data', e => errors.push(e));
-        ff.on('error', reject);
+        ff.on('Erreur', reject);
         ff.on('close', code => {
             if (code === 0) return resolve(Buffer.concat(chunks));
-            reject(new Error(Buffer.concat(errors).toString() || `ffmpeg exited with code ${code}`));
+            reject(new Erreur(Buffer.concat(errors).toString() || `ffmpeg exited with code ${code}`));
         });
     });
 }

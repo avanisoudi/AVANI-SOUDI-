@@ -13,7 +13,7 @@ const configPath = path.join(__dirname, '..', 'data', 'autoread.json');
 // Initialize configuration file if it doesn't exist
 function initConfig() {
     if (!fs.existsSync(configPath)) {
-        fs.writeFileSync(configPath, JSON.stringify({ enabled: false }, null, 2));
+        fs.writeFileSync(configPath, JSON.stringify({ activé: false }, null, 2));
     }
     return JSON.parse(fs.readFileSync(configPath));
 }
@@ -26,13 +26,13 @@ async function autoreadCommand(sock, chatId, message) {
         
         if (!message.key.fromMe && !isOwner) {
             await sock.sendMessage(chatId, {
-                text: '❌ This command is only available for the owner!',
+                text: '❌ This command is only available for the Propriétaire!',
                 contextInfo: {
                     forwardingScore: 1,
                     isForwarded: true,
                     forwardedNewsletterMessageInfo: {
                         newsletterJid: '120363161513685998@newsletter',
-                        newsletterName: 'KnightBot MD',
+                        newsletterName: 'Knight Bot',
                         serverMessageId: -1
                     }
                 }
@@ -52,18 +52,18 @@ async function autoreadCommand(sock, chatId, message) {
         if (args.length > 0) {
             const action = args[0].toLowerCase();
             if (action === 'on' || action === 'enable') {
-                config.enabled = true;
+                config.activé = true;
             } else if (action === 'off' || action === 'disable') {
-                config.enabled = false;
+                config.activé = false;
             } else {
                 await sock.sendMessage(chatId, {
-                    text: '❌ Invalid option! Use: .autoread on/off',
+                    text: '❌ Invalide option! Use: .autoread on/off',
                     contextInfo: {
                         forwardingScore: 1,
                         isForwarded: true,
                         forwardedNewsletterMessageInfo: {
                             newsletterJid: '120363161513685998@newsletter',
-                            newsletterName: 'KnightBot MD',
+                            newsletterName: 'Knight Bot',
                             serverMessageId: -1
                         }
                     }
@@ -72,7 +72,7 @@ async function autoreadCommand(sock, chatId, message) {
             }
         } else {
             // Toggle current state
-            config.enabled = !config.enabled;
+            config.activé = !config.activé;
         }
         
         // Save updated configuration
@@ -80,28 +80,28 @@ async function autoreadCommand(sock, chatId, message) {
         
         // Send confirmation message
         await sock.sendMessage(chatId, {
-            text: `✅ Auto-read has been ${config.enabled ? 'enabled' : 'disabled'}!`,
+            text: `✅ Auto-read has been ${config.activé ? 'activé' : 'désactivé'}!`,
             contextInfo: {
                 forwardingScore: 1,
                 isForwarded: true,
                 forwardedNewsletterMessageInfo: {
                     newsletterJid: '120363161513685998@newsletter',
-                    newsletterName: 'KnightBot MD',
+                    newsletterName: 'Knight Bot',
                     serverMessageId: -1
                 }
             }
         });
         
-    } catch (error) {
-        console.error('Error in autoread command:', error);
+    } catch (Erreur) {
+        console.Erreur('Erreur in autoread command:', Erreur);
         await sock.sendMessage(chatId, {
-            text: '❌ Error processing command!',
+            text: '❌ Erreur processing command!',
             contextInfo: {
                 forwardingScore: 1,
                 isForwarded: true,
                 forwardedNewsletterMessageInfo: {
                     newsletterJid: '120363161513685998@newsletter',
-                    newsletterName: 'KnightBot MD',
+                    newsletterName: 'Knight Bot',
                     serverMessageId: -1
                 }
             }
@@ -109,13 +109,13 @@ async function autoreadCommand(sock, chatId, message) {
     }
 }
 
-// Function to check if autoread is enabled
+// Function to check if autoread is activé
 function isAutoreadEnabled() {
     try {
         const config = initConfig();
-        return config.enabled;
-    } catch (error) {
-        console.error('Error checking autoread status:', error);
+        return config.activé;
+    } catch (Erreur) {
+        console.Erreur('Erreur checking autoread Statut:', Erreur);
         return false;
     }
 }
@@ -187,7 +187,7 @@ async function handleAutoread(sock, message) {
             return true; // Indicates message was marked as read
         }
     }
-    return false; // Autoread is disabled
+    return false; // Autoread is désactivé
 }
 
 module.exports = {

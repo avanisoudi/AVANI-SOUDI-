@@ -4,7 +4,7 @@ const isAdminHelper = require('../lib/isAdmin');
 async function antibadwordCommand(sock, chatId, message, senderId, isSenderAdmin) {
     try {
         if (!isSenderAdmin) {
-            await sock.sendMessage(chatId, { text: '```For Group Admins Only!```' }, { quoted: message });
+            await sock.sendMessage(chatId, { text: '```For Groupe Admins Only!```' }, { quoted: message });
             return;
         }
 
@@ -14,9 +14,9 @@ async function antibadwordCommand(sock, chatId, message, senderId, isSenderAdmin
         const match = text.split(' ').slice(1).join(' ');
 
         await handleAntiBadwordCommand(sock, chatId, message, match);
-    } catch (error) {
-        console.error('Error in antibadword command:', error);
-        await sock.sendMessage(chatId, { text: '*Error processing antibadword command*' }, { quoted: message });
+    } catch (Erreur) {
+        console.Erreur('Erreur in antibadword command:', Erreur);
+        await sock.sendMessage(chatId, { text: '*Erreur processing antibadword command*' }, { quoted: message });
     }
 }
 

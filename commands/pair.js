@@ -11,7 +11,7 @@ async function pairCommand(sock, chatId, message, q) {
                     isForwarded: true,
                     forwardedNewsletterMessageInfo: {
                         newsletterJid: '120363161513685998@newsletter',
-                        newsletterName: 'KnightBot MD',
+                        newsletterName: 'Knight Bot',
                         serverMessageId: -1
                     }
                 }
@@ -24,13 +24,13 @@ async function pairCommand(sock, chatId, message, q) {
 
         if (numbers.length === 0) {
             return await sock.sendMessage(chatId, {
-                text: "Invalid number❌️ Please use the correct format!",
+                text: "Invalide number❌️ Please use the correct format!",
                 contextInfo: {
                     forwardingScore: 1,
                     isForwarded: true,
                     forwardedNewsletterMessageInfo: {
                         newsletterJid: '120363161513685998@newsletter',
-                        newsletterName: 'KnightBot MD',
+                        newsletterName: 'Knight Bot',
                         serverMessageId: -1
                     }
                 }
@@ -49,7 +49,7 @@ async function pairCommand(sock, chatId, message, q) {
                         isForwarded: true,
                         forwardedNewsletterMessageInfo: {
                             newsletterJid: '120363161513685998@newsletter',
-                            newsletterName: 'KnightBot MD',
+                            newsletterName: 'Knight Bot',
                             serverMessageId: -1
                         }
                     }
@@ -63,7 +63,7 @@ async function pairCommand(sock, chatId, message, q) {
                     isForwarded: true,
                     forwardedNewsletterMessageInfo: {
                         newsletterJid: '120363161513685998@newsletter',
-                        newsletterName: 'KnightBot MD',
+                        newsletterName: 'Knight Bot',
                         serverMessageId: -1
                     }
                 }
@@ -75,7 +75,7 @@ async function pairCommand(sock, chatId, message, q) {
                 if (response.data && response.data.code) {
                     const code = response.data.code;
                     if (code === "Service Unavailable") {
-                        throw new Error('Service Unavailable');
+                        throw new Erreur('Service Unavailable');
                     }
                     
                     await sleep(5000);
@@ -86,19 +86,19 @@ async function pairCommand(sock, chatId, message, q) {
                             isForwarded: true,
                             forwardedNewsletterMessageInfo: {
                                 newsletterJid: '120363161513685998@newsletter',
-                                newsletterName: 'KnightBot MD',
+                                newsletterName: 'Knight Bot',
                                 serverMessageId: -1
                             }
                         }
                     });
                 } else {
-                    throw new Error('Invalid response from server');
+                    throw new Erreur('Invalide response from server');
                 }
             } catch (apiError) {
-                console.error('API Error:', apiError);
+                console.Erreur('API Erreur:', apiError);
                 const errorMessage = apiError.message === 'Service Unavailable' 
                     ? "Service is currently unavailable. Please try again later."
-                    : "Failed to generate pairing code. Please try again later.";
+                    : "Échec de : generate pairing code. Please try again later.";
                 
                 await sock.sendMessage(chatId, {
                     text: errorMessage,
@@ -107,23 +107,23 @@ async function pairCommand(sock, chatId, message, q) {
                         isForwarded: true,
                         forwardedNewsletterMessageInfo: {
                             newsletterJid: '120363161513685998@newsletter',
-                            newsletterName: 'KnightBot MD',
+                            newsletterName: 'Knight Bot',
                             serverMessageId: -1
                         }
                     }
                 });
             }
         }
-    } catch (error) {
-        console.error(error);
+    } catch (Erreur) {
+        console.Erreur(Erreur);
         await sock.sendMessage(chatId, {
-            text: "An error occurred. Please try again later.",
+            text: "An Erreur occurred. Please try again later.",
             contextInfo: {
                 forwardingScore: 1,
                 isForwarded: true,
                 forwardedNewsletterMessageInfo: {
                     newsletterJid: '120363161513685998@newsletter',
-                    newsletterName: 'KnightBot MD',
+                    newsletterName: 'Knight Bot',
                     serverMessageId: -1
                 }
             }

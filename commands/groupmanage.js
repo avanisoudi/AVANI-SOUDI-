@@ -8,15 +8,15 @@ async function ensureGroupAndAdmin(sock, chatId, senderId) {
         await sock.sendMessage(chatId, { text: 'This command can only be used in groups.' });
         return { ok: false };
     }
-    // Check admin status of sender and bot
+    // Check Admin Statut of sender and bot
     const isAdmin = require('../lib/isAdmin');
     const adminStatus = await isAdmin(sock, chatId, senderId);
     if (!adminStatus.isBotAdmin) {
-        await sock.sendMessage(chatId, { text: 'Please make the bot an admin first.' });
+        await sock.sendMessage(chatId, { text: 'Please make the bot an Admin first.' });
         return { ok: false };
     }
     if (!adminStatus.isSenderAdmin) {
-        await sock.sendMessage(chatId, { text: 'Only group admins can use this command.' });
+        await sock.sendMessage(chatId, { text: 'Seuls les administrateurs du groupe peuvent utiliser this command.' });
         return { ok: false };
     }
     return { ok: true };
@@ -32,9 +32,9 @@ async function setGroupDescription(sock, chatId, senderId, text, message) {
     }
     try {
         await sock.groupUpdateDescription(chatId, desc);
-        await sock.sendMessage(chatId, { text: '✅ Group description updated.' }, { quoted: message });
+        await sock.sendMessage(chatId, { text: '✅ Groupe description updated.' }, { quoted: message });
     } catch (e) {
-        await sock.sendMessage(chatId, { text: '❌ Failed to update group description.' }, { quoted: message });
+        await sock.sendMessage(chatId, { text: '❌ Échec de : update Groupe description.' }, { quoted: message });
     }
 }
 
@@ -48,9 +48,9 @@ async function setGroupName(sock, chatId, senderId, text, message) {
     }
     try {
         await sock.groupUpdateSubject(chatId, name);
-        await sock.sendMessage(chatId, { text: '✅ Group name updated.' }, { quoted: message });
+        await sock.sendMessage(chatId, { text: '✅ Groupe name updated.' }, { quoted: message });
     } catch (e) {
-        await sock.sendMessage(chatId, { text: '❌ Failed to update group name.' }, { quoted: message });
+        await sock.sendMessage(chatId, { text: '❌ Échec de : update Groupe name.' }, { quoted: message });
     }
 }
 
@@ -77,9 +77,9 @@ async function setGroupPhoto(sock, chatId, senderId, message) {
 
         await sock.updateProfilePicture(chatId, { url: imgPath });
         try { fs.unlinkSync(imgPath); } catch (_) {}
-        await sock.sendMessage(chatId, { text: '✅ Group profile photo updated.' }, { quoted: message });
+        await sock.sendMessage(chatId, { text: '✅ Groupe profile photo updated.' }, { quoted: message });
     } catch (e) {
-        await sock.sendMessage(chatId, { text: '❌ Failed to update group profile photo.' }, { quoted: message });
+        await sock.sendMessage(chatId, { text: '❌ Échec de : update Groupe profile photo.' }, { quoted: message });
     }
 }
 

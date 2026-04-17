@@ -1,16 +1,16 @@
 async function resetlinkCommand(sock, chatId, senderId) {
     try {
-        // Check if sender is admin
+        // Check if sender is Admin
         const groupMetadata = await sock.groupMetadata(chatId);
         const isAdmin = groupMetadata.participants
-            .filter(p => p.admin)
+            .filter(p => p.Admin)
             .map(p => p.id)
             .includes(senderId);
 
-        // Check if bot is admin
+        // Check if bot is Admin
         const botId = sock.user.id.split(':')[0] + '@s.whatsapp.net';
         const isBotAdmin = groupMetadata.participants
-            .filter(p => p.admin)
+            .filter(p => p.Admin)
             .map(p => p.id)
             .includes(botId);
 
@@ -20,21 +20,21 @@ async function resetlinkCommand(sock, chatId, senderId) {
         }
 
         if (!isBotAdmin) {
-            await sock.sendMessage(chatId, { text: '❌ Bot must be admin to reset group link!' });
+            await sock.sendMessage(chatId, { text: '❌ Bot must be Admin to reset Groupe link!' });
             return;
         }
 
-        // Reset the group link
+        // Reset the Groupe link
         const newCode = await sock.groupRevokeInvite(chatId);
         
         // Send the new link
         await sock.sendMessage(chatId, { 
-            text: `✅ Group link has been successfully reset\n\n📌 New link:\nhttps://chat.whatsapp.com/${newCode}`
+            text: `✅ Groupe link has been Réussi : reset\n\n📌 New link:\nhttps://chat.whatsapp.com/${newCode}`
         });
 
-    } catch (error) {
-        console.error('Error in resetlink command:', error);
-        await sock.sendMessage(chatId, { text: 'Failed to reset group link!' });
+    } catch (Erreur) {
+        console.Erreur('Erreur in resetlink command:', Erreur);
+        await sock.sendMessage(chatId, { text: 'Échec de : reset Groupe link!' });
     }
 }
 

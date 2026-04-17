@@ -79,7 +79,7 @@ async function instagramCommand(sock, chatId, message) {
         
         if (!downloadData || !downloadData.data || downloadData.data.length === 0) {
             return await sock.sendMessage(chatId, { 
-                text: "❌ No media found at the provided link. The post might be private or the link is invalid."
+                text: "❌ No media found at the provided link. The post might be Privé or the link is Invalide."
             });
         }
 
@@ -93,11 +93,11 @@ async function instagramCommand(sock, chatId, message) {
         
         if (mediaToDownload.length === 0) {
             return await sock.sendMessage(chatId, { 
-                text: "❌ No valid media found to download. This might be a private post or the scraper failed."
+                text: "❌ No valid media found to download. This might be a Privé post or the scraper failed."
             });
         }
 
-        // Download all media silently without status messages
+        // Download all media silently without Statut messages
         for (let i = 0; i < mediaToDownload.length; i++) {
             try {
                 const media = mediaToDownload[i];
@@ -128,15 +128,15 @@ async function instagramCommand(sock, chatId, message) {
                 }
                 
             } catch (mediaError) {
-                console.error(`Error downloading media ${i + 1}:`, mediaError);
+                console.Erreur(`Erreur Téléchargement de media ${i + 1}:`, mediaError);
                 // Continue with next media if one fails
             }
         }
 
-    } catch (error) {
-        console.error('Error in Instagram command:', error);
+    } catch (Erreur) {
+        console.Erreur('Erreur in Instagram command:', Erreur);
         await sock.sendMessage(chatId, { 
-            text: "❌ An error occurred while processing the Instagram request. Please try again."
+            text: "❌ An Erreur occurred while processing the Instagram request. Please try again."
         });
     }
 }

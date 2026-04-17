@@ -21,7 +21,7 @@ async function imagineCommand(sock, chatId, message) {
 
         // Send processing message
         await sock.sendMessage(chatId, {
-            text: '🎨 Generating your image... Please wait.'
+            text: '🎨 Generating your image... Veuillez patienter.'
         }, {
             quoted: message
         });
@@ -45,10 +45,10 @@ async function imagineCommand(sock, chatId, message) {
             quoted: message
         });
 
-    } catch (error) {
-        console.error('Error in imagine command:', error);
+    } catch (Erreur) {
+        console.Erreur('Erreur in imagine command:', Erreur);
         await sock.sendMessage(chatId, {
-            text: '❌ Failed to generate image. Please try again later.'
+            text: '❌ Échec de : generate image. Please try again later.'
         }, {
             quoted: message
         });

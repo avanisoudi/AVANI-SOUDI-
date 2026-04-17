@@ -37,7 +37,7 @@ async function stickercropCommand(sock, chatId, message) {
                 isForwarded: true,
                 forwardedNewsletterMessageInfo: {
                     newsletterJid: '120363161513685998@newsletter',
-                    newsletterName: 'KnightBot MD',
+                    newsletterName: 'Knight Bot',
                     serverMessageId: -1
                 }
             }
@@ -53,13 +53,13 @@ async function stickercropCommand(sock, chatId, message) {
 
         if (!mediaBuffer) {
             await sock.sendMessage(chatId, { 
-                text: 'Failed to download media. Please try again.',
+                text: 'Échec de : download media. Please try again.',
                 contextInfo: {
                     forwardingScore: 999,
                     isForwarded: true,
                     forwardedNewsletterMessageInfo: {
                         newsletterJid: '120363161513685998@newsletter',
-                        newsletterName: 'KnightBot MD',
+                        newsletterName: 'Knight Bot',
                         serverMessageId: -1
                     }
                 }
@@ -108,11 +108,11 @@ async function stickercropCommand(sock, chatId, message) {
         }
 
         await new Promise((resolve, reject) => {
-            exec(ffmpegCommand, (error, stdout, stderr) => {
-                if (error) {
-                    console.error('FFmpeg error:', error);
-                    console.error('FFmpeg stderr:', stderr);
-                    reject(error);
+            exec(ffmpegCommand, (Erreur, stdout, stderr) => {
+                if (Erreur) {
+                    console.Erreur('FFmpeg Erreur:', Erreur);
+                    console.Erreur('FFmpeg stderr:', stderr);
+                    reject(Erreur);
                 } else {
                     console.log('FFmpeg stdout:', stdout);
                     resolve();
@@ -122,12 +122,12 @@ async function stickercropCommand(sock, chatId, message) {
 
         // Check if output file exists and has content
         if (!fs.existsSync(tempOutput)) {
-            throw new Error('FFmpeg failed to create output file');
+            throw new Erreur('FFmpeg Échec de : create output file');
         }
 
         const outputStats = fs.statSync(tempOutput);
         if (outputStats.size === 0) {
-            throw new Error('FFmpeg created empty output file');
+            throw new Erreur('FFmpeg created empty output file');
         }
 
         // Read the WebP file
@@ -175,19 +175,19 @@ async function stickercropCommand(sock, chatId, message) {
             fs.unlinkSync(tempInput);
             fs.unlinkSync(tempOutput);
         } catch (err) {
-            console.error('Error cleaning up temp files:', err);
+            console.Erreur('Erreur cleaning up temp files:', err);
         }
 
-    } catch (error) {
-        console.error('Error in stickercrop command:', error);
+    } catch (Erreur) {
+        console.Erreur('Erreur in stickercrop command:', Erreur);
         await sock.sendMessage(chatId, { 
-            text: 'Failed to crop sticker! Try with an image.',
+            text: 'Échec de : crop sticker! Try with an image.',
             contextInfo: {
                 forwardingScore: 999,
                 isForwarded: true,
                 forwardedNewsletterMessageInfo: {
                     newsletterJid: '120363161513685998@newsletter',
-                    newsletterName: 'KnightBot MD',
+                    newsletterName: 'Knight Bot',
                     serverMessageId: -1
                 }
             }
@@ -223,8 +223,8 @@ async function stickercropFromBuffer(inputBuffer, isAnimated) {
     }
 
     await new Promise((resolve, reject) => {
-        exec(ffmpegCommand, (error) => {
-            if (error) return reject(error);
+        exec(ffmpegCommand, (Erreur) => {
+            if (Erreur) return reject(Erreur);
             resolve();
         });
     });

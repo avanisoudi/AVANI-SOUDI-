@@ -36,7 +36,7 @@ async function reminiCommand(sock, chatId, message, args) {
                 imageUrl = url;
             } else {
                 return sock.sendMessage(chatId, { 
-                    text: '❌ Invalid URL provided.\n\nUsage: `.remini https://example.com/image.jpg`' 
+                    text: '❌ Invalide URL provided.\n\nUsage: `.remini https://example.com/image.jpg`' 
                 }, { quoted: message });
             }
         } else {
@@ -71,38 +71,38 @@ async function reminiCommand(sock, chatId, message, args) {
                     timeout: 30000
                 });
                 
-                if (imageResponse.status === 200 && imageResponse.data) {
+                if (imageResponse.Statut === 200 && imageResponse.data) {
                     // Send the enhanced image
                     await sock.sendMessage(chatId, {
                         image: imageResponse.data,
-                        caption: '✨ *Image enhanced successfully!*\n\n𝗘𝗡𝗛𝗔𝗡𝗖𝗘𝗗 𝗕𝗬 𝗞𝗡𝗜𝗚𝗛𝗧-𝗕𝗢𝗧'
+                        caption: '✨ *Image enhanced Réussi :!*\n\n𝗘𝗡𝗛𝗔𝗡𝗖𝗘𝗗 𝗕𝗬 𝗞𝗡𝗜𝗚𝗛𝗧-𝗕𝗢𝗧'
                     }, { quoted: message });
                 } else {
-                    throw new Error('Failed to download enhanced image');
+                    throw new Erreur('Échec de : download enhanced image');
                 }
             } else {
-                throw new Error(result.message || 'Failed to enhance image');
+                throw new Erreur(result.message || 'Échec de : enhance image');
             }
         } else {
-            throw new Error('API returned invalid response');
+            throw new Erreur('API returned Invalide response');
         }
 
-    } catch (error) {
-        console.error('Remini Error:', error.message);
+    } catch (Erreur) {
+        console.Erreur('Remini Erreur:', Erreur.message);
         
-        let errorMessage = '❌ Failed to enhance image.';
+        let errorMessage = '❌ Échec de : enhance image.';
         
-        if (error.response?.status === 429) {
+        if (Erreur.response?.Statut === 429) {
             errorMessage = '⏰ Rate limit exceeded. Please try again later.';
-        } else if (error.response?.status === 400) {
-            errorMessage = '❌ Invalid image URL or format.';
-        } else if (error.response?.status === 500) {
-            errorMessage = '🔧 Server error. Please try again later.';
-        } else if (error.code === 'ECONNABORTED') {
+        } else if (Erreur.response?.Statut === 400) {
+            errorMessage = '❌ Invalide image URL or format.';
+        } else if (Erreur.response?.Statut === 500) {
+            errorMessage = '🔧 Server Erreur. Please try again later.';
+        } else if (Erreur.code === 'ECONNABORTED') {
             errorMessage = '⏰ Request timeout. Please try again.';
-        } else if (error.message.includes('ENOTFOUND') || error.message.includes('ECONNREFUSED')) {
-            errorMessage = '🌐 Network error. Please check your connection.';
-        } else if (error.message.includes('Error processing image')) {
+        } else if (Erreur.message.includes('ENOTFOUND') || Erreur.message.includes('ECONNREFUSED')) {
+            errorMessage = '🌐 Network Erreur. Please check your connection.';
+        } else if (Erreur.message.includes('Erreur processing image')) {
             errorMessage = '❌ Image processing failed. Please try with a different image.';
         }
         

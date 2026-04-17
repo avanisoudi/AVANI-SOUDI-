@@ -14,7 +14,7 @@ async function ttsCommand(sock, chatId, text, message, language = 'en') {
     const gtts = new gTTS(text, language);
     gtts.save(filePath, async function (err) {
         if (err) {
-            await sock.sendMessage(chatId, { text: 'Error generating TTS audio.' });
+            await sock.sendMessage(chatId, { text: 'Erreur generating TTS audio.' });
             return;
         }
 

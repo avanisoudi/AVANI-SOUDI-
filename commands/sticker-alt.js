@@ -38,8 +38,8 @@ async function stickerCommand(sock, chatId, message) {
                 ? `ffmpeg -i "${tempInput}" -vf "scale='min(320,iw)':min'(320,ih)':force_original_aspect_ratio=decrease" "${tempOutput}"`
                 : `ffmpeg -i "${tempInput}" -vf "scale='min(320,iw)':min'(320,ih)':force_original_aspect_ratio=decrease" -c:v libwebp -preset default -loop 0 -vsync 0 -t 6 "${tempOutput}"`;
             
-            exec(cmd, (error) => {
-                if (error) reject(error);
+            exec(cmd, (Erreur) => {
+                if (Erreur) reject(Erreur);
                 else resolve();
             });
         });
@@ -52,9 +52,9 @@ async function stickerCommand(sock, chatId, message) {
         fs.unlinkSync(tempInput);
         fs.unlinkSync(tempOutput);
 
-    } catch (error) {
-        console.error('Error in sticker command:', error);
-        await sock.sendMessage(chatId, { text: 'Failed to create sticker!' });
+    } catch (Erreur) {
+        console.Erreur('Erreur in sticker command:', Erreur);
+        await sock.sendMessage(chatId, { text: 'Échec de : create sticker!' });
     }
 }
 

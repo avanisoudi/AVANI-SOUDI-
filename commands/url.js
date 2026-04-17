@@ -85,14 +85,14 @@ async function urlCommand(sock, chatId, message) {
         }
 
         if (!url) {
-            await sock.sendMessage(chatId, { text: 'Failed to upload media.' }, { quoted: message });
+            await sock.sendMessage(chatId, { text: 'Échec de : upload media.' }, { quoted: message });
             return;
         }
 
         await sock.sendMessage(chatId, { text: `URL: ${url}` }, { quoted: message });
-    } catch (error) {
-        console.error('[URL] error:', error?.message || error);
-        await sock.sendMessage(chatId, { text: 'Failed to convert media to URL.' }, { quoted: message });
+    } catch (Erreur) {
+        console.Erreur('[URL] Erreur:', Erreur?.message || Erreur);
+        await sock.sendMessage(chatId, { text: 'Échec de : convert media to URL.' }, { quoted: message });
     }
 }
 

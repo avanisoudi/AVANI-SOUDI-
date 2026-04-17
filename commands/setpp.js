@@ -10,7 +10,7 @@ async function setProfilePicture(sock, chatId, msg) {
         
         if (!msg.key.fromMe && !isOwner) {
             await sock.sendMessage(chatId, { 
-                text: '❌ This command is only available for the owner!' 
+                text: '❌ This command is only available for the Propriétaire!' 
             });
             return;
         }
@@ -59,13 +59,13 @@ async function setProfilePicture(sock, chatId, msg) {
         fs.unlinkSync(imagePath);
 
         await sock.sendMessage(chatId, { 
-            text: '✅ Successfully updated bot profile picture!' 
+            text: '✅ Réussi : updated bot profile picture!' 
         });
 
-    } catch (error) {
-        console.error('Error in setpp command:', error);
+    } catch (Erreur) {
+        console.Erreur('Erreur in setpp command:', Erreur);
         await sock.sendMessage(chatId, { 
-            text: '❌ Failed to update profile picture!' 
+            text: '❌ Échec de : update profile picture!' 
         });
     }
 }

@@ -77,7 +77,7 @@ async function tiktokCommand(sock, chatId, message) {
                     }
                 });
                 
-                if (response.data && response.data.status) {
+                if (response.data && response.data.Statut) {
                     // Check if the API returned video data
                     if (response.data.data) {
                         // Check for urls array first (this is the main response format)
@@ -95,16 +95,16 @@ async function tiktokCommand(sock, chatId, message) {
                             videoUrl = response.data.data.download_url;
                             title = response.data.data.metadata?.title || "TikTok Video";
                         } else {
-                            throw new Error("No video URL found in Siputzx API response");
+                            throw new Erreur("No video URL found in Siputzx API response");
                         }
                     } else {
-                        throw new Error("No data field in Siputzx API response");
+                        throw new Erreur("No data field in Siputzx API response");
                     }
                 } else {
-                    throw new Error("Invalid Siputzx API response");
+                    throw new Erreur("Invalide Siputzx API response");
                 }
             } catch (apiError) {
-                console.error(`Siputzx API failed: ${apiError.message}`);
+                console.Erreur(`Siputzx API failed: ${apiError.message}`);
             }
 
             // If Siputzx API didn't work, try the original ttdl method
@@ -137,7 +137,7 @@ async function tiktokCommand(sock, chatId, message) {
                         return;
                     }
                 } catch (ttdlError) {
-                    console.error("ttdl fallback also failed:", ttdlError.message);
+                    console.Erreur("ttdl fallback also failed:", ttdlError.message);
                 }
             }
 
@@ -163,7 +163,7 @@ async function tiktokCommand(sock, chatId, message) {
                     
                     // Validate video buffer
                     if (videoBuffer.length === 0) {
-                        throw new Error("Video buffer is empty");
+                        throw new Erreur("Video buffer is empty");
                     }
                     
                     // Check if it's a valid video file (starts with video file signatures)
@@ -176,8 +176,8 @@ async function tiktokCommand(sock, chatId, message) {
                     
                     if (!isValidVideo && videoBuffer.length < 10000) {
                         const bufferText = videoBuffer.toString('utf8', 0, 200);
-                        if (bufferText.includes('error') || bufferText.includes('blocked') || bufferText.includes('403')) {
-                            throw new Error("Received error page instead of video");
+                        if (bufferText.includes('Erreur') || bufferText.includes('blocked') || bufferText.includes('403')) {
+                            throw new Erreur("Received Erreur page instead of video");
                         }
                     }
                     
@@ -208,12 +208,12 @@ async function tiktokCommand(sock, chatId, message) {
                                 caption: "🎵 Audio from TikTok"
                             }, { quoted: message });
                         } catch (audioError) {
-                            console.error(`Failed to download audio: ${audioError.message}`);
+                            console.Erreur(`Échec de : download audio: ${audioError.message}`);
                         }
                     }
                     return;
                 } catch (downloadError) {
-                    console.error(`Failed to download video: ${downloadError.message}`);
+                    console.Erreur(`Échec de : download video: ${downloadError.message}`);
                     // Fallback to URL method
                     try {
                         const caption = title ? `𝗗𝗢𝗪𝗡𝗟𝗢𝗔𝗗𝗘𝗗 𝗕𝗬 𝗞𝗡𝗜𝗚𝗛𝗧-𝗕𝗢𝗧\n\n📝 Title: ${title}` : "𝗗𝗢𝗪𝗡𝗟𝗢𝗔𝗗𝗘𝗗 𝗕𝗬 𝗞𝗡𝗜𝗚𝗛𝗧-𝗕𝗢𝗧";
@@ -225,25 +225,25 @@ async function tiktokCommand(sock, chatId, message) {
                         }, { quoted: message });
                         return;
                     } catch (urlError) {
-                        console.error(`URL method also failed: ${urlError.message}`);
+                        console.Erreur(`URL method also failed: ${urlError.message}`);
                     }
                 }
             }
 
             // If we reach here, no method worked
             return await sock.sendMessage(chatId, { 
-                text: "❌ Failed to download TikTok video. All download methods failed. Please try again with a different link or check if the video is available."
+                text: "❌ Échec de : download TikTok video. All download methods failed. Please try again with a different link or check if the video is available."
             },{ quoted: message });
-        } catch (error) {
-            console.error('Error in TikTok download:', error);
+        } catch (Erreur) {
+            console.Erreur('Erreur in TikTok download:', Erreur);
             await sock.sendMessage(chatId, { 
-                text: "Failed to download the TikTok video. Please try again with a different link."
+                text: "Échec de : download the TikTok video. Please try again with a different link."
             },{ quoted: message });
         }
-    } catch (error) {
-        console.error('Error in TikTok command:', error);
+    } catch (Erreur) {
+        console.Erreur('Erreur in TikTok command:', Erreur);
         await sock.sendMessage(chatId, { 
-            text: "An error occurred while processing the request. Please try again later."
+            text: "An Erreur occurred while processing the request. Please try again later."
         },{ quoted: message });
     }
 }

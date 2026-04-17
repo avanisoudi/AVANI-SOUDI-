@@ -37,7 +37,7 @@ async function stickerCommand(sock, chatId, message) {
                 isForwarded: true,
                 forwardedNewsletterMessageInfo: {
                     newsletterJid: '120363161513685998@newsletter',
-                    newsletterName: 'KnightBot MD',
+                    newsletterName: 'Knight Bot',
                     serverMessageId: -1
                 }
             }
@@ -53,13 +53,13 @@ async function stickerCommand(sock, chatId, message) {
 
         if (!mediaBuffer) {
             await sock.sendMessage(chatId, { 
-                text: 'Failed to download media. Please try again.',
+                text: 'Échec de : download media. Please try again.',
                 contextInfo: {
                     forwardingScore: 999,
                     isForwarded: true,
                     forwardedNewsletterMessageInfo: {
                         newsletterJid: '120363161513685998@newsletter',
-                        newsletterName: 'KnightBot MD',
+                        newsletterName: 'Knight Bot',
                         serverMessageId: -1
                     }
                 }
@@ -91,10 +91,10 @@ async function stickerCommand(sock, chatId, message) {
             : `ffmpeg -i "${tempInput}" -vf "scale=512:512:force_original_aspect_ratio=decrease,format=rgba,pad=512:512:(ow-iw)/2:(oh-ih)/2:color=#00000000" -c:v libwebp -preset default -loop 0 -vsync 0 -pix_fmt yuva420p -quality 75 -compression_level 6 "${tempOutput}"`;
 
         await new Promise((resolve, reject) => {
-            exec(ffmpegCommand, (error) => {
-                if (error) {
-                    console.error('FFmpeg error:', error);
-                    reject(error);
+            exec(ffmpegCommand, (Erreur) => {
+                if (Erreur) {
+                    console.Erreur('FFmpeg Erreur:', Erreur);
+                    reject(Erreur);
                 } else resolve();
             });
         });
@@ -113,7 +113,7 @@ async function stickerCommand(sock, chatId, message) {
                     ? `ffmpeg -y -i "${tempInput}" -t 2 -vf "scale=512:512:force_original_aspect_ratio=decrease,fps=8,pad=512:512:(ow-iw)/2:(oh-ih)/2:color=#00000000" -c:v libwebp -preset default -loop 0 -vsync 0 -pix_fmt yuva420p -quality 30 -compression_level 6 -b:v 100k -max_muxing_queue_size 1024 "${tempOutput2}"`
                     : `ffmpeg -y -i "${tempInput}" -t 3 -vf "scale=512:512:force_original_aspect_ratio=decrease,fps=12,pad=512:512:(ow-iw)/2:(oh-ih)/2:color=#00000000" -c:v libwebp -preset default -loop 0 -vsync 0 -pix_fmt yuva420p -quality 45 -compression_level 6 -b:v 150k -max_muxing_queue_size 1024 "${tempOutput2}"`;
                 await new Promise((resolve, reject) => {
-                    exec(fallbackCmd, (error) => error ? reject(error) : resolve());
+                    exec(fallbackCmd, (Erreur) => Erreur ? reject(Erreur) : resolve());
                 });
                 if (fs.existsSync(tempOutput2)) {
                     webpBuffer = fs.readFileSync(tempOutput2);
@@ -135,7 +135,7 @@ async function stickerCommand(sock, chatId, message) {
                     ? `ffmpeg -y -i "${tempInput}" -t 2 -vf "scale=512:512:force_original_aspect_ratio=decrease,fps=8,pad=512:512:(ow-iw)/2:(oh-ih)/2:color=#00000000" -c:v libwebp -preset default -loop 0 -vsync 0 -pix_fmt yuva420p -quality 30 -compression_level 6 -b:v 100k -max_muxing_queue_size 1024 "${tempOutput2}"`
                     : `ffmpeg -y -i "${tempInput}" -t 3 -vf "scale=512:512:force_original_aspect_ratio=decrease,fps=12,pad=512:512:(ow-iw)/2:(oh-ih)/2:color=#00000000" -c:v libwebp -preset default -loop 0 -vsync 0 -pix_fmt yuva420p -quality 45 -compression_level 6 -b:v 150k -max_muxing_queue_size 1024 "${tempOutput2}"`;
                 await new Promise((resolve, reject) => {
-                    exec(fallbackCmd, (error) => error ? reject(error) : resolve());
+                    exec(fallbackCmd, (Erreur) => Erreur ? reject(Erreur) : resolve());
                 });
                 if (fs.existsSync(tempOutput2)) {
                     webpBuffer = fs.readFileSync(tempOutput2);
@@ -173,7 +173,7 @@ async function stickerCommand(sock, chatId, message) {
                 const tempOutput3 = path.join(tmpDir, `sticker_small_${Date.now()}.webp`);
                 const smallCmd = `ffmpeg -y -i "${tempInput}" -t 2 -vf "scale=320:320:force_original_aspect_ratio=decrease,fps=8,pad=320:320:(ow-iw)/2:(oh-ih)/2:color=#00000000" -c:v libwebp -preset default -loop 0 -vsync 0 -pix_fmt yuva420p -quality 30 -compression_level 6 -b:v 80k -max_muxing_queue_size 1024 "${tempOutput3}"`;
                 await new Promise((resolve, reject) => {
-                    exec(smallCmd, (error) => error ? reject(error) : resolve());
+                    exec(smallCmd, (Erreur) => Erreur ? reject(Erreur) : resolve());
                 });
                 if (fs.existsSync(tempOutput3)) {
                     const smallWebp = fs.readFileSync(tempOutput3);
@@ -205,19 +205,19 @@ async function stickerCommand(sock, chatId, message) {
             fs.unlinkSync(tempInput);
             fs.unlinkSync(tempOutput);
         } catch (err) {
-            console.error('Error cleaning up temp files:', err);
+            console.Erreur('Erreur cleaning up temp files:', err);
         }
 
-    } catch (error) {
-        console.error('Error in sticker command:', error);
+    } catch (Erreur) {
+        console.Erreur('Erreur in sticker command:', Erreur);
         await sock.sendMessage(chatId, { 
-            text: 'Failed to create sticker! Try again later.',
+            text: 'Échec de : create sticker! Try again later.',
             contextInfo: {
                 forwardingScore: 999,
                 isForwarded: true,
                 forwardedNewsletterMessageInfo: {
                     newsletterJid: '120363161513685998@newsletter',
-                    newsletterName: 'KnightBot MD',
+                    newsletterName: 'Knight Bot',
                     serverMessageId: -1
                 }
             }

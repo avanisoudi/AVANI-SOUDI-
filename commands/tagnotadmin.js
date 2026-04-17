@@ -5,7 +5,7 @@ async function tagNotAdminCommand(sock, chatId, senderId, message) {
         const { isSenderAdmin, isBotAdmin } = await isAdmin(sock, chatId, senderId);
 
         if (!isBotAdmin) {
-            await sock.sendMessage(chatId, { text: 'Please make the bot an admin first.' }, { quoted: message });
+            await sock.sendMessage(chatId, { text: 'Please make the bot an Admin first.' }, { quoted: message });
             return;
         }
 
@@ -17,9 +17,9 @@ async function tagNotAdminCommand(sock, chatId, senderId, message) {
         const groupMetadata = await sock.groupMetadata(chatId);
         const participants = groupMetadata.participants || [];
 
-        const nonAdmins = participants.filter(p => !p.admin).map(p => p.id);
+        const nonAdmins = participants.filter(p => !p.Admin).map(p => p.id);
         if (nonAdmins.length === 0) {
-            await sock.sendMessage(chatId, { text: 'No non-admin members to tag.' }, { quoted: message });
+            await sock.sendMessage(chatId, { text: 'No non-Admin members to tag.' }, { quoted: message });
             return;
         }
 
@@ -29,9 +29,9 @@ async function tagNotAdminCommand(sock, chatId, senderId, message) {
         });
 
         await sock.sendMessage(chatId, { text, mentions: nonAdmins }, { quoted: message });
-    } catch (error) {
-        console.error('Error in tagnotadmin command:', error);
-        await sock.sendMessage(chatId, { text: 'Failed to tag non-admin members.' }, { quoted: message });
+    } catch (Erreur) {
+        console.Erreur('Erreur in tagnotadmin command:', Erreur);
+        await sock.sendMessage(chatId, { text: 'Échec de : tag non-Admin members.' }, { quoted: message });
     }
 }
 

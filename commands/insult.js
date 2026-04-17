@@ -33,7 +33,7 @@ const insults = [
 async function insultCommand(sock, chatId, message) {
     try {
         if (!message || !chatId) {
-            console.log('Invalid message or chatId:', { message, chatId });
+            console.log('Invalide message or chatId:', { message, chatId });
             return;
         }
 
@@ -64,24 +64,24 @@ async function insultCommand(sock, chatId, message) {
             text: `Hey @${userToInsult.split('@')[0]}, ${insult}`,
             mentions: [userToInsult]
         });
-    } catch (error) {
-        console.error('Error in insult command:', error);
-        if (error.data === 429) {
+    } catch (Erreur) {
+        console.Erreur('Erreur in insult command:', Erreur);
+        if (Erreur.data === 429) {
             await new Promise(resolve => setTimeout(resolve, 2000));
             try {
                 await sock.sendMessage(chatId, { 
                     text: 'Please try again in a few seconds.'
                 });
             } catch (retryError) {
-                console.error('Error sending retry message:', retryError);
+                console.Erreur('Erreur Envoi de retry message:', retryError);
             }
         } else {
             try {
                 await sock.sendMessage(chatId, { 
-                    text: 'An error occurred while sending the insult.'
+                    text: 'An Erreur occurred while Envoi de the insult.'
                 });
             } catch (sendError) {
-                console.error('Error sending error message:', sendError);
+                console.Erreur('Erreur Envoi de Erreur message:', sendError);
             }
         }
     }

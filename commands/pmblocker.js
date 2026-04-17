@@ -5,24 +5,24 @@ const PMBLOCKER_PATH = './data/pmblocker.json';
 
 function readState() {
     try {
-        if (!fs.existsSync(PMBLOCKER_PATH)) return { enabled: false, message: '⚠️ Direct messages are blocked!\nYou cannot DM this bot. Please contact the owner in group chats only.' };
+        if (!fs.existsSync(PMBLOCKER_PATH)) return { activé: false, message: '⚠️ Direct messages are blocked!\nYou cannot DM this bot. Please contact the Propriétaire in Groupe chats only.' };
         const raw = fs.readFileSync(PMBLOCKER_PATH, 'utf8');
         const data = JSON.parse(raw || '{}');
         return {
-            enabled: !!data.enabled,
-            message: typeof data.message === 'string' && data.message.trim() ? data.message : '⚠️ Direct messages are blocked!\nYou cannot DM this bot. Please contact the owner in group chats only.'
+            activé: !!data.activé,
+            message: typeof data.message === 'string' && data.message.trim() ? data.message : '⚠️ Direct messages are blocked!\nYou cannot DM this bot. Please contact the Propriétaire in Groupe chats only.'
         };
     } catch {
-        return { enabled: false, message: '⚠️ Direct messages are blocked!\nYou cannot DM this bot. Please contact the owner in group chats only.' };
+        return { activé: false, message: '⚠️ Direct messages are blocked!\nYou cannot DM this bot. Please contact the Propriétaire in Groupe chats only.' };
     }
 }
 
-function writeState(enabled, message) {
+function writeState(activé, message) {
     try {
         if (!fs.existsSync('./data')) fs.mkdirSync('./data', { recursive: true });
         const current = readState();
         const payload = {
-            enabled: !!enabled,
+            activé: !!activé,
             message: typeof message === 'string' && message.trim() ? message : current.message
         };
         fs.writeFileSync(PMBLOCKER_PATH, JSON.stringify(payload, null, 2));
@@ -34,7 +34,7 @@ async function pmblockerCommand(sock, chatId, message, args) {
     const isOwner = await isOwnerOrSudo(senderId, sock, chatId);
     
     if (!message.key.fromMe && !isOwner) {
-        await sock.sendMessage(chatId, { text: 'Only bot owner can use this command!' }, { quoted: message });
+        await sock.sendMessage(chatId, { text: 'Only bot Propriétaire can use this command!' }, { quoted: message });
         return;
     }
     
@@ -42,13 +42,13 @@ async function pmblockerCommand(sock, chatId, message, args) {
     const [sub, ...rest] = argStr.split(' ');
     const state = readState();
 
-    if (!sub || !['on', 'off', 'status', 'setmsg'].includes(sub.toLowerCase())) {
-        await sock.sendMessage(chatId, { text: '*PMBLOCKER (Owner only)*\n\n.pmblocker on - Enable PM auto-block\n.pmblocker off - Disable PM blocker\n.pmblocker status - Show current status\n.pmblocker setmsg <text> - Set warning message' }, { quoted: message });
+    if (!sub || !['on', 'off', 'Statut', 'setmsg'].includes(sub.toLowerCase())) {
+        await sock.sendMessage(chatId, { text: '*PMBLOCKER (Propriétaire only)*\n\n.pmblocker on - Enable PM auto-block\n.pmblocker off - Disable PM blocker\n.pmblocker Statut - Show current Statut\n.pmblocker setmsg <text> - Set warning message' }, { quoted: message });
         return;
     }
 
-    if (sub.toLowerCase() === 'status') {
-        await sock.sendMessage(chatId, { text: `PM Blocker is currently *${state.enabled ? 'ON' : 'OFF'}*\nMessage: ${state.message}` }, { quoted: message });
+    if (sub.toLowerCase() === 'Statut') {
+        await sock.sendMessage(chatId, { text: `PM Blocker is currently *${state.activé ? 'ON' : 'OFF'}*\nMessage: ${state.message}` }, { quoted: message });
         return;
     }
 
@@ -58,14 +58,14 @@ async function pmblockerCommand(sock, chatId, message, args) {
             await sock.sendMessage(chatId, { text: 'Usage: .pmblocker setmsg <message>' }, { quoted: message });
             return;
         }
-        writeState(state.enabled, newMsg);
+        writeState(state.activé, newMsg);
         await sock.sendMessage(chatId, { text: 'PM Blocker message updated.' }, { quoted: message });
         return;
     }
 
     const enable = sub.toLowerCase() === 'on';
     writeState(enable);
-    await sock.sendMessage(chatId, { text: `PM Blocker is now *${enable ? 'ENABLED' : 'DISABLED'}*.` }, { quoted: message });
+    await sock.sendMessage(chatId, { text: `PM Blocker est maintenant *${enable ? 'activé' : 'désactivé'}*.` }, { quoted: message });
 }
 
 module.exports = { pmblockerCommand, readState };

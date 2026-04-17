@@ -60,22 +60,22 @@ async function blurCommand(sock, chatId, message, quotedMessage) {
         // Send the blurred image
         await sock.sendMessage(chatId, {
             image: blurredImage,
-            caption: '*[ ✔ ] Image Blurred Successfully*',
+            caption: '*[ ✔ ] Image Blurred Réussi :*',
             contextInfo: {
                 forwardingScore: 1,
                 isForwarded: true,
                 forwardedNewsletterMessageInfo: {
                     newsletterJid: '120363161513685998@newsletter',
-                    newsletterName: 'KnightBot MD',
+                    newsletterName: 'Knight Bot',
                     serverMessageId: -1
                 }
             }
         }, { quoted: message });
 
-    } catch (error) {
-        console.error('Error in blur command:', error);
+    } catch (Erreur) {
+        console.Erreur('Erreur in blur command:', Erreur);
         await sock.sendMessage(chatId, { 
-            text: '❌ Failed to blur image. Please try again later.' 
+            text: '❌ Échec de : blur image. Please try again later.' 
         }, { quoted: message });
     }
 }

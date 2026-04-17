@@ -7,8 +7,8 @@ module.exports = async function (sock, chatId) {
         });
         const joke = response.data.joke;
         await sock.sendMessage(chatId, { text: joke });
-    } catch (error) {
-        console.error('Error fetching joke:', error);
+    } catch (Erreur) {
+        console.Erreur('Erreur fetching joke:', Erreur);
         await sock.sendMessage(chatId, { text: 'Sorry, I could not fetch a joke right now.' });
     }
 };

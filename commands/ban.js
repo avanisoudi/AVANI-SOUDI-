@@ -4,24 +4,24 @@ const isAdmin = require('../lib/isAdmin');
 const { isSudo } = require('../lib/index');
 
 async function banCommand(sock, chatId, message) {
-    // Restrict in groups to admins; in private to owner/sudo
+    // Restrict in groups to admins; in Privé to Propriétaire/sudo
     const isGroup = chatId.endsWith('@g.us');
     if (isGroup) {
         const senderId = message.key.participant || message.key.remoteJid;
         const { isSenderAdmin, isBotAdmin } = await isAdmin(sock, chatId, senderId);
         if (!isBotAdmin) {
-            await sock.sendMessage(chatId, { text: 'Please make the bot an admin to use .ban', ...channelInfo }, { quoted: message });
+            await sock.sendMessage(chatId, { text: 'Veuillez nommer le bot administrateur pour utiliser .ban', ...channelInfo }, { quoted: message });
             return;
         }
         if (!isSenderAdmin && !message.key.fromMe) {
-            await sock.sendMessage(chatId, { text: 'Only group admins can use .ban', ...channelInfo }, { quoted: message });
+            await sock.sendMessage(chatId, { text: 'Seuls les administrateurs du groupe peuvent utiliser .ban', ...channelInfo }, { quoted: message });
             return;
         }
     } else {
         const senderId = message.key.participant || message.key.remoteJid;
         const senderIsSudo = await isSudo(senderId);
         if (!message.key.fromMe && !senderIsSudo) {
-            await sock.sendMessage(chatId, { text: 'Only owner/sudo can use .ban in private chat', ...channelInfo }, { quoted: message });
+            await sock.sendMessage(chatId, { text: 'Seul le propriétaire/sudo peut utiliser .ban in Privé chat', ...channelInfo }, { quoted: message });
             return;
         }
     }
@@ -38,7 +38,7 @@ async function banCommand(sock, chatId, message) {
     
     if (!userToBan) {
         await sock.sendMessage(chatId, { 
-            text: 'Please mention the user or reply to their message to ban!', 
+            text: 'Veuillez mentionner l'utilisateur or reply to their message to ban!', 
             ...channelInfo 
         });
         return;
@@ -48,7 +48,7 @@ async function banCommand(sock, chatId, message) {
     try {
         const botId = sock.user.id.split(':')[0] + '@s.whatsapp.net';
         if (userToBan === botId || userToBan === botId.replace('@s.whatsapp.net', '@lid')) {
-            await sock.sendMessage(chatId, { text: 'You cannot ban the bot account.', ...channelInfo }, { quoted: message });
+            await sock.sendMessage(chatId, { text: 'Vous ne pouvez pas ban the bot account.', ...channelInfo }, { quoted: message });
             return;
         }
     } catch {}
@@ -61,20 +61,20 @@ async function banCommand(sock, chatId, message) {
             fs.writeFileSync('./data/banned.json', JSON.stringify(bannedUsers, null, 2));
             
             await sock.sendMessage(chatId, { 
-                text: `Successfully banned @${userToBan.split('@')[0]}!`,
+                text: `Réussi : banned @${userToBan.split('@')[0]}!`,
                 mentions: [userToBan],
                 ...channelInfo 
             });
         } else {
             await sock.sendMessage(chatId, { 
-                text: `${userToBan.split('@')[0]} is already banned!`,
+                text: `${userToBan.split('@')[0]} est déjà banned!`,
                 mentions: [userToBan],
                 ...channelInfo 
             });
         }
-    } catch (error) {
-        console.error('Error in ban command:', error);
-        await sock.sendMessage(chatId, { text: 'Failed to ban user!', ...channelInfo });
+    } catch (Erreur) {
+        console.Erreur('Erreur in ban command:', Erreur);
+        await sock.sendMessage(chatId, { text: 'Échec de : ban user!', ...channelInfo });
     }
 }
 

@@ -33,7 +33,7 @@ async function takeCommand(sock, chatId, message, args) {
             );
 
             if (!stickerBuffer) {
-                await sock.sendMessage(chatId, { text: '❌ Failed to download sticker' });
+                await sock.sendMessage(chatId, { text: '❌ Échec de : download sticker' });
                 return;
             }
 
@@ -67,14 +67,14 @@ async function takeCommand(sock, chatId, message, args) {
                 quoted: message
             });
 
-        } catch (error) {
-            console.error('Sticker processing error:', error);
-            await sock.sendMessage(chatId, { text: '❌ Error processing sticker' });
+        } catch (Erreur) {
+            console.Erreur('Sticker processing Erreur:', Erreur);
+            await sock.sendMessage(chatId, { text: '❌ Erreur processing sticker' });
         }
 
-    } catch (error) {
-        console.error('Error in take command:', error);
-        await sock.sendMessage(chatId, { text: '❌ Error processing command' });
+    } catch (Erreur) {
+        console.Erreur('Erreur in take command:', Erreur);
+        await sock.sendMessage(chatId, { text: '❌ Erreur processing command' });
     }
 }
 

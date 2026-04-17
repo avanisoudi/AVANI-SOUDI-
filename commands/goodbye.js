@@ -1,9 +1,9 @@
-const { handleGoodbye } = require('../lib/welcome');
+const { handleGoodbye } = require('../lib/Bienvenue');
 const { isGoodByeOn, getGoodbye } = require('../lib/index');
 const fetch = require('node-fetch');
 
 async function goodbyeCommand(sock, chatId, message, match) {
-    // Check if it's a group
+    // Check if it's a Groupe
     if (!chatId.endsWith('@g.us')) {
         await sock.sendMessage(chatId, { text: 'This command can only be used in groups.' });
         return;
@@ -18,18 +18,18 @@ async function goodbyeCommand(sock, chatId, message, match) {
 }
 
 async function handleLeaveEvent(sock, id, participants) {
-    // Check if goodbye is enabled for this group
+    // Check if Au revoir is activé for this Groupe
     const isGoodbyeEnabled = await isGoodByeOn(id);
     if (!isGoodbyeEnabled) return;
 
-    // Get custom goodbye message
+    // Get custom Au revoir message
     const customMessage = await getGoodbye(id);
 
-    // Get group metadata
+    // Get Groupe metadata
     const groupMetadata = await sock.groupMetadata(id);
     const groupName = groupMetadata.subject;
 
-    // Send goodbye message for each leaving participant
+    // Send Au revoir message for each leaving participant
     for (const participant of participants) {
         try {
             // Handle case where participant might be an object or not a string
@@ -43,7 +43,7 @@ async function handleLeaveEvent(sock, id, participants) {
                 if (contact && contact.name) {
                     displayName = contact.name;
                 } else {
-                    // Try to get from group participants
+                    // Try to get from Groupe participants
                     const groupParticipants = groupMetadata.participants;
                     const userParticipant = groupParticipants.find(p => p.id === participantString);
                     if (userParticipant && userParticipant.name) {
@@ -59,7 +59,7 @@ async function handleLeaveEvent(sock, id, participants) {
             if (customMessage) {
                 finalMessage = customMessage
                     .replace(/{user}/g, `@${displayName}`)
-                    .replace(/{group}/g, groupName);
+                    .replace(/{Groupe}/g, groupName);
             } else {
                 // Default message if no custom message is set
                 finalMessage = ` *@${displayName}* we will never miss you! `;
@@ -78,15 +78,15 @@ async function handleLeaveEvent(sock, id, participants) {
                     console.log('Could not fetch profile picture, using default');
                 }
                 
-                // Construct API URL for goodbye image
-                const apiUrl = `https://api.some-random-api.com/welcome/img/2/gaming1?type=leave&textcolor=red&username=${encodeURIComponent(displayName)}&guildName=${encodeURIComponent(groupName)}&memberCount=${groupMetadata.participants.length}&avatar=${encodeURIComponent(profilePicUrl)}`;
+                // Construct API URL for Au revoir image
+                const apiUrl = `https://api.some-random-api.com/Bienvenue/img/2/gaming1?type=leave&textcolor=red&username=${encodeURIComponent(displayName)}&guildName=${encodeURIComponent(groupName)}&memberCount=${groupMetadata.participants.length}&avatar=${encodeURIComponent(profilePicUrl)}`;
                 
-                // Fetch the goodbye image
+                // Fetch the Au revoir image
                 const response = await fetch(apiUrl);
                 if (response.ok) {
                     const imageBuffer = await response.buffer();
                     
-                    // Send goodbye image with caption (custom or default message)
+                    // Send Au revoir image with caption (custom or default message)
                     await sock.sendMessage(id, {
                         image: imageBuffer,
                         caption: finalMessage,
@@ -103,8 +103,8 @@ async function handleLeaveEvent(sock, id, participants) {
                 text: finalMessage,
                 mentions: [participantString]
             });
-        } catch (error) {
-            console.error('Error sending goodbye message:', error);
+        } catch (Erreur) {
+            console.Erreur('Erreur Envoi de Au revoir message:', Erreur);
             // Fallback to text message
             const participantString = typeof participant === 'string' ? participant : (participant.id || participant.toString());
             const user = participantString.split('@')[0];
@@ -114,9 +114,9 @@ async function handleLeaveEvent(sock, id, participants) {
             if (customMessage) {
                 fallbackMessage = customMessage
                     .replace(/{user}/g, `@${user}`)
-                    .replace(/{group}/g, groupName);
+                    .replace(/{Groupe}/g, groupName);
             } else {
-                fallbackMessage = `Goodbye @${user}! 👋`;
+                fallbackMessage = `Au revoir @${user}! 👋`;
             }
             
             await sock.sendMessage(id, {

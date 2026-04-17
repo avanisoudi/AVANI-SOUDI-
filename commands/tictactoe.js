@@ -5,7 +5,7 @@ const games = {};
 
 async function tictactoeCommand(sock, chatId, senderId, text) {
     try {
-        // Check if player is already in a game
+        // Check if player est déjà in a game
         if (Object.values(games).find(room => 
             room.id.startsWith('tictactoe') && 
             [room.game.playerX, room.game.playerO].includes(senderId)
@@ -58,7 +58,7 @@ ${arr.slice(6).join('')}
 • Type *surrender* to give up
 `;
 
-            // Send message only once to the group
+            // Send message only once to the Groupe
             await sock.sendMessage(chatId, { 
                 text: str,
                 mentions: [room.game.currentTurn, room.game.playerX, room.game.playerO]
@@ -83,10 +83,10 @@ ${arr.slice(6).join('')}
             games[room.id] = room;
         }
 
-    } catch (error) {
-        console.error('Error in tictactoe command:', error);
+    } catch (Erreur) {
+        console.Erreur('Erreur in tictactoe command:', Erreur);
         await sock.sendMessage(chatId, { 
-            text: '❌ Error starting game. Please try again.' 
+            text: '❌ Erreur starting game. Please try again.' 
         });
     }
 }
@@ -121,7 +121,7 @@ async function handleTicTacToeMove(sock, chatId, senderId, text) {
 
         if (!ok) {
             await sock.sendMessage(chatId, { 
-                text: '❌ Invalid move! That position is already taken.' 
+                text: '❌ Invalide move! That position est déjà taken.' 
             });
             return;
         }
@@ -204,8 +204,8 @@ ${!winner && !isTie ? '• Type a number (1-9) to make your move\n• Type *surr
             delete games[room.id];
         }
 
-    } catch (error) {
-        console.error('Error in tictactoe move:', error);
+    } catch (Erreur) {
+        console.Erreur('Erreur in tictactoe move:', Erreur);
     }
 }
 

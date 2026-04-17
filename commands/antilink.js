@@ -5,7 +5,7 @@ const isAdmin = require('../lib/isAdmin');
 async function handleAntilinkCommand(sock, chatId, userMessage, senderId, isSenderAdmin, message) {
     try {
         if (!isSenderAdmin) {
-            await sock.sendMessage(chatId, { text: '```For Group Admins Only!```' }, { quoted: message });
+            await sock.sendMessage(chatId, { text: '```For Groupe Admins Only!```' }, { quoted: message });
             return;
         }
 
@@ -22,8 +22,8 @@ async function handleAntilinkCommand(sock, chatId, userMessage, senderId, isSend
         switch (action) {
             case 'on':
                 const existingConfig = await getAntilink(chatId, 'on');
-                if (existingConfig?.enabled) {
-                    await sock.sendMessage(chatId, { text: '*_Antilink is already on_*' }, { quoted: message });
+                if (existingConfig?.activé) {
+                    await sock.sendMessage(chatId, { text: '*_Antilink est déjà on_*' }, { quoted: message });
                     return;
                 }
                 const result = await setAntilink(chatId, 'on', 'delete');
@@ -58,18 +58,18 @@ async function handleAntilinkCommand(sock, chatId, userMessage, senderId, isSend
                 break;
 
             case 'get':
-                const status = await getAntilink(chatId, 'on');
+                const Statut = await getAntilink(chatId, 'on');
                 const actionConfig = await getAntilink(chatId, 'on');
                 await sock.sendMessage(chatId, { 
-                    text: `*_Antilink Configuration:_*\nStatus: ${status ? 'ON' : 'OFF'}\nAction: ${actionConfig ? actionConfig.action : 'Not set'}` 
+                    text: `*_Antilink Configuration:_*\nStatus: ${Statut ? 'ON' : 'OFF'}\nAction: ${actionConfig ? actionConfig.action : 'Not set'}` 
                 }, { quoted: message });
                 break;
 
             default:
                 await sock.sendMessage(chatId, { text: `*_Use ${prefix}antilink for usage._*` });
         }
-    } catch (error) {
-        console.error('Error in antilink command:', error);
+    } catch (Erreur) {
+        console.Erreur('Erreur in antilink command:', Erreur);
         await sock.sendMessage(chatId, { text: '*_Error processing antilink command_*' });
     }
 }
@@ -98,11 +98,11 @@ async function handleLinkDetection(sock, chatId, message, userMessage, senderId)
         allLinks: /https?:\/\/\S+|www\.\S+|(?:[a-z0-9-]+\.)+[a-z]{2,}(?:\/\S*)?/i,
     };
 
-    // Detect WhatsApp Group links
+    // Detect WhatsApp Groupe links
     if (antilinkSetting === 'whatsappGroup') {
-        console.log('WhatsApp group link protection is enabled.');
+        console.log('WhatsApp Groupe link protection is activé.');
         if (linkPatterns.whatsappGroup.test(userMessage)) {
-            console.log('Detected a WhatsApp group link!');
+            console.log('Detected a WhatsApp Groupe link!');
             shouldDelete = true;
         }
     } else if (antilinkSetting === 'whatsappChannel' && linkPatterns.whatsappChannel.test(userMessage)) {
@@ -123,15 +123,15 @@ async function handleLinkDetection(sock, chatId, message, userMessage, senderId)
             await sock.sendMessage(chatId, {
                 delete: { remoteJid: chatId, fromMe: false, id: quotedMessageId, participant: quotedParticipant },
             });
-            console.log(`Message with ID ${quotedMessageId} deleted successfully.`);
-        } catch (error) {
-            console.error('Failed to delete message:', error);
+            console.log(`Message with ID ${quotedMessageId} deleted Réussi :.`);
+        } catch (Erreur) {
+            console.Erreur('Échec de : delete message:', Erreur);
         }
 
         const mentionedJidList = [senderId];
         await sock.sendMessage(chatId, { text: `Warning! @${senderId.split('@')[0]}, posting links is not allowed.`, mentions: mentionedJidList });
     } else {
-        console.log('No link detected or protection not enabled for this type of link.');
+        console.log('No link detected or protection not activé for this type of link.');
     }
 }
 

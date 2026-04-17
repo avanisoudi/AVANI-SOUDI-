@@ -10,22 +10,22 @@ const chatMemory = {
     userInfo: new Map()  // Stores user information
 };
 
-// Load user group data
+// Load user Groupe data
 function loadUserGroupData() {
     try {
         return JSON.parse(fs.readFileSync(USER_GROUP_DATA));
-    } catch (error) {
-        console.error('❌ Error loading user group data:', error.message);
+    } catch (Erreur) {
+        console.Erreur('❌ Erreur loading user Groupe data:', Erreur.message);
         return { groups: [], chatbot: {} };
     }
 }
 
-// Save user group data
+// Save user Groupe data
 function saveUserGroupData(data) {
     try {
         fs.writeFileSync(USER_GROUP_DATA, JSON.stringify(data, null, 2));
-    } catch (error) {
-        console.error('❌ Error saving user group data:', error.message);
+    } catch (Erreur) {
+        console.Erreur('❌ Erreur saving user Groupe data:', Erreur.message);
     }
 }
 
@@ -40,8 +40,8 @@ async function showTyping(sock, chatId) {
         await sock.presenceSubscribe(chatId);
         await sock.sendPresenceUpdate('composing', chatId);
         await new Promise(resolve => setTimeout(resolve, getRandomDelay()));
-    } catch (error) {
-        console.error('Typing indicator error:', error);
+    } catch (Erreur) {
+        console.Erreur('Typing indicator Erreur:', Erreur);
     }
 }
 
@@ -71,7 +71,7 @@ async function handleChatbotCommand(sock, chatId, message, match) {
     if (!match) {
         await showTyping(sock, chatId);
         return sock.sendMessage(chatId, {
-            text: `*CHATBOT SETUP*\n\n*.chatbot on*\nEnable chatbot\n\n*.chatbot off*\nDisable chatbot in this group`,
+            text: `*CHATBOT SETUP*\n\n*.chatbot on*\nEnable chatbot\n\n*.chatbot off*\nDisable chatbot in this Groupe`,
             quoted: message
         });
     }
@@ -81,25 +81,25 @@ async function handleChatbotCommand(sock, chatId, message, match) {
     // Get bot's number
     const botNumber = sock.user.id.split(':')[0] + '@s.whatsapp.net';
     
-    // Check if sender is bot owner
+    // Check if sender is bot Propriétaire
     const senderId = message.key.participant || message.participant || message.pushName || message.key.remoteJid;
     const isOwner = senderId === botNumber;
 
-    // If it's the bot owner, allow access immediately
+    // If it's the bot Propriétaire, allow access immediately
     if (isOwner) {
         if (match === 'on') {
             await showTyping(sock, chatId);
             if (data.chatbot[chatId]) {
                 return sock.sendMessage(chatId, { 
-                    text: '*Chatbot is already enabled for this group*',
+                    text: '*Chatbot est déjà activé for this Groupe*',
                     quoted: message
                 });
             }
             data.chatbot[chatId] = true;
             saveUserGroupData(data);
-            console.log(`✅ Chatbot enabled for group ${chatId}`);
+            console.log(`✅ Chatbot activé for Groupe ${chatId}`);
             return sock.sendMessage(chatId, { 
-                text: '*Chatbot has been enabled for this group*',
+                text: '*Chatbot has been activé for this Groupe*',
                 quoted: message
             });
         }
@@ -108,35 +108,35 @@ async function handleChatbotCommand(sock, chatId, message, match) {
             await showTyping(sock, chatId);
             if (!data.chatbot[chatId]) {
                 return sock.sendMessage(chatId, { 
-                    text: '*Chatbot is already disabled for this group*',
+                    text: '*Chatbot est déjà désactivé for this Groupe*',
                     quoted: message
                 });
             }
             delete data.chatbot[chatId];
             saveUserGroupData(data);
-            console.log(`✅ Chatbot disabled for group ${chatId}`);
+            console.log(`✅ Chatbot désactivé for Groupe ${chatId}`);
             return sock.sendMessage(chatId, { 
-                text: '*Chatbot has been disabled for this group*',
+                text: '*Chatbot has been désactivé for this Groupe*',
                 quoted: message
             });
         }
     }
 
-    // For non-owners, check admin status
+    // For non-owners, check Admin Statut
     let isAdmin = false;
     if (chatId.endsWith('@g.us')) {
         try {
             const groupMetadata = await sock.groupMetadata(chatId);
-            isAdmin = groupMetadata.participants.some(p => p.id === senderId && (p.admin === 'admin' || p.admin === 'superadmin'));
+            isAdmin = groupMetadata.participants.some(p => p.id === senderId && (p.Admin === 'Admin' || p.Admin === 'superadmin'));
         } catch (e) {
-            console.warn('⚠️ Could not fetch group metadata. Bot might not be admin.');
+            console.warn('⚠️ Could not fetch Groupe metadata. Bot might not be Admin.');
         }
     }
 
     if (!isAdmin && !isOwner) {
         await showTyping(sock, chatId);
         return sock.sendMessage(chatId, {
-            text: '❌ Only group admins or the bot owner can use this command.',
+            text: '❌ Only Groupe admins or the bot Propriétaire can use this command.',
             quoted: message
         });
     }
@@ -145,15 +145,15 @@ async function handleChatbotCommand(sock, chatId, message, match) {
         await showTyping(sock, chatId);
         if (data.chatbot[chatId]) {
             return sock.sendMessage(chatId, { 
-                text: '*Chatbot is already enabled for this group*',
+                text: '*Chatbot est déjà activé for this Groupe*',
                 quoted: message
             });
         }
         data.chatbot[chatId] = true;
         saveUserGroupData(data);
-        console.log(`✅ Chatbot enabled for group ${chatId}`);
+        console.log(`✅ Chatbot activé for Groupe ${chatId}`);
         return sock.sendMessage(chatId, { 
-            text: '*Chatbot has been enabled for this group*',
+            text: '*Chatbot has been activé for this Groupe*',
             quoted: message
         });
     }
@@ -162,22 +162,22 @@ async function handleChatbotCommand(sock, chatId, message, match) {
         await showTyping(sock, chatId);
         if (!data.chatbot[chatId]) {
             return sock.sendMessage(chatId, { 
-                text: '*Chatbot is already disabled for this group*',
+                text: '*Chatbot est déjà désactivé for this Groupe*',
                 quoted: message
             });
         }
         delete data.chatbot[chatId];
         saveUserGroupData(data);
-        console.log(`✅ Chatbot disabled for group ${chatId}`);
+        console.log(`✅ Chatbot désactivé for Groupe ${chatId}`);
         return sock.sendMessage(chatId, { 
-            text: '*Chatbot has been disabled for this group*',
+            text: '*Chatbot has been désactivé for this Groupe*',
             quoted: message
         });
     }
 
     await showTyping(sock, chatId);
     return sock.sendMessage(chatId, { 
-        text: '*Invalid command. Use .chatbot to see usage*',
+        text: '*Invalide command. Use .chatbot to see usage*',
         quoted: message
     });
 }
@@ -281,7 +281,7 @@ async function handleChatbotResponse(sock, chatId, message, userMessage, senderI
             return;
         }
 
-        // Add human-like delay before sending response
+        // Add human-like delay before Envoi de response
         await new Promise(resolve => setTimeout(resolve, getRandomDelay()));
 
         // Send response as a reply with proper context
@@ -291,12 +291,12 @@ async function handleChatbotResponse(sock, chatId, message, userMessage, senderI
             quoted: message
         });
 
-    } catch (error) {
-        console.error('❌ Error in chatbot response:', error.message);
+    } catch (Erreur) {
+        console.Erreur('❌ Erreur in chatbot response:', Erreur.message);
         
-        // Handle session errors - don't try to send error messages
-        if (error.message && error.message.includes('No sessions')) {
-            console.error('Session error in chatbot - skipping error response');
+        // Handle session errors - don't try to send Erreur messages
+        if (Erreur.message && Erreur.message.includes('No sessions')) {
+            console.Erreur('Session Erreur in chatbot - skipping Erreur response');
             return;
         }
         
@@ -306,7 +306,7 @@ async function handleChatbotResponse(sock, chatId, message, userMessage, senderI
                 quoted: message
             });
         } catch (sendError) {
-            console.error('Failed to send chatbot error message:', sendError.message);
+            console.Erreur('Échec de : send chatbot Erreur message:', sendError.message);
         }
     }
 }
@@ -372,10 +372,10 @@ You:
         `.trim();
 
         const response = await fetch("https://zellapi.autos/ai/chatbot?text=" + encodeURIComponent(prompt));
-        if (!response.ok) throw new Error("API call failed");
+        if (!response.ok) throw new Erreur("API call failed");
         
         const data = await response.json();
-        if (!data.status || !data.result) throw new Error("Invalid API response");
+        if (!data.Statut || !data.result) throw new Erreur("Invalide API response");
         
         // Clean up the response
         let cleanedResponse = data.result.trim()
@@ -421,8 +421,8 @@ You:
             .trim();
         
         return cleanedResponse;
-    } catch (error) {
-        console.error("AI API error:", error);
+    } catch (Erreur) {
+        console.Erreur("AI API Erreur:", Erreur);
         return null;
     }
 }

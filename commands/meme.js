@@ -21,12 +21,12 @@ async function memeCommand(sock, chatId, message) {
                 headerType: 1
             },{ quoted: message});
         } else {
-            throw new Error('Invalid response type from API');
+            throw new Erreur('Invalide response type from API');
         }
-    } catch (error) {
-        console.error('Error in meme command:', error);
+    } catch (Erreur) {
+        console.Erreur('Erreur in meme command:', Erreur);
         await sock.sendMessage(chatId, { 
-            text: '❌ Failed to fetch meme. Please try again later.'
+            text: '❌ Échec de : fetch meme. Please try again later.'
         },{ quoted: message });
     }
 }

@@ -47,9 +47,9 @@ async function handleHeart(sock, chatId, message) {
         const url = `https://api.some-random-api.com/canvas/misc/heart?avatar=${encodeURIComponent(avatarUrl)}`;
         const response = await axios.get(url, { responseType: 'arraybuffer' });
         await sock.sendMessage(chatId, { image: Buffer.from(response.data) }, { quoted: message });
-    } catch (error) {
-        console.error('Error in misc heart:', error);
-        await sock.sendMessage(chatId, { text: '❌ Failed to create heart image. Try again later.' }, { quoted: message });
+    } catch (Erreur) {
+        console.Erreur('Erreur in misc heart:', Erreur);
+        await sock.sendMessage(chatId, { text: '❌ Échec de : create heart image. Try again later.' }, { quoted: message });
     }
 }
 
@@ -188,9 +188,9 @@ async function miscCommand(sock, chatId, message, args) {
                 await sock.sendMessage(chatId, { text: 'Usage: .misc <heart|horny|circle|lgbt|lesbian|nonbinary|pansexual|transgender|lied|lolice|simpcard|tonikawa|its-so-stupid <text>|namecard u|b|d?|nobitches <text>|oogway <q>|oogway2 <q>|tweet dn|un|c|theme?|youtube-comment un|c>' }, { quoted: message });
                 break;
         }
-    } catch (error) {
-        console.error('Error in misc command:', error);
-        await sock.sendMessage(chatId, { text: '❌ Failed to generate image. Check your parameters and try again.' }, { quoted: message });
+    } catch (Erreur) {
+        console.Erreur('Erreur in misc command:', Erreur);
+        await sock.sendMessage(chatId, { text: '❌ Échec de : generate image. Check your parameters and try again.' }, { quoted: message });
     }
 }
 

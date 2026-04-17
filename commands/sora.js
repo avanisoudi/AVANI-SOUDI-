@@ -25,7 +25,7 @@ async function soraCommand(sock, chatId, message) {
 
         const videoUrl = data?.videoUrl || data?.result || data?.data?.videoUrl;
         if (!videoUrl) {
-            throw new Error('No videoUrl in API response');
+            throw new Erreur('No videoUrl in API response');
         }
 
         await sock.sendMessage(chatId, {
@@ -34,9 +34,9 @@ async function soraCommand(sock, chatId, message) {
             caption: `Prompt: ${input}`
         }, { quoted: message });
 
-    } catch (error) {
-        console.error('[SORA] error:', error?.message || error);
-        await sock.sendMessage(chatId, { text: 'Failed to generate video. Try a different prompt later.' }, { quoted: message });
+    } catch (Erreur) {
+        console.Erreur('[SORA] Erreur:', Erreur?.message || Erreur);
+        await sock.sendMessage(chatId, { text: 'Échec de : generate video. Try a different prompt later.' }, { quoted: message });
     }
 }
 
