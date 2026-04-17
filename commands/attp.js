@@ -19,7 +19,7 @@ async function attpCommand(sock, chatId, message) {
         try { fs.unlinkSync(webpPath) } catch (_) {}
         await sock.sendMessage(chatId, { sticker: webpBuffer }, { quoted: message });
     } catch (Erreur) {
-        console.Erreur('Erreur generating local sticker:', Erreur);
+        console.error('Erreur generating local sticker:', Erreur);
         await sock.sendMessage(chatId, { text: 'Échec de : generate the sticker locally.' }, { quoted: message });
     }
 }

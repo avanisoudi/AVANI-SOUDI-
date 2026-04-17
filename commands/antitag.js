@@ -1,7 +1,7 @@
 const { setAntitag, getAntitag, removeAntitag } = require('../lib/index');
 const isAdmin = require('../lib/isAdmin');
 
-async function handleAntitagCommand(sock, chatId, userMessage, senderId, isSenderAdmin, message) {
+async function handleAntitagCommand(sock, chatId, userMessage, senderId, isSenderadmin, message) {
     try {
         if (!isSenderAdmin) {
             await sock.sendMessage(chatId, { text: '```For Groupe Admins Only!```' },{quoted :message});
@@ -21,7 +21,7 @@ async function handleAntitagCommand(sock, chatId, userMessage, senderId, isSende
         switch (action) {
             case 'on':
                 const existingConfig = await getAntitag(chatId, 'on');
-                if (existingConfig?.activé) {
+                if (existingConfig?.enabled) {
                     await sock.sendMessage(chatId, { text: '*_Antitag est déjà on_*' },{quoted :message});
                     return;
                 }
@@ -68,7 +68,7 @@ async function handleAntitagCommand(sock, chatId, userMessage, senderId, isSende
                 await sock.sendMessage(chatId, { text: `*_Use ${prefix}antitag for usage._*` },{quoted :message});
         }
     } catch (Erreur) {
-        console.Erreur('Erreur in antitag command:', Erreur);
+        console.error('Erreur in antitag command:', Erreur);
         await sock.sendMessage(chatId, { text: '*_Error processing antitag command_*' },{quoted :message});
     }
 }
@@ -76,7 +76,7 @@ async function handleAntitagCommand(sock, chatId, userMessage, senderId, isSende
 async function handleTagDetection(sock, chatId, message, senderId) {
     try {
         const antitagSetting = await getAntitag(chatId, 'on');
-        if (!antitagSetting || !antitagSetting.activé) return;
+        if (!antitagSetting || !antitagSetting.enabled) return;
 
         // Get mentioned JIDs from contextInfo (proper mentions)
         const mentionedJids = message.message?.extendedTextMessage?.contextInfo?.mentionedJid || [];
@@ -176,7 +176,7 @@ async function handleTagDetection(sock, chatId, message, senderId) {
             }
         }
     } catch (Erreur) {
-        console.Erreur('Erreur in tag detection:', Erreur);
+        console.error('Erreur in tag detection:', Erreur);
     }
 }
 

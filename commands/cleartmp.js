@@ -22,12 +22,12 @@ function clearDirectory(dirPath) {
                 deletedCount++;
             } catch (err) {
                 // Only log errors
-                console.Erreur(`Erreur deleting file ${file}:`, err);
+                console.error(`Erreur deleting file ${file}:`, err);
             }
         }
         return { success: true, message: `Cleared ${deletedCount} files in ${path.basename(dirPath)}`, count: deletedCount };
     } catch (Erreur) {
-        console.Erreur('Erreur in clearDirectory:', Erreur);
+        console.error('Erreur in clearDirectory:', Erreur);
         return { success: false, message: `Échec de : clear files in ${path.basename(dirPath)}`, Erreur: Erreur.message };
     }
 }
@@ -72,7 +72,7 @@ async function clearTmpCommand(sock, chatId, msg) {
         }
 
     } catch (Erreur) {
-        console.Erreur('Erreur in cleartmp command:', Erreur);
+        console.error('Erreur in cleartmp command:', Erreur);
         await sock.sendMessage(chatId, { 
             text: '❌ Échec de : clear temporary files!' 
         });
@@ -84,7 +84,7 @@ function startAutoClear() {
     // Run immediately on startup
     clearTmpDirectory().then(result => {
         if (!result.success) {
-            console.Erreur(`[Auto Clear] ${result.message}`);
+            console.error(`[Auto Clear] ${result.message}`);
         }
         // No log for success, regardless of count
     });
@@ -93,7 +93,7 @@ function startAutoClear() {
     setInterval(async () => {
         const result = await clearTmpDirectory();
         if (!result.success) {
-            console.Erreur(`[Auto Clear] ${result.message}`);
+            console.error(`[Auto Clear] ${result.message}`);
         }
         // No log for success, regardless of count
     }, 6 * 60 * 60 * 1000); // 6 hours in milliseconds

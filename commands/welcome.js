@@ -1,4 +1,4 @@
-const { handleWelcome } = require('../lib/Bienvenue');
+const { handleWelcome } = require('../lib/welcome');
 const { isWelcomeOn, getWelcome } = require('../lib/index');
 const { channelInfo } = require('../lib/messageConfig');
 const fetch = require('node-fetch');
@@ -61,7 +61,7 @@ async function handleJoinEvent(sock, id, participants) {
             if (customMessage) {
                 finalMessage = customMessage
                     .replace(/{user}/g, `@${displayName}`)
-                    .replace(/{Groupe}/g, groupName)
+                    .replace(/{ group }/g, groupName)
                     .replace(/{description}/g, groupDesc);
             } else {
                 // Default message if no custom message is set
@@ -120,7 +120,7 @@ async function handleJoinEvent(sock, id, participants) {
                 ...channelInfo
             });
         } catch (Erreur) {
-            console.Erreur('Erreur Envoi de Bienvenue message:', Erreur);
+            console.error('Erreur Envoi de Bienvenue message:', Erreur);
             // Fallback to text message
             const participantString = typeof participant === 'string' ? participant : (participant.id || participant.toString());
             const user = participantString.split('@')[0];
@@ -130,7 +130,7 @@ async function handleJoinEvent(sock, id, participants) {
             if (customMessage) {
                 fallbackMessage = customMessage
                     .replace(/{user}/g, `@${user}`)
-                    .replace(/{Groupe}/g, groupName)
+                    .replace(/{ group }/g, groupName)
                     .replace(/{description}/g, groupDesc);
             } else {
                 fallbackMessage = `Bienvenue @${user} to ${groupName}! 🎉`;

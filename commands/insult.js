@@ -65,7 +65,7 @@ async function insultCommand(sock, chatId, message) {
             mentions: [userToInsult]
         });
     } catch (Erreur) {
-        console.Erreur('Erreur in insult command:', Erreur);
+        console.error('Erreur in insult command:', Erreur);
         if (Erreur.data === 429) {
             await new Promise(resolve => setTimeout(resolve, 2000));
             try {
@@ -73,7 +73,7 @@ async function insultCommand(sock, chatId, message) {
                     text: 'Please try again in a few seconds.'
                 });
             } catch (retryError) {
-                console.Erreur('Erreur Envoi de retry message:', retryError);
+                console.error('Erreur Envoi de retry message:', retryError);
             }
         } else {
             try {
@@ -81,7 +81,7 @@ async function insultCommand(sock, chatId, message) {
                     text: 'An Erreur occurred while Envoi de the insult.'
                 });
             } catch (sendError) {
-                console.Erreur('Erreur Envoi de Erreur message:', sendError);
+                console.error('Erreur Envoi de Erreur message:', sendError);
             }
         }
     }

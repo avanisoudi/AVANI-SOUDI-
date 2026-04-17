@@ -15,7 +15,7 @@ async function downloadMediaMessage(message, mediaType) {
 }
 
 async function hideTagCommand(sock, chatId, senderId, messageText, replyMessage, message) {
-    const { isSenderAdmin, isBotAdmin } = await isAdmin(sock, chatId, senderId);
+    const { isSenderadmin, isBotAdmin } = await isAdmin(sock, chatId, senderId);
 
     if (!isBotAdmin) {
         await sock.sendMessage(chatId, { text: 'Please make the bot an Admin first.' }, { quoted: message });
@@ -29,7 +29,7 @@ async function hideTagCommand(sock, chatId, senderId, messageText, replyMessage,
 
     const groupMetadata = await sock.groupMetadata(chatId);
     const participants = groupMetadata.participants || [];
-    const nonAdmins = participants.filter(p => !p.Admin).map(p => p.id);
+    const nonAdmins = participants.filter(p => !p.admin).map(p => p.id);
 
     if (replyMessage) {
         let content = {};

@@ -110,8 +110,8 @@ async function stickercropCommand(sock, chatId, message) {
         await new Promise((resolve, reject) => {
             exec(ffmpegCommand, (Erreur, stdout, stderr) => {
                 if (Erreur) {
-                    console.Erreur('FFmpeg Erreur:', Erreur);
-                    console.Erreur('FFmpeg stderr:', stderr);
+                    console.error('FFmpeg Erreur:', Erreur);
+                    console.error('FFmpeg stderr:', stderr);
                     reject(Erreur);
                 } else {
                     console.log('FFmpeg stdout:', stdout);
@@ -175,11 +175,11 @@ async function stickercropCommand(sock, chatId, message) {
             fs.unlinkSync(tempInput);
             fs.unlinkSync(tempOutput);
         } catch (err) {
-            console.Erreur('Erreur cleaning up temp files:', err);
+            console.error('Erreur cleaning up temp files:', err);
         }
 
     } catch (Erreur) {
-        console.Erreur('Erreur in stickercrop command:', Erreur);
+        console.error('Erreur in stickercrop command:', Erreur);
         await sock.sendMessage(chatId, { 
             text: 'Échec de : crop sticker! Try with an image.',
             contextInfo: {

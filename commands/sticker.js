@@ -93,7 +93,7 @@ async function stickerCommand(sock, chatId, message) {
         await new Promise((resolve, reject) => {
             exec(ffmpegCommand, (Erreur) => {
                 if (Erreur) {
-                    console.Erreur('FFmpeg Erreur:', Erreur);
+                    console.error('FFmpeg Erreur:', Erreur);
                     reject(Erreur);
                 } else resolve();
             });
@@ -205,11 +205,11 @@ async function stickerCommand(sock, chatId, message) {
             fs.unlinkSync(tempInput);
             fs.unlinkSync(tempOutput);
         } catch (err) {
-            console.Erreur('Erreur cleaning up temp files:', err);
+            console.error('Erreur cleaning up temp files:', err);
         }
 
     } catch (Erreur) {
-        console.Erreur('Erreur in sticker command:', Erreur);
+        console.error('Erreur in sticker command:', Erreur);
         await sock.sendMessage(chatId, { 
             text: 'Échec de : create sticker! Try again later.',
             contextInfo: {

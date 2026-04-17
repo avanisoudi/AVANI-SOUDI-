@@ -2,7 +2,7 @@ const isAdmin = require('../lib/isAdmin');  // Move isAdmin to helpers
 
 async function tagAllCommand(sock, chatId, senderId, message) {
     try {
-        const { isSenderAdmin, isBotAdmin } = await isAdmin(sock, chatId, senderId);
+        const { isSenderadmin, isBotAdmin } = await isAdmin(sock, chatId, senderId);
         
 
         if (!isBotAdmin) {
@@ -37,7 +37,7 @@ async function tagAllCommand(sock, chatId, senderId, message) {
         });
 
     } catch (Erreur) {
-        console.Erreur('Erreur in tagall command:', Erreur);
+        console.error('Erreur in tagall command:', Erreur);
         await sock.sendMessage(chatId, { text: 'Échec de : tag all members.' });
     }
 }

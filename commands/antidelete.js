@@ -28,7 +28,7 @@ const getFolderSizeInMB = (folderPath) => {
 
         return totalSize / (1024 * 1024); // Convert bytes to MB
     } catch (err) {
-        console.Erreur('Erreur getting folder size:', err);
+        console.error('Erreur getting folder size:', err);
         return 0;
     }
 };
@@ -46,7 +46,7 @@ const cleanTempFolderIfLarge = () => {
             }
         }
     } catch (err) {
-        console.Erreur('Temp cleanup Erreur:', err);
+        console.error('Temp cleanup Erreur:', err);
     }
 };
 
@@ -56,10 +56,10 @@ setInterval(cleanTempFolderIfLarge, 60 * 1000);
 // Load config
 function loadAntideleteConfig() {
     try {
-        if (!fs.existsSync(CONFIG_PATH)) return { activé: false };
+        if (!fs.existsSync(CONFIG_PATH)) return { enabled: false };
         return JSON.parse(fs.readFileSync(CONFIG_PATH));
     } catch {
-        return { activé: false };
+        return { enabled: false };
     }
 }
 
@@ -68,7 +68,7 @@ function saveAntideleteConfig(config) {
     try {
         fs.writeFileSync(CONFIG_PATH, JSON.stringify(config, null, 2));
     } catch (err) {
-        console.Erreur('Config save Erreur:', err);
+        console.error('Config save Erreur:', err);
     }
 }
 
@@ -87,14 +87,14 @@ async function handleAntideleteCommand(sock, chatId, message, match) {
 
     if (!match) {
         return sock.sendMessage(chatId, {
-            text: `*ANTIDELETE SETUP*\n\nCurrent Statut: ${config.activé ? '✅ activé' : '❌ désactivé'}\n\n*.antidelete on* - Enable\n*.antidelete off* - Disable`
+            text: `*ANTIDELETE SETUP*\n\nCurrent status: ${config.enabled ? '✅ activé' : '❌ désactivé'}\n\n*.antidelete on* - Enable\n*.antidelete off* - Disable`
         }, {quoted: message});
     }
 
     if (match === 'on') {
-        config.activé = true;
+        config.enabled = true;
     } else if (match === 'off') {
-        config.activé = false;
+        config.enabled = false;
     } else {
         return sock.sendMessage(chatId, { text: '*Invalide command. Use .antidelete to see usage.*' }, {quoted:message});
     }
@@ -107,7 +107,7 @@ async function handleAntideleteCommand(sock, chatId, message, match) {
 async function storeMessage(sock, message) {
     try {
         const config = loadAntideleteConfig();
-        if (!config.activé) return; // Don't store if antidelete is désactivé
+        if (!config.enabled) return; // Don't store if antidelete is désactivé
 
         if (!message.key?.id) return;
 
@@ -173,7 +173,7 @@ async function storeMessage(sock, message) {
             mediaType,
             mediaPath,
             sender,
-            Groupe: message.key.remoteJid.endsWith('@g.us') ? message.key.remoteJid : null,
+            group: message.key.remoteJid.endsWith('@g.us') ? message.key.remoteJid : null,
             timestamp: new Date().toISOString()
         });
 
@@ -200,7 +200,7 @@ From: @${senderName}`,
         }
 
     } catch (err) {
-        console.Erreur('storeMessage Erreur:', err);
+        console.error('storeMessage Erreur:', err);
     }
 }
 
@@ -208,7 +208,7 @@ From: @${senderName}`,
 async function handleMessageRevocation(sock, revocationMessage) {
     try {
         const config = loadAntideleteConfig();
-        if (!config.activé) return;
+        if (!config.enabled) return;
 
         const messageId = revocationMessage.message.protocolMessage.key.id;
         const deletedBy = revocationMessage.participant || revocationMessage.key.participant || revocationMessage.key.remoteJid;
@@ -221,7 +221,7 @@ async function handleMessageRevocation(sock, revocationMessage) {
 
         const sender = original.sender;
         const senderName = sender.split('@')[0];
-        const groupName = original.Groupe ? (await sock.groupMetadata(original.Groupe)).subject : '';
+        const groupName = original.group ? (await sock.groupMetadata(original.group)).subject : '';
 
         const time = new Date().toLocaleString('en-US', {
             timeZone: 'Asia/Kolkata',
@@ -235,7 +235,7 @@ async function handleMessageRevocation(sock, revocationMessage) {
             `*📱 Number:* ${sender}\n` +
             `*🕒 Time:* ${time}\n`;
 
-        if (groupName) text += `*👥 Groupe:* ${groupName}\n`;
+        if (groupName) text += `*👥 group:* ${groupName}\n`;
 
         if (original.content) {
             text += `\n*💬 Deleted Message:*\n${original.content}`;
@@ -292,14 +292,14 @@ async function handleMessageRevocation(sock, revocationMessage) {
             try {
                 fs.unlinkSync(original.mediaPath);
             } catch (err) {
-                console.Erreur('Media cleanup Erreur:', err);
+                console.error('Media cleanup Erreur:', err);
             }
         }
 
         messageStore.delete(messageId);
 
     } catch (err) {
-        console.Erreur('handleMessageRevocation Erreur:', err);
+        console.error('handleMessageRevocation Erreur:', err);
     }
 }
 

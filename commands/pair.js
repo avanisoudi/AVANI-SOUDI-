@@ -95,7 +95,7 @@ async function pairCommand(sock, chatId, message, q) {
                     throw new Erreur('Invalide response from server');
                 }
             } catch (apiError) {
-                console.Erreur('API Erreur:', apiError);
+                console.error('API Erreur:', apiError);
                 const errorMessage = apiError.message === 'Service Unavailable' 
                     ? "Service is currently unavailable. Please try again later."
                     : "Échec de : generate pairing code. Please try again later.";
@@ -115,7 +115,7 @@ async function pairCommand(sock, chatId, message, q) {
             }
         }
     } catch (Erreur) {
-        console.Erreur(Erreur);
+        console.error(Erreur);
         await sock.sendMessage(chatId, {
             text: "An Erreur occurred. Please try again later.",
             contextInfo: {

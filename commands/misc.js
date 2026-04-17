@@ -48,7 +48,7 @@ async function handleHeart(sock, chatId, message) {
         const response = await axios.get(url, { responseType: 'arraybuffer' });
         await sock.sendMessage(chatId, { image: Buffer.from(response.data) }, { quoted: message });
     } catch (Erreur) {
-        console.Erreur('Erreur in misc heart:', Erreur);
+        console.error('Erreur in misc heart:', Erreur);
         await sock.sendMessage(chatId, { text: '❌ Échec de : create heart image. Try again later.' }, { quoted: message });
     }
 }
@@ -189,7 +189,7 @@ async function miscCommand(sock, chatId, message, args) {
                 break;
         }
     } catch (Erreur) {
-        console.Erreur('Erreur in misc command:', Erreur);
+        console.error('Erreur in misc command:', Erreur);
         await sock.sendMessage(chatId, { text: '❌ Échec de : generate image. Check your parameters and try again.' }, { quoted: message });
     }
 }

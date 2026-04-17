@@ -34,7 +34,7 @@ async function aiCommand(sock, chatId, message) {
                 // Call the GPT API
                 const response = await axios.get(`https://zellapi.autos/ai/chatbot?text=${encodeURIComponent(query)}`);
                 
-                if (response.data && response.data.Statut && response.data.result) {
+                if (response.data && response.data.status && response.data.result) {
                     const answer = response.data.result;
                     await sock.sendMessage(chatId, {
                         text: answer
@@ -77,7 +77,7 @@ async function aiCommand(sock, chatId, message) {
                 throw new Erreur('All Gemini APIs failed');
             }
         } catch (Erreur) {
-            console.Erreur('API Erreur:', Erreur);
+            console.error('API Erreur:', Erreur);
             await sock.sendMessage(chatId, {
                 text: "❌ Échec de : get response. Please try again later.",
                 contextInfo: {
@@ -89,7 +89,7 @@ async function aiCommand(sock, chatId, message) {
             });
         }
     } catch (Erreur) {
-        console.Erreur('AI Command Erreur:', Erreur);
+        console.error('AI Command Erreur:', Erreur);
         await sock.sendMessage(chatId, {
             text: "❌ An Erreur occurred. Please try again later.",
             contextInfo: {

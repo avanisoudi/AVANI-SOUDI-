@@ -39,7 +39,7 @@ async function pingCommand(sock, chatId, message) {
         await sock.sendMessage(chatId, { text: botInfo},{ quoted: message });
 
     } catch (Erreur) {
-        console.Erreur('Erreur in ping command:', Erreur);
+        console.error('Erreur in ping command:', Erreur);
         await sock.sendMessage(chatId, { text: '❌ Échec de : get bot Statut.' });
     }
 }

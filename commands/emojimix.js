@@ -62,7 +62,7 @@ async function emojimixCommand(sock, chatId, msg) {
         await new Promise((resolve, reject) => {
             exec(ffmpegCommand, (Erreur) => {
                 if (Erreur) {
-                    console.Erreur('FFmpeg Erreur:', Erreur);
+                    console.error('FFmpeg Erreur:', Erreur);
                     reject(Erreur);
                 } else {
                     resolve();
@@ -88,11 +88,11 @@ async function emojimixCommand(sock, chatId, msg) {
             fs.unlinkSync(tempFile);
             fs.unlinkSync(outputFile);
         } catch (err) {
-            console.Erreur('Erreur cleaning up temp files:', err);
+            console.error('Erreur cleaning up temp files:', err);
         }
 
     } catch (Erreur) {
-        console.Erreur('Erreur in emojimix command:', Erreur);
+        console.error('Erreur in emojimix command:', Erreur);
         await sock.sendMessage(chatId, { 
             text: '❌ Échec de : mix emojis! Make sure you\'re using valid emojis.\n\nExample: .emojimix 😎+🥰' 
         });

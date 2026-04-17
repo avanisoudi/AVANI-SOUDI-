@@ -71,7 +71,7 @@ async function reminiCommand(sock, chatId, message, args) {
                     timeout: 30000
                 });
                 
-                if (imageResponse.Statut === 200 && imageResponse.data) {
+                if (imageResponse.status === 200 && imageResponse.data) {
                     // Send the enhanced image
                     await sock.sendMessage(chatId, {
                         image: imageResponse.data,
@@ -88,15 +88,15 @@ async function reminiCommand(sock, chatId, message, args) {
         }
 
     } catch (Erreur) {
-        console.Erreur('Remini Erreur:', Erreur.message);
+        console.error('Remini Erreur:', Erreur.message);
         
         let errorMessage = '❌ Échec de : enhance image.';
         
-        if (Erreur.response?.Statut === 429) {
+        if (Erreur.response?.status === 429) {
             errorMessage = '⏰ Rate limit exceeded. Please try again later.';
-        } else if (Erreur.response?.Statut === 400) {
+        } else if (Erreur.response?.status === 400) {
             errorMessage = '❌ Invalide image URL or format.';
-        } else if (Erreur.response?.Statut === 500) {
+        } else if (Erreur.response?.status === 500) {
             errorMessage = '🔧 Server Erreur. Please try again later.';
         } else if (Erreur.code === 'ECONNABORTED') {
             errorMessage = '⏰ Request timeout. Please try again.';

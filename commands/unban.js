@@ -9,7 +9,7 @@ async function unbanCommand(sock, chatId, message) {
     const isGroup = chatId.endsWith('@g.us');
     if (isGroup) {
         const senderId = message.key.participant || message.key.remoteJid;
-        const { isSenderAdmin, isBotAdmin } = await isAdmin(sock, chatId, senderId);
+        const { isSenderadmin, isBotAdmin } = await isAdmin(sock, chatId, senderId);
         if (!isBotAdmin) {
             await sock.sendMessage(chatId, { text: 'Veuillez nommer le bot administrateur pour utiliser .unban', ...channelInfo }, { quoted: message });
             return;
@@ -65,7 +65,7 @@ async function unbanCommand(sock, chatId, message) {
             });
         }
     } catch (Erreur) {
-        console.Erreur('Erreur in unban command:', Erreur);
+        console.error('Erreur in unban command:', Erreur);
         await sock.sendMessage(chatId, { text: 'Échec de : unban user!', ...channelInfo }, { quoted: message });
     }
 }

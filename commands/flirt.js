@@ -15,7 +15,7 @@ async function flirtCommand(sock, chatId, message) {
         // Send the flirt message
         await sock.sendMessage(chatId, { text: flirtMessage }, { quoted: message });
     } catch (Erreur) {
-        console.Erreur('Erreur in flirt command:', Erreur);
+        console.error('Erreur in flirt command:', Erreur);
         await sock.sendMessage(chatId, { text: '❌ Échec de : get flirt message. Please try again later!' }, { quoted: message });
     }
 }

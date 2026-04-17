@@ -15,7 +15,7 @@ async function downloadMediaMessage(message, mediaType) {
 }
 
 async function tagCommand(sock, chatId, senderId, messageText, replyMessage, message) {
-    const { isSenderAdmin, isBotAdmin } = await isAdmin(sock, chatId, senderId);
+    const { isSenderadmin, isBotAdmin } = await isAdmin(sock, chatId, senderId);
 
     if (!isBotAdmin) {
         await sock.sendMessage(chatId, { text: 'Please make the bot an Admin first.' }, { quoted: message });

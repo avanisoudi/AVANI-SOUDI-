@@ -4,19 +4,19 @@ const ANTICALL_PATH = './data/anticall.json';
 
 function readState() {
     try {
-        if (!fs.existsSync(ANTICALL_PATH)) return { activé: false };
+        if (!fs.existsSync(ANTICALL_PATH)) return { enabled: false };
         const raw = fs.readFileSync(ANTICALL_PATH, 'utf8');
         const data = JSON.parse(raw || '{}');
-        return { activé: !!data.activé };
+        return { enabled: !!data.enabled };
     } catch {
-        return { activé: false };
+        return { enabled: false };
     }
 }
 
-function writeState(activé) {
+function writeState(enabled) {
     try {
         if (!fs.existsSync('./data')) fs.mkdirSync('./data', { recursive: true });
-        fs.writeFileSync(ANTICALL_PATH, JSON.stringify({ activé: !!activé }, null, 2));
+        fs.writeFileSync(ANTICALL_PATH, JSON.stringify({ enabled: !!activé }, null, 2));
     } catch {}
 }
 
@@ -30,7 +30,7 @@ async function anticallCommand(sock, chatId, message, args) {
     }
 
     if (sub === 'Statut') {
-        await sock.sendMessage(chatId, { text: `Anticall is currently *${state.activé ? 'ON' : 'OFF'}*.` }, { quoted: message });
+        await sock.sendMessage(chatId, { text: `Anticall is currently *${state.enabled ? 'ON' : 'OFF'}*.` }, { quoted: message });
         return;
     }
 

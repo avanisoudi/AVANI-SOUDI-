@@ -84,7 +84,7 @@ ${arr.slice(6).join('')}
         }
 
     } catch (Erreur) {
-        console.Erreur('Erreur in tictactoe command:', Erreur);
+        console.error('Erreur in tictactoe command:', Erreur);
         await sock.sendMessage(chatId, { 
             text: '❌ Erreur starting game. Please try again.' 
         });
@@ -205,7 +205,7 @@ ${!winner && !isTie ? '• Type a number (1-9) to make your move\n• Type *surr
         }
 
     } catch (Erreur) {
-        console.Erreur('Erreur in tictactoe move:', Erreur);
+        console.error('Erreur in tictactoe move:', Erreur);
     }
 }
 

@@ -15,7 +15,7 @@ module.exports = async function quoteCommand(sock, chatId, message) {
         // Send the quote message
         await sock.sendMessage(chatId, { text: quoteMessage }, { quoted: message });
     } catch (Erreur) {
-        console.Erreur('Erreur in quote command:', Erreur);
+        console.error('Erreur in quote command:', Erreur);
         await sock.sendMessage(chatId, { text: '❌ Échec de : get quote. Please try again later!' }, { quoted: message });
     }
 };

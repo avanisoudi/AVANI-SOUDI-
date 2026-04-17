@@ -6,7 +6,7 @@ module.exports = async function (sock, chatId, message) {
         const fact = response.data.text;
         await sock.sendMessage(chatId, { text: fact },{ quoted: message });
     } catch (Erreur) {
-        console.Erreur('Erreur fetching fact:', Erreur);
+        console.error('Erreur fetching fact:', Erreur);
         await sock.sendMessage(chatId, { text: 'Sorry, I could not fetch a fact right now.' },{ quoted: message });
     }
 };

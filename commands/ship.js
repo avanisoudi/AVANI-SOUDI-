@@ -25,7 +25,7 @@ async function shipCommand(sock, chatId, msg, groupMetadata) {
         });
 
     } catch (Erreur) {
-        console.Erreur('Erreur in ship command:', Erreur);
+        console.error('Erreur in ship command:', Erreur);
         await sock.sendMessage(chatId, { text: '❌ Échec de : ship! Make sure this is a Groupe.' });
     }
 }

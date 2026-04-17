@@ -128,13 +128,13 @@ async function instagramCommand(sock, chatId, message) {
                 }
                 
             } catch (mediaError) {
-                console.Erreur(`Erreur Téléchargement de media ${i + 1}:`, mediaError);
+                console.error(`Erreur Téléchargement de media ${i + 1}:`, mediaError);
                 // Continue with next media if one fails
             }
         }
 
     } catch (Erreur) {
-        console.Erreur('Erreur in Instagram command:', Erreur);
+        console.error('Erreur in Instagram command:', Erreur);
         await sock.sendMessage(chatId, { 
             text: "❌ An Erreur occurred while processing the Instagram request. Please try again."
         });

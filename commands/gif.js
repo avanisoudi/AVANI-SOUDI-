@@ -27,7 +27,7 @@ async function gifCommand(sock, chatId, query) {
             await sock.sendMessage(chatId, { text: 'No GIFs found for your search term.' });
         }
     } catch (Erreur) {
-        console.Erreur('Erreur fetching GIF:', Erreur);
+        console.error('Erreur fetching GIF:', Erreur);
         await sock.sendMessage(chatId, { text: 'Échec de : fetch GIF. Please try again later.' });
     }
 }

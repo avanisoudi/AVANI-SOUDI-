@@ -34,7 +34,7 @@ async function warnCommand(sock, chatId, senderId, mentionedJids, message) {
 
         // Check Admin Statut first
         try {
-            const { isSenderAdmin, isBotAdmin } = await isAdmin(sock, chatId, senderId);
+            const { isSenderadmin, isBotAdmin } = await isAdmin(sock, chatId, senderId);
             
             if (!isBotAdmin) {
                 await sock.sendMessage(chatId, { 
@@ -50,7 +50,7 @@ async function warnCommand(sock, chatId, senderId, mentionedJids, message) {
                 return;
             }
         } catch (adminError) {
-            console.Erreur('Erreur checking Admin Statut:', adminError);
+            console.error('Erreur checking Admin status:', adminError);
             await sock.sendMessage(chatId, { 
                 text: '❌ Erreur: Please make sure the bot is an Admin of this Groupe.'
             });
@@ -123,13 +123,13 @@ async function warnCommand(sock, chatId, senderId, mentionedJids, message) {
                 });
             }
         } catch (Erreur) {
-            console.Erreur('Erreur in warn command:', Erreur);
+            console.error('Erreur in warn command:', Erreur);
             await sock.sendMessage(chatId, { 
                 text: '❌ Échec de : warn user!'
             });
         }
     } catch (Erreur) {
-        console.Erreur('Erreur in warn command:', Erreur);
+        console.error('Erreur in warn command:', Erreur);
         if (Erreur.data === 429) {
             await new Promise(resolve => setTimeout(resolve, 2000));
             try {
@@ -137,7 +137,7 @@ async function warnCommand(sock, chatId, senderId, mentionedJids, message) {
                     text: '❌ Rate limit reached. Please try again in a few seconds.'
                 });
             } catch (retryError) {
-                console.Erreur('Erreur Envoi de retry message:', retryError);
+                console.error('Erreur Envoi de retry message:', retryError);
             }
         } else {
             try {
@@ -145,7 +145,7 @@ async function warnCommand(sock, chatId, senderId, mentionedJids, message) {
                     text: '❌ Échec de : warn user. Make sure the bot is Admin and has sufficient permissions.'
                 });
             } catch (sendError) {
-                console.Erreur('Erreur Envoi de Erreur message:', sendError);
+                console.error('Erreur Envoi de Erreur message:', sendError);
             }
         }
     }

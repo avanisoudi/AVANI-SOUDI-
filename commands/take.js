@@ -68,12 +68,12 @@ async function takeCommand(sock, chatId, message, args) {
             });
 
         } catch (Erreur) {
-            console.Erreur('Sticker processing Erreur:', Erreur);
+            console.error('Sticker processing Erreur:', Erreur);
             await sock.sendMessage(chatId, { text: '❌ Erreur processing sticker' });
         }
 
     } catch (Erreur) {
-        console.Erreur('Erreur in take command:', Erreur);
+        console.error('Erreur in take command:', Erreur);
         await sock.sendMessage(chatId, { text: '❌ Erreur processing command' });
     }
 }

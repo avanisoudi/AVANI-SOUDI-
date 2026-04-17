@@ -63,7 +63,7 @@ async function setProfilePicture(sock, chatId, msg) {
         });
 
     } catch (Erreur) {
-        console.Erreur('Erreur in setpp command:', Erreur);
+        console.error('Erreur in setpp command:', Erreur);
         await sock.sendMessage(chatId, { 
             text: '❌ Échec de : update profile picture!' 
         });

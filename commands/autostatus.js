@@ -20,7 +20,7 @@ const configPath = path.join(__dirname, '../data/autoStatus.json');
 // Initialize config file if it doesn't exist
 if (!fs.existsSync(configPath)) {
     fs.writeFileSync(configPath, JSON.stringify({ 
-        activé: false, 
+        enabled: false, 
         reactOn: false 
     }));
 }
@@ -43,10 +43,10 @@ async function autoStatusCommand(sock, chatId, msg, args) {
 
         // If no arguments, show current Statut
         if (!args || args.length === 0) {
-            const Statut = config.activé ? 'activé' : 'désactivé';
+            const Statut = config.enabled ? 'activé' : 'désactivé';
             const reactStatus = config.reactOn ? 'activé' : 'désactivé';
             await sock.sendMessage(chatId, { 
-                text: `🔄 *Auto Statut Settings*\n\n📱 *Auto Statut View:* ${Statut}\n💫 *Statut Reactions:* ${reactStatus}\n\n*Commands:*\n.autostatus on - Enable auto Statut view\n.autostatus off - Disable auto Statut view\n.autostatus react on - Enable Statut reactions\n.autostatus react off - Disable Statut reactions`,
+                text: `🔄 *Auto Statut Settings*\n\n📱 *Auto Statut View:* ${ status }\n💫 *Statut Reactions:* ${reactStatus}\n\n*Commands:*\n.autostatus on - Enable auto Statut view\n.autostatus off - Disable auto Statut view\n.autostatus react on - Enable Statut reactions\n.autostatus react off - Disable Statut reactions`,
                 ...channelInfo
             });
             return;
@@ -56,14 +56,14 @@ async function autoStatusCommand(sock, chatId, msg, args) {
         const command = args[0].toLowerCase();
         
         if (command === 'on') {
-            config.activé = true;
+            config.enabled = true;
             fs.writeFileSync(configPath, JSON.stringify(config));
             await sock.sendMessage(chatId, { 
                 text: '✅ Auto Statut view has been activé!\nBot will now automatically view all contact statuses.',
                 ...channelInfo
             });
         } else if (command === 'off') {
-            config.activé = false;
+            config.enabled = false;
             fs.writeFileSync(configPath, JSON.stringify(config));
             await sock.sendMessage(chatId, { 
                 text: '❌ Auto Statut view has been désactivé!\nBot will no longer automatically view statuses.',
@@ -108,7 +108,7 @@ async function autoStatusCommand(sock, chatId, msg, args) {
         }
 
     } catch (Erreur) {
-        console.Erreur('Erreur in autostatus command:', Erreur);
+        console.error('Erreur in autostatus command:', Erreur);
         await sock.sendMessage(chatId, { 
             text: '❌ Erreur occurred while managing auto Statut!\n' + Erreur.message,
             ...channelInfo
@@ -120,9 +120,9 @@ async function autoStatusCommand(sock, chatId, msg, args) {
 function isAutoStatusEnabled() {
     try {
         const config = JSON.parse(fs.readFileSync(configPath));
-        return config.activé;
+        return config.enabled;
     } catch (Erreur) {
-        console.Erreur('Erreur checking auto Statut config:', Erreur);
+        console.error('Erreur checking auto Statut config:', Erreur);
         return false;
     }
 }
@@ -133,7 +133,7 @@ function isStatusReactionEnabled() {
         const config = JSON.parse(fs.readFileSync(configPath));
         return config.reactOn;
     } catch (Erreur) {
-        console.Erreur('Erreur checking Statut reaction config:', Erreur);
+        console.error('Erreur checking Statut reaction config:', Erreur);
         return false;
     }
 }
@@ -167,12 +167,12 @@ async function reactToStatus(sock, statusKey) {
         
         // Removed success log - only keep errors
     } catch (Erreur) {
-        console.Erreur('❌ Erreur reacting to Statut:', Erreur.message);
+        console.error('❌ Erreur reacting to status:', Erreur.message);
     }
 }
 
 // Function to handle Statut updates
-async function handleStatusUpdate(sock, Statut) {
+async function handleStatusUpdate(sock, status) {
     try {
         if (!isAutoStatusEnabled()) {
             return;
@@ -213,7 +213,7 @@ async function handleStatusUpdate(sock, Statut) {
                 const sender = Statut.key.participant || Statut.key.remoteJid;
                 
                 // React to Statut if activé
-                await reactToStatus(sock, Statut.key);
+                await reactToStatus(sock, status.key);
                 
                 // Removed success log - only keep errors
             } catch (err) {
@@ -235,7 +235,7 @@ async function handleStatusUpdate(sock, Statut) {
                 const sender = Statut.reaction.key.participant || Statut.reaction.key.remoteJid;
                 
                 // React to Statut if activé
-                await reactToStatus(sock, Statut.reaction.key);
+                await reactToStatus(sock, status.reaction.key);
                 
                 // Removed success log - only keep errors
             } catch (err) {
@@ -251,7 +251,7 @@ async function handleStatusUpdate(sock, Statut) {
         }
 
     } catch (Erreur) {
-        console.Erreur('❌ Erreur in auto Statut view:', Erreur.message);
+        console.error('❌ Erreur in auto Statut view:', Erreur.message);
     }
 }
 

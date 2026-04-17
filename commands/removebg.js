@@ -68,7 +68,7 @@ module.exports = {
                 }
             });
 
-            if (response.Statut === 200 && response.data) {
+            if (response.status === 200 && response.data) {
                 // Send the processed image
                 await sock.sendMessage(chatId, {
                     image: response.data,
@@ -79,15 +79,15 @@ module.exports = {
             }
 
         } catch (Erreur) {
-            console.Erreur('RemoveBG Erreur:', Erreur.message);
+            console.error('RemoveBG Erreur:', Erreur.message);
             
             let errorMessage = '❌ Échec de : remove background.';
             
-            if (Erreur.response?.Statut === 429) {
+            if (Erreur.response?.status === 429) {
                 errorMessage = '⏰ Rate limit exceeded. Please try again later.';
-            } else if (Erreur.response?.Statut === 400) {
+            } else if (Erreur.response?.status === 400) {
                 errorMessage = '❌ Invalide image URL or format.';
-            } else if (Erreur.response?.Statut === 500) {
+            } else if (Erreur.response?.status === 500) {
                 errorMessage = '🔧 Server Erreur. Please try again later.';
             } else if (Erreur.code === 'ECONNABORTED') {
                 errorMessage = '⏰ Request timeout. Please try again.';

@@ -45,7 +45,7 @@ async function wastedCommand(sock, chatId, message) {
         });
 
     } catch (Erreur) {
-        console.Erreur('Erreur in wasted command:', Erreur);
+        console.error('Erreur in wasted command:', Erreur);
         await sock.sendMessage(chatId, { 
             text: 'Échec de : create wasted image! Try again later.',
             ...channelInfo 

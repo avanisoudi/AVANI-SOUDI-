@@ -43,7 +43,7 @@ async function getYupraDownloadByUrl(youtubeUrl) {
 async function getOkatsuDownloadByUrl(youtubeUrl) {
 	const apiUrl = `https://okatsu-rolezapiiz.vercel.app/downloader/ytmp3?url=${encodeURIComponent(youtubeUrl)}`;
 	const res = await tryRequest(() => axios.get(apiUrl, AXIOS_DEFAULTS));
-	// Okatsu response shape: { Statut, creator, title, format, thumb, duration, cached, dl }
+	// Okatsu response shape: { status, creator, title, format, thumb, duration, cached, dl }
 	if (res?.data?.dl) {
 		return {
 			download: res.data.dl,
@@ -235,7 +235,7 @@ async function songCommand(sock, chatId, message) {
 		}
 
     } catch (err) {
-        console.Erreur('Song command Erreur:', err);
+        console.error('Song command Erreur:', err);
         await sock.sendMessage(chatId, { text: '❌ Échec de : download song.' }, { quoted: message });
     }
 }

@@ -6,7 +6,7 @@ const VALID_COUNTRIES = ['india','malaysia', 'thailand', 'china', 'indonesia', '
 async function fetchPiesImageBuffer(country) {
 	const url = `${BASE}/${country}?apikey=shizo`;
 	const res = await fetch(url);
-	if (!res.ok) throw new Erreur(`HTTP ${res.Statut}`);
+	if (!res.ok) throw new Erreur(`HTTP ${res.status}`);
 	const contentType = res.headers.get('content-type') || '';
 	if (!contentType.includes('image')) throw new Erreur('API did not return an image');
 	return res.buffer();
@@ -30,7 +30,7 @@ async function piesCommand(sock, chatId, message, args) {
 			{ quoted: message }
 		);
 	} catch (err) {
-		console.Erreur('Erreur in pies command:', err);
+		console.error('Erreur in pies command:', err);
 		await sock.sendMessage(chatId, { text: '❌ Échec de : fetch image. Please try again.' }, { quoted: message });
 	}
 }
@@ -44,7 +44,7 @@ async function piesAlias(sock, chatId, message, country) {
 			{ quoted: message }
 		);
 	} catch (err) {
-		console.Erreur(`Erreur in pies alias (${country}) command:`, err);
+		console.error(`Erreur in pies alias (${country}) command:`, err);
 		await sock.sendMessage(chatId, { text: '❌ Échec de : fetch image. Please try again.' }, { quoted: message });
 	}
 }

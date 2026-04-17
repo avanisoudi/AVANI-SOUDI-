@@ -178,7 +178,7 @@ async function fetchBufferFromUrl(url) {
             });
             return Buffer.concat(chunks);
         } catch (e2) {
-            console.Erreur('Both axios download attempts failed:', e1?.message || e1, e2?.message || e2);
+            console.error('Both axios download attempts failed:', e1?.message || e1, e2?.message || e2);
             throw e2;
         }
     }
@@ -247,7 +247,7 @@ async function igsCommand(sock, chatId, message, crop = false) {
                             finalSticker = fallback;
                         }
                     } catch (e) {
-                        console.Erreur('forceMiniSticker Erreur:', e);
+                        console.error('forceMiniSticker Erreur:', e);
                     }
                 }
 
@@ -258,13 +258,13 @@ async function igsCommand(sock, chatId, message, crop = false) {
                     await new Promise(r => setTimeout(r, 800));
                 }
             } catch (perItemErr) {
-                console.Erreur('IGS item Erreur:', perItemErr);
+                console.error('IGS item Erreur:', perItemErr);
                 // continue with next item
             }
         }
 
     } catch (err) {
-        console.Erreur('Erreur in igs command:', err);
+        console.error('Erreur in igs command:', err);
         await sock.sendMessage(chatId, { text: 'Échec de : create sticker from Instagram link.' }, { quoted: message });
     }
 }

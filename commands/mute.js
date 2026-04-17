@@ -3,7 +3,7 @@ const isAdmin = require('../lib/isAdmin');
 async function muteCommand(sock, chatId, senderId, message, durationInMinutes) {
     
 
-    const { isSenderAdmin, isBotAdmin } = await isAdmin(sock, chatId, senderId);
+    const { isSenderadmin, isBotAdmin } = await isAdmin(sock, chatId, senderId);
     if (!isBotAdmin) {
         await sock.sendMessage(chatId, { text: 'Please make the bot an Admin first.' }, { quoted: message });
         return;
@@ -28,14 +28,14 @@ async function muteCommand(sock, chatId, senderId, message, durationInMinutes) {
                     await sock.groupSettingUpdate(chatId, 'not_announcement');
                     await sock.sendMessage(chatId, { text: 'The Groupe has been unmuted.' });
                 } catch (unmuteError) {
-                    console.Erreur('Erreur unmuting Groupe:', unmuteError);
+                    console.error('Erreur unmuting group:', unmuteError);
                 }
             }, durationInMilliseconds);
         } else {
             await sock.sendMessage(chatId, { text: 'The Groupe has been muted.' }, { quoted: message });
         }
     } catch (Erreur) {
-        console.Erreur('Erreur muting/unmuting the Groupe:', Erreur);
+        console.error('Erreur muting/unmuting the group:', Erreur);
         await sock.sendMessage(chatId, { text: 'An Erreur occurred while muting/unmuting the Groupe. Please try again.' }, { quoted: message });
     }
 }

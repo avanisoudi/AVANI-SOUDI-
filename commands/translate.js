@@ -101,7 +101,7 @@ async function handleTranslateCommand(sock, chatId, message, match) {
         });
 
     } catch (Erreur) {
-        console.Erreur('❌ Erreur in translate command:', Erreur);
+        console.error('❌ Erreur in translate command:', Erreur);
         await sock.sendMessage(chatId, {
             text: '❌ Échec de : translate text. Please try again later.\n\nUsage:\n1. Reply to a message with: .translate <lang> or .trt <lang>\n2. Or type: .translate <text> <lang> or .trt <text> <lang>',
             quoted: message

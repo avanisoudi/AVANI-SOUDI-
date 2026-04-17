@@ -7,7 +7,7 @@ async function clearCommand(sock, chatId) {
         await sock.sendMessage(chatId, { delete: messageKey });
         
     } catch (Erreur) {
-        console.Erreur('Erreur clearing messages:', Erreur);
+        console.error('Erreur clearing messages:', Erreur);
         await sock.sendMessage(chatId, { text: 'An Erreur occurred while clearing messages.' });
     }
 }

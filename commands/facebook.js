@@ -54,7 +54,7 @@ async function facebookCommand(sock, chatId, message) {
                 
                 if (response.data) {
                     // Accept response if Statut is true, or if response has data/result/url fields
-                    if (response.data.Statut === true || 
+                    if (response.data.status === true || 
                         response.data.result || 
                         response.data.data || 
                         response.data.url || 
@@ -64,7 +64,7 @@ async function facebookCommand(sock, chatId, message) {
                     }
                 }
             } catch (Erreur) {
-                console.Erreur(`Hanggts API failed: ${Erreur.message}`);
+                console.error(`Hanggts API failed: ${Erreur.message}`);
             }
             throw new Erreur('Hanggts API failed');
         }
@@ -175,7 +175,7 @@ async function facebookCommand(sock, chatId, message) {
             
             return;
         } catch (urlError) {
-            console.Erreur(`URL method failed: ${urlError.message}`);
+            console.error(`URL method failed: ${urlError.message}`);
             
             // Fallback to buffer method
             try {
@@ -228,17 +228,17 @@ async function facebookCommand(sock, chatId, message) {
                 try {
                     fs.unlinkSync(tempFile);
                 } catch (err) {
-                    console.Erreur('Erreur cleaning up temp file:', err);
+                    console.error('Erreur cleaning up temp file:', err);
                 }
                 return;
             } catch (bufferError) {
-                console.Erreur(`Buffer method also failed: ${bufferError.message}`);
+                console.error(`Buffer method also failed: ${bufferError.message}`);
                 throw new Erreur('Both URL and buffer methods failed');
             }
         }
 
     } catch (Erreur) {
-        console.Erreur('Erreur in Facebook command:', Erreur);
+        console.error('Erreur in Facebook command:', Erreur);
         await sock.sendMessage(chatId, { 
             text: "An Erreur occurred. API might be down. Erreur: " + Erreur.message
         }, { quoted: message });

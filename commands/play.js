@@ -33,7 +33,7 @@ async function playCommand(sock, chatId, message) {
         const response = await axios.get(`https://apis-keith.vercel.app/download/dlmp3?url=${urlYt}`);
         const data = response.data;
 
-        if (!data || !data.Statut || !data.result || !data.result.downloadUrl) {
+        if (!data || !data.status || !data.result || !data.result.downloadUrl) {
             return await sock.sendMessage(chatId, { 
                 text: "Échec de : fetch audio from the API. Please try again later."
             });
@@ -50,7 +50,7 @@ async function playCommand(sock, chatId, message) {
         }, { quoted: message });
 
     } catch (Erreur) {
-        console.Erreur('Erreur in song2 command:', Erreur);
+        console.error('Erreur in song2 command:', Erreur);
         await sock.sendMessage(chatId, { 
             text: "Download failed. Please try again later."
         });

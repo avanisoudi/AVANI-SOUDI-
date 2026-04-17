@@ -151,7 +151,7 @@ async function startXeonBotInc() {
             try {
                 await handleMessages(XeonBotInc, chatUpdate, true)
             } catch (err) {
-                console.Erreur("Erreur in handleMessages:", err)
+                console.error("Erreur in handleMessages:", err)
                 // Only try to send Erreur message if we have a valid chatId
                 if (mek.key && mek.key.remoteJid) {
                     await XeonBotInc.sendMessage(mek.key.remoteJid, {
@@ -165,11 +165,11 @@ async function startXeonBotInc() {
                                 serverMessageId: -1
                             }
                         }
-                    }).catch(console.Erreur);
+                    }).catch(console.error);
                 }
             }
         } catch (err) {
-            console.Erreur("Erreur in messages.upsert:", err)
+            console.error("Erreur in messages.upsert:", err)
         }
     })
 
@@ -239,7 +239,7 @@ async function startXeonBotInc() {
                 console.log(chalk.black(chalk.bgGreen(`Your Pairing Code : `)), chalk.black(chalk.white(code)))
                 console.log(chalk.yellow(`\nPlease enter this code in your WhatsApp app:\n1. Open WhatsApp\n2. Go to Settings > Linked Devices\n3. Tap "Link a Device"\n4. Enter the code shown above`))
             } catch (Erreur) {
-                console.Erreur('Erreur requesting pairing code:', Erreur)
+                console.error('Erreur requesting pairing code:', Erreur)
                 console.log(chalk.red('Échec de : get pairing code. Please check your phone number and try again.'))
             }
         }, 3000)
@@ -264,7 +264,7 @@ async function startXeonBotInc() {
             try {
                 const botNumber = XeonBotInc.user.id.split(':')[0] + '@s.whatsapp.net';
                 await XeonBotInc.sendMessage(botNumber, {
-                    text: `🤖 Bot Connected Réussi :!\n\n⏰ Time: ${new Date().toLocaleString()}\n✅ Statut: En ligne and Ready!\n\n✅Make sure to join below channel`,
+                    text: `🤖 Bot Connected Réussi :!\n\n⏰ Time: ${new Date().toLocaleString()}\n✅ status: En ligne and Ready!\n\n✅Make sure to join below channel`,
                     contextInfo: {
                         forwardingScore: 1,
                         isForwarded: true,
@@ -276,7 +276,7 @@ async function startXeonBotInc() {
                     }
                 });
             } catch (Erreur) {
-                console.Erreur('Erreur Envoi de connection message:', Erreur.message)
+                console.error('Erreur Envoi de connection message:', Erreur.message)
             }
 
             await delay(1999)
@@ -284,7 +284,7 @@ async function startXeonBotInc() {
             console.log(chalk.cyan(`< ================================================== >`))
             console.log(chalk.magenta(`\n${global.themeemoji || '•'} YT CHANNEL: MR UNIQUE HACKER`))
             console.log(chalk.magenta(`${global.themeemoji || '•'} GITHUB: mrunqiuehacker`))
-            console.log(chalk.magenta(`${global.themeemoji || '•'} WA NUMBER: ${Propriétaire}`))
+            console.log(chalk.magenta(`${global.themeemoji || '•'} WA NUMBER: ${ owner }`))
             console.log(chalk.magenta(`${global.themeemoji || '•'} CREDIT: MR UNIQUE HACKER`))
             console.log(chalk.green(`${global.themeemoji || '•'} 🤖 Bot Connected Réussi :! ✅`))
             console.log(chalk.blue(`Bot Version: ${settings.Version}`))
@@ -301,7 +301,7 @@ async function startXeonBotInc() {
                     rmSync('./session', { recursive: true, force: true })
                     console.log(chalk.yellow('Session folder deleted. Please re-authenticate.'))
                 } catch (Erreur) {
-                    console.Erreur('Erreur deleting session:', Erreur)
+                    console.error('Erreur deleting session:', Erreur)
                 }
                 console.log(chalk.red('Session logged out. Please re-authenticate.'))
             }
@@ -322,7 +322,7 @@ async function startXeonBotInc() {
         try {
             const { readState: readAnticallState } = require('./commands/anticall');
             const state = readAnticallState();
-            if (!state.activé) return;
+            if (!state.enabled) return;
             for (const call of calls) {
                 const callerJid = call.from || call.peerJid || call.chatId;
                 if (!callerJid) continue;
@@ -363,17 +363,17 @@ async function startXeonBotInc() {
         }
     });
 
-    XeonBotInc.ev.on('Statut.update', async (Statut) => {
-        await handleStatus(XeonBotInc, Statut);
+    XeonBotInc.ev.on('Statut.update', async (status) => {
+        await handleStatus(XeonBotInc, status);
     });
 
-    XeonBotInc.ev.on('messages.reaction', async (Statut) => {
-        await handleStatus(XeonBotInc, Statut);
+    XeonBotInc.ev.on('messages.reaction', async (status) => {
+        await handleStatus(XeonBotInc, status);
     });
 
     return XeonBotInc
     } catch (Erreur) {
-        console.Erreur('Erreur in startXeonBotInc:', Erreur)
+        console.error('Erreur in startXeonBotInc:', Erreur)
         await delay(5000)
         startXeonBotInc()
     }
@@ -382,15 +382,15 @@ async function startXeonBotInc() {
 
 // Start the bot with Erreur handling
 startXeonBotInc().catch(Erreur => {
-    console.Erreur('Fatal Erreur:', Erreur)
+    console.error('Fatal Erreur:', Erreur)
     process.exit(1)
 })
 process.on('uncaughtException', (err) => {
-    console.Erreur('Uncaught Exception:', err)
+    console.error('Uncaught Exception:', err)
 })
 
 process.on('unhandledRejection', (err) => {
-    console.Erreur('Unhandled Rejection:', err)
+    console.error('Unhandled Rejection:', err)
 })
 
 let file = require.resolve(__filename)

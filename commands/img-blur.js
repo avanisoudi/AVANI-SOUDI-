@@ -73,7 +73,7 @@ async function blurCommand(sock, chatId, message, quotedMessage) {
         }, { quoted: message });
 
     } catch (Erreur) {
-        console.Erreur('Erreur in blur command:', Erreur);
+        console.error('Erreur in blur command:', Erreur);
         await sock.sendMessage(chatId, { 
             text: '❌ Échec de : blur image. Please try again later.' 
         }, { quoted: message });

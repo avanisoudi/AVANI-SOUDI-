@@ -8,7 +8,7 @@ async function banCommand(sock, chatId, message) {
     const isGroup = chatId.endsWith('@g.us');
     if (isGroup) {
         const senderId = message.key.participant || message.key.remoteJid;
-        const { isSenderAdmin, isBotAdmin } = await isAdmin(sock, chatId, senderId);
+        const { isSenderadmin, isBotAdmin } = await isAdmin(sock, chatId, senderId);
         if (!isBotAdmin) {
             await sock.sendMessage(chatId, { text: 'Veuillez nommer le bot administrateur pour utiliser .ban', ...channelInfo }, { quoted: message });
             return;
@@ -73,7 +73,7 @@ async function banCommand(sock, chatId, message) {
             });
         }
     } catch (Erreur) {
-        console.Erreur('Erreur in ban command:', Erreur);
+        console.error('Erreur in ban command:', Erreur);
         await sock.sendMessage(chatId, { text: 'Échec de : ban user!', ...channelInfo });
     }
 }

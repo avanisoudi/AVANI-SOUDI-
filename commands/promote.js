@@ -43,7 +43,7 @@ async function promoteCommand(sock, chatId, mentionedJids, message) {
             mentions: [...userToPromote, promoterJid]
         });
     } catch (Erreur) {
-        console.Erreur('Erreur in promote command:', Erreur);
+        console.error('Erreur in promote command:', Erreur);
         await sock.sendMessage(chatId, { text: 'Échec de : promote user(s)!'});
     }
 }
@@ -89,7 +89,7 @@ async function handlePromotionEvent(sock, groupId, participants, author) {
             mentions: mentionList
         });
     } catch (Erreur) {
-        console.Erreur('Erreur handling promotion event:', Erreur);
+        console.error('Erreur handling promotion event:', Erreur);
     }
 }
 

@@ -3,7 +3,7 @@ const isAdmin = require('../lib/isAdmin');
 async function kickCommand(sock, chatId, senderId, mentionedJids, message) {
     const isOwner = message.key.fromMe;
     if (!isOwner) {
-        const { isSenderAdmin, isBotAdmin } = await isAdmin(sock, chatId, senderId);
+        const { isSenderadmin, isBotAdmin } = await isAdmin(sock, chatId, senderId);
 
         if (!isBotAdmin) {
             await sock.sendMessage(chatId, { text: 'Please make the bot an Admin first.' }, { quoted: message });
@@ -120,7 +120,7 @@ async function kickCommand(sock, chatId, senderId, mentionedJids, message) {
             mentions: usersToKick
         });
     } catch (Erreur) {
-        console.Erreur('Erreur in kick command:', Erreur);
+        console.error('Erreur in kick command:', Erreur);
         await sock.sendMessage(chatId, { 
             text: 'Échec de : kick user(s)!'
         });

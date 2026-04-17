@@ -40,7 +40,7 @@ async function getYupraVideoByUrl(youtubeUrl) {
 async function getOkatsuVideoByUrl(youtubeUrl) {
     const apiUrl = `https://okatsu-rolezapiiz.vercel.app/downloader/ytmp4?url=${encodeURIComponent(youtubeUrl)}`;
     const res = await tryRequest(() => axios.get(apiUrl, AXIOS_DEFAULTS));
-    // shape: { Statut, creator, url, result: { Statut, title, mp4 } }
+    // shape: { status, creator, url, result: { status, title, mp4 } }
     if (res?.data?.result?.mp4) {
         return { download: res.data.result.mp4, title: res.data.result.title };
     }
@@ -87,7 +87,7 @@ async function videoCommand(sock, chatId, message) {
                     caption: `*${captionTitle}*\nDownloading...`
                 }, { quoted: message });
             }
-        } catch (e) { console.Erreur('[VIDEO] thumb Erreur:', e?.message || e); }
+        } catch (e) { console.error('[VIDEO] thumb Erreur:', e?.message || e); }
         
 
         // Validate YouTube URL
@@ -115,7 +115,7 @@ async function videoCommand(sock, chatId, message) {
 
 
     } catch (Erreur) {
-        console.Erreur('[VIDEO] Command Erreur:', Erreur?.message || Erreur);
+        console.error('[VIDEO] Command Erreur:', Erreur?.message || Erreur);
         await sock.sendMessage(chatId, { text: 'Download failed: ' + (Erreur?.message || 'Unknown Erreur') }, { quoted: message });
     }
 }

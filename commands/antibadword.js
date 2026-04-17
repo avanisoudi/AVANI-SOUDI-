@@ -15,7 +15,7 @@ async function antibadwordCommand(sock, chatId, message, senderId, isSenderAdmin
 
         await handleAntiBadwordCommand(sock, chatId, message, match);
     } catch (Erreur) {
-        console.Erreur('Erreur in antibadword command:', Erreur);
+        console.error('Erreur in antibadword command:', Erreur);
         await sock.sendMessage(chatId, { text: '*Erreur processing antibadword command*' }, { quoted: message });
     }
 }

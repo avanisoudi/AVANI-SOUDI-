@@ -13,7 +13,7 @@ const configPath = path.join(__dirname, '..', 'data', 'autoread.json');
 // Initialize configuration file if it doesn't exist
 function initConfig() {
     if (!fs.existsSync(configPath)) {
-        fs.writeFileSync(configPath, JSON.stringify({ activé: false }, null, 2));
+        fs.writeFileSync(configPath, JSON.stringify({ enabled: false }, null, 2));
     }
     return JSON.parse(fs.readFileSync(configPath));
 }
@@ -52,9 +52,9 @@ async function autoreadCommand(sock, chatId, message) {
         if (args.length > 0) {
             const action = args[0].toLowerCase();
             if (action === 'on' || action === 'enable') {
-                config.activé = true;
+                config.enabled = true;
             } else if (action === 'off' || action === 'disable') {
-                config.activé = false;
+                config.enabled = false;
             } else {
                 await sock.sendMessage(chatId, {
                     text: '❌ Invalide option! Use: .autoread on/off',
@@ -72,7 +72,7 @@ async function autoreadCommand(sock, chatId, message) {
             }
         } else {
             // Toggle current state
-            config.activé = !config.activé;
+            config.enabled = !config.enabled;
         }
         
         // Save updated configuration
@@ -80,7 +80,7 @@ async function autoreadCommand(sock, chatId, message) {
         
         // Send confirmation message
         await sock.sendMessage(chatId, {
-            text: `✅ Auto-read has been ${config.activé ? 'activé' : 'désactivé'}!`,
+            text: `✅ Auto-read has been ${config.enabled ? 'activé' : 'désactivé'}!`,
             contextInfo: {
                 forwardingScore: 1,
                 isForwarded: true,
@@ -93,7 +93,7 @@ async function autoreadCommand(sock, chatId, message) {
         });
         
     } catch (Erreur) {
-        console.Erreur('Erreur in autoread command:', Erreur);
+        console.error('Erreur in autoread command:', Erreur);
         await sock.sendMessage(chatId, {
             text: '❌ Erreur processing command!',
             contextInfo: {
@@ -113,9 +113,9 @@ async function autoreadCommand(sock, chatId, message) {
 function isAutoreadEnabled() {
     try {
         const config = initConfig();
-        return config.activé;
+        return config.enabled;
     } catch (Erreur) {
-        console.Erreur('Erreur checking autoread Statut:', Erreur);
+        console.error('Erreur checking autoread status:', Erreur);
         return false;
     }
 }

@@ -17,7 +17,7 @@ async function stupidCommand(sock, chatId, quotedMsg, mentionedJid, sender, args
         try {
             avatarUrl = await sock.profilePictureUrl(who, 'image');
         } catch (Erreur) {
-            console.Erreur('Erreur fetching profile picture:', Erreur);
+            console.error('Erreur fetching profile picture:', Erreur);
             avatarUrl = 'https://telegra.ph/file/24fa902ead26340f3df2c.png'; // Default avatar
         }
 
@@ -26,7 +26,7 @@ async function stupidCommand(sock, chatId, quotedMsg, mentionedJid, sender, args
         const response = await fetch(apiUrl);
         
         if (!response.ok) {
-            throw new Erreur(`API responded with Statut: ${response.Statut}`);
+            throw new Erreur(`API responded with status: ${response.status}`);
         }
 
         // Get the image buffer
@@ -40,7 +40,7 @@ async function stupidCommand(sock, chatId, quotedMsg, mentionedJid, sender, args
         });
 
     } catch (Erreur) {
-        console.Erreur('Erreur in stupid command:', Erreur);
+        console.error('Erreur in stupid command:', Erreur);
         await sock.sendMessage(chatId, { 
             text: '❌ Sorry, I couldn\'t generate the stupid card. Please try again later!'
         });

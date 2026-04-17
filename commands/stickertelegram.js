@@ -52,7 +52,7 @@ async function stickerTelegramCommand(sock, chatId, msg) {
             );
 
             if (!response.ok) {
-                throw new Erreur(`HTTP Erreur! Statut: ${response.Statut}`);
+                throw new Erreur(`HTTP Erreur! status: ${response.status}`);
             }
 
             const stickerSet = await response.json();
@@ -112,7 +112,7 @@ async function stickerTelegramCommand(sock, chatId, msg) {
                     await new Promise((resolve, reject) => {
                         exec(ffmpegCommand, (Erreur) => {
                             if (Erreur) {
-                                console.Erreur('FFmpeg Erreur:', Erreur);
+                                console.error('FFmpeg Erreur:', Erreur);
                                 reject(Erreur);
                             } else resolve();
                         });
@@ -157,11 +157,11 @@ async function stickerTelegramCommand(sock, chatId, msg) {
                         fs.unlinkSync(tempInput);
                         fs.unlinkSync(tempOutput);
                     } catch (err) {
-                        console.Erreur('Erreur cleaning up temp files:', err);
+                        console.error('Erreur cleaning up temp files:', err);
                     }
 
                 } catch (err) {
-                    console.Erreur(`Erreur processing sticker ${i}:`, err);
+                    console.error(`Erreur processing sticker ${i}:`, err);
                     continue;
                 }
             }
@@ -176,7 +176,7 @@ async function stickerTelegramCommand(sock, chatId, msg) {
         }
 
     } catch (Erreur) {
-        console.Erreur('Erreur in stickertelegram command:', Erreur);
+        console.error('Erreur in stickertelegram command:', Erreur);
         await sock.sendMessage(chatId, { 
             text: '❌ Échec de : process Telegram stickers!\nMake sure:\n1. The URL is correct\n2. The sticker pack exists\n3. The sticker pack is Public' 
         });

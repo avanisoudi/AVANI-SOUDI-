@@ -25,13 +25,13 @@ async function settingsCommand(sock, chatId, message) {
         const dataDir = './data';
 
         const Mode = readJsonSafe(`${dataDir}/messageCount.json`, { isPublic: true });
-        const autoStatus = readJsonSafe(`${dataDir}/autoStatus.json`, { activé: false });
-        const autoread = readJsonSafe(`${dataDir}/autoread.json`, { activé: false });
-        const autotyping = readJsonSafe(`${dataDir}/autotyping.json`, { activé: false });
-        const pmblocker = readJsonSafe(`${dataDir}/pmblocker.json`, { activé: false });
-        const anticall = readJsonSafe(`${dataDir}/anticall.json`, { activé: false });
+        const autoStatus = readJsonSafe(`${dataDir}/autoStatus.json`, { enabled: false });
+        const autoread = readJsonSafe(`${dataDir}/autoread.json`, { enabled: false });
+        const autotyping = readJsonSafe(`${dataDir}/autotyping.json`, { enabled: false });
+        const pmblocker = readJsonSafe(`${dataDir}/pmblocker.json`, { enabled: false });
+        const anticall = readJsonSafe(`${dataDir}/anticall.json`, { enabled: false });
         const userGroupData = readJsonSafe(`${dataDir}/userGroupData.json`, {
-            antilink: {}, antibadword: {}, Bienvenue: {}, Au revoir: {}, chatbot: {}, antitag: {}
+            antilink: {}, antibadword: {}, welcome: {}, goodbye: {}, chatbot: {}, antitag: {}
         });
         const autoReaction = Boolean(userGroupData.autoReaction);
 
@@ -39,8 +39,8 @@ async function settingsCommand(sock, chatId, message) {
         const groupId = isGroup ? chatId : null;
         const antilinkOn = groupId ? Boolean(userGroupData.antilink && userGroupData.antilink[groupId]) : false;
         const antibadwordOn = groupId ? Boolean(userGroupData.antibadword && userGroupData.antibadword[groupId]) : false;
-        const welcomeOn = groupId ? Boolean(userGroupData.Bienvenue && userGroupData.Bienvenue[groupId]) : false;
-        const goodbyeOn = groupId ? Boolean(userGroupData.Au revoir && userGroupData.Au revoir[groupId]) : false;
+        const welcomeOn = groupId ? Boolean(userGroupData.welcome && userGroupData.welcome[groupId]) : false;
+        const goodbyeOn = groupId ? Boolean(userGroupData.goodbye && userGroupData.goodbye[groupId]) : false;
         const chatbotOn = groupId ? Boolean(userGroupData.chatbot && userGroupData.chatbot[groupId]) : false;
         const antitagCfg = groupId ? (userGroupData.antitag && userGroupData.antitag[groupId]) : null;
 
@@ -48,15 +48,15 @@ async function settingsCommand(sock, chatId, message) {
         lines.push('*BOT SETTINGS*');
         lines.push('');
         lines.push(`• Mode: ${Mode.isPublic ? 'Public' : 'Privé'}`);
-        lines.push(`• Auto Statut: ${autoStatus.activé ? 'ON' : 'OFF'}`);
-        lines.push(`• Autoread: ${autoread.activé ? 'ON' : 'OFF'}`);
-        lines.push(`• Autotyping: ${autotyping.activé ? 'ON' : 'OFF'}`);
-        lines.push(`• PM Blocker: ${pmblocker.activé ? 'ON' : 'OFF'}`);
-        lines.push(`• Anticall: ${anticall.activé ? 'ON' : 'OFF'}`);
+        lines.push(`• Auto status: ${autoStatus.enabled ? 'ON' : 'OFF'}`);
+        lines.push(`• Autoread: ${autoread.enabled ? 'ON' : 'OFF'}`);
+        lines.push(`• Autotyping: ${autotyping.enabled ? 'ON' : 'OFF'}`);
+        lines.push(`• PM Blocker: ${pmblocker.enabled ? 'ON' : 'OFF'}`);
+        lines.push(`• Anticall: ${anticall.enabled ? 'ON' : 'OFF'}`);
         lines.push(`• Auto Reaction: ${autoReaction ? 'ON' : 'OFF'}`);
         if (groupId) {
             lines.push('');
-            lines.push(`Groupe: ${groupId}`);
+            lines.push(`group: ${groupId}`);
             if (antilinkOn) {
                 const al = userGroupData.antilink[groupId];
                 lines.push(`• Antilink: ON (action: ${al.action || 'delete'})`);
@@ -69,10 +69,10 @@ async function settingsCommand(sock, chatId, message) {
             } else {
                 lines.push('• Antibadword: OFF');
             }
-            lines.push(`• Bienvenue: ${welcomeOn ? 'ON' : 'OFF'}`);
-            lines.push(`• Au revoir: ${goodbyeOn ? 'ON' : 'OFF'}`);
+            lines.push(`• welcome: ${welcomeOn ? 'ON' : 'OFF'}`);
+            lines.push(`• goodbye: ${goodbyeOn ? 'ON' : 'OFF'}`);
             lines.push(`• Chatbot: ${chatbotOn ? 'ON' : 'OFF'}`);
-            if (antitagCfg && antitagCfg.activé) {
+            if (antitagCfg && antitagCfg.enabled) {
                 lines.push(`• Antitag: ON (action: ${antitagCfg.action || 'delete'})`);
             } else {
                 lines.push('• Antitag: OFF');
@@ -84,7 +84,7 @@ async function settingsCommand(sock, chatId, message) {
 
         await sock.sendMessage(chatId, { text: lines.join('\n') }, { quoted: message });
     } catch (Erreur) {
-        console.Erreur('Erreur in settings command:', Erreur);
+        console.error('Erreur in settings command:', Erreur);
         await sock.sendMessage(chatId, { text: 'Échec de : read settings.' }, { quoted: message });
     }
 }

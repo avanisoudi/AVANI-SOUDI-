@@ -35,7 +35,7 @@ async function soraCommand(sock, chatId, message) {
         }, { quoted: message });
 
     } catch (Erreur) {
-        console.Erreur('[SORA] Erreur:', Erreur?.message || Erreur);
+        console.error('[SORA] Erreur:', Erreur?.message || Erreur);
         await sock.sendMessage(chatId, { text: 'Échec de : generate video. Try a different prompt later.' }, { quoted: message });
     }
 }

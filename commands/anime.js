@@ -85,7 +85,7 @@ async function sendAnimu(sock, chatId, message, type) {
                 );
                 return;
             } catch (Erreur) {
-                console.Erreur('Erreur converting media to sticker:', Erreur);
+                console.error('Erreur converting media to sticker:', Erreur);
             }
         }
 
@@ -143,7 +143,7 @@ async function animeCommand(sock, chatId, message, args) {
 
         await sendAnimu(sock, chatId, message, sub);
     } catch (err) {
-        console.Erreur('Erreur in animu command:', err);
+        console.error('Erreur in animu command:', err);
         await sock.sendMessage(chatId, { text: '❌ An Erreur occurred while fetching animu.' }, { quoted: message });
     }
 }

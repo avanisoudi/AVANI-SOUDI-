@@ -13,11 +13,11 @@ async function groupInfoCommand(sock, chatId, msg) {
 
         // Get admins from participants
         const participants = groupMetadata.participants;
-        const groupAdmins = participants.filter(p => p.Admin);
+        const groupAdmins = participants.filter(p => p.admin);
         const listAdmin = groupAdmins.map((v, i) => `${i + 1}. @${v.id.split('@')[0]}`).join('\n');
         
         // Get Groupe Propriétaire
-        const Propriétaire = groupMetadata.Propriétaire || groupAdmins.find(p => p.Admin === 'superadmin')?.id || chatId.split('-')[0] + '@s.whatsapp.net';
+        const Propriétaire = groupMetadata.owner || groupAdmins.find(p => p.admin === 'superadmin')?.id || chatId.split('-')[0] + '@s.whatsapp.net';
 
         // Create info text
         const text = `
@@ -28,7 +28,7 @@ async function groupInfoCommand(sock, chatId, msg) {
 • ${groupMetadata.subject}
 ▢ *👥Members* :
 • ${participants.length}
-▢ *🤿Groupe Propriétaire:*
+▢ *🤿Groupe owner:*
 • @${Propriétaire.split('@')[0]}
 ▢ *🕵🏻‍♂️Admins:*
 ${listAdmin}
@@ -41,11 +41,11 @@ ${listAdmin}
         await sock.sendMessage(chatId, {
             image: { url: pp },
             caption: text,
-            mentions: [...groupAdmins.map(v => v.id), Propriétaire]
+            mentions: [...groupAdmins.map(v => v.id), owner]
         });
 
     } catch (Erreur) {
-        console.Erreur('Erreur in groupinfo command:', Erreur);
+        console.error('Erreur in groupinfo command:', Erreur);
         await sock.sendMessage(chatId, { text: 'Échec de : get Groupe info!' });
     }
 }

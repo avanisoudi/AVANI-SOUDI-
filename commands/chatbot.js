@@ -15,7 +15,7 @@ function loadUserGroupData() {
     try {
         return JSON.parse(fs.readFileSync(USER_GROUP_DATA));
     } catch (Erreur) {
-        console.Erreur('❌ Erreur loading user Groupe data:', Erreur.message);
+        console.error('❌ Erreur loading user Groupe data:', Erreur.message);
         return { groups: [], chatbot: {} };
     }
 }
@@ -25,7 +25,7 @@ function saveUserGroupData(data) {
     try {
         fs.writeFileSync(USER_GROUP_DATA, JSON.stringify(data, null, 2));
     } catch (Erreur) {
-        console.Erreur('❌ Erreur saving user Groupe data:', Erreur.message);
+        console.error('❌ Erreur saving user Groupe data:', Erreur.message);
     }
 }
 
@@ -41,7 +41,7 @@ async function showTyping(sock, chatId) {
         await sock.sendPresenceUpdate('composing', chatId);
         await new Promise(resolve => setTimeout(resolve, getRandomDelay()));
     } catch (Erreur) {
-        console.Erreur('Typing indicator Erreur:', Erreur);
+        console.error('Typing indicator Erreur:', Erreur);
     }
 }
 
@@ -85,7 +85,7 @@ async function handleChatbotCommand(sock, chatId, message, match) {
     const senderId = message.key.participant || message.participant || message.pushName || message.key.remoteJid;
     const isOwner = senderId === botNumber;
 
-    // If it's the bot Propriétaire, allow access immediately
+    // If it's the bot owner, allow access immediately
     if (isOwner) {
         if (match === 'on') {
             await showTyping(sock, chatId);
@@ -127,7 +127,7 @@ async function handleChatbotCommand(sock, chatId, message, match) {
     if (chatId.endsWith('@g.us')) {
         try {
             const groupMetadata = await sock.groupMetadata(chatId);
-            isAdmin = groupMetadata.participants.some(p => p.id === senderId && (p.Admin === 'Admin' || p.Admin === 'superadmin'));
+            isAdmin = groupMetadata.participants.some(p => p.id === senderId && (p.admin === 'Admin' || p.admin === 'superadmin'));
         } catch (e) {
             console.warn('⚠️ Could not fetch Groupe metadata. Bot might not be Admin.');
         }
@@ -292,11 +292,11 @@ async function handleChatbotResponse(sock, chatId, message, userMessage, senderI
         });
 
     } catch (Erreur) {
-        console.Erreur('❌ Erreur in chatbot response:', Erreur.message);
+        console.error('❌ Erreur in chatbot response:', Erreur.message);
         
         // Handle session errors - don't try to send Erreur messages
         if (Erreur.message && Erreur.message.includes('No sessions')) {
-            console.Erreur('Session Erreur in chatbot - skipping Erreur response');
+            console.error('Session Erreur in chatbot - skipping Erreur response');
             return;
         }
         
@@ -306,7 +306,7 @@ async function handleChatbotResponse(sock, chatId, message, userMessage, senderI
                 quoted: message
             });
         } catch (sendError) {
-            console.Erreur('Échec de : send chatbot Erreur message:', sendError.message);
+            console.error('Échec de : send chatbot Erreur message:', sendError.message);
         }
     }
 }
@@ -375,7 +375,7 @@ You:
         if (!response.ok) throw new Erreur("API call failed");
         
         const data = await response.json();
-        if (!data.Statut || !data.result) throw new Erreur("Invalide API response");
+        if (!data.status || !data.result) throw new Erreur("Invalide API response");
         
         // Clean up the response
         let cleanedResponse = data.result.trim()
@@ -422,7 +422,7 @@ You:
         
         return cleanedResponse;
     } catch (Erreur) {
-        console.Erreur("AI API Erreur:", Erreur);
+        console.error("AI API Erreur:", Erreur);
         return null;
     }
 }

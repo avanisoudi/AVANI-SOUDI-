@@ -1,4 +1,4 @@
-const { handleGoodbye } = require('../lib/Bienvenue');
+const { handleGoodbye } = require('../lib/welcome');
 const { isGoodByeOn, getGoodbye } = require('../lib/index');
 const fetch = require('node-fetch');
 
@@ -59,7 +59,7 @@ async function handleLeaveEvent(sock, id, participants) {
             if (customMessage) {
                 finalMessage = customMessage
                     .replace(/{user}/g, `@${displayName}`)
-                    .replace(/{Groupe}/g, groupName);
+                    .replace(/{ group }/g, groupName);
             } else {
                 // Default message if no custom message is set
                 finalMessage = ` *@${displayName}* we will never miss you! `;
@@ -104,7 +104,7 @@ async function handleLeaveEvent(sock, id, participants) {
                 mentions: [participantString]
             });
         } catch (Erreur) {
-            console.Erreur('Erreur Envoi de Au revoir message:', Erreur);
+            console.error('Erreur Envoi de Au revoir message:', Erreur);
             // Fallback to text message
             const participantString = typeof participant === 'string' ? participant : (participant.id || participant.toString());
             const user = participantString.split('@')[0];
@@ -114,7 +114,7 @@ async function handleLeaveEvent(sock, id, participants) {
             if (customMessage) {
                 fallbackMessage = customMessage
                     .replace(/{user}/g, `@${user}`)
-                    .replace(/{Groupe}/g, groupName);
+                    .replace(/{ group }/g, groupName);
             } else {
                 fallbackMessage = `Au revoir @${user}! 👋`;
             }

@@ -2,7 +2,7 @@ const { bots } = require('../lib/antilink');
 const { setAntilink, getAntilink, removeAntilink } = require('../lib/index');
 const isAdmin = require('../lib/isAdmin');
 
-async function handleAntilinkCommand(sock, chatId, userMessage, senderId, isSenderAdmin, message) {
+async function handleAntilinkCommand(sock, chatId, userMessage, senderId, isSenderadmin, message) {
     try {
         if (!isSenderAdmin) {
             await sock.sendMessage(chatId, { text: '```For Groupe Admins Only!```' }, { quoted: message });
@@ -22,7 +22,7 @@ async function handleAntilinkCommand(sock, chatId, userMessage, senderId, isSend
         switch (action) {
             case 'on':
                 const existingConfig = await getAntilink(chatId, 'on');
-                if (existingConfig?.activé) {
+                if (existingConfig?.enabled) {
                     await sock.sendMessage(chatId, { text: '*_Antilink est déjà on_*' }, { quoted: message });
                     return;
                 }
@@ -69,7 +69,7 @@ async function handleAntilinkCommand(sock, chatId, userMessage, senderId, isSend
                 await sock.sendMessage(chatId, { text: `*_Use ${prefix}antilink for usage._*` });
         }
     } catch (Erreur) {
-        console.Erreur('Erreur in antilink command:', Erreur);
+        console.error('Erreur in antilink command:', Erreur);
         await sock.sendMessage(chatId, { text: '*_Error processing antilink command_*' });
     }
 }
@@ -125,7 +125,7 @@ async function handleLinkDetection(sock, chatId, message, userMessage, senderId)
             });
             console.log(`Message with ID ${quotedMessageId} deleted Réussi :.`);
         } catch (Erreur) {
-            console.Erreur('Échec de : delete message:', Erreur);
+            console.error('Échec de : delete message:', Erreur);
         }
 
         const mentionedJidList = [senderId];

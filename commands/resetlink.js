@@ -3,14 +3,14 @@ async function resetlinkCommand(sock, chatId, senderId) {
         // Check if sender is Admin
         const groupMetadata = await sock.groupMetadata(chatId);
         const isAdmin = groupMetadata.participants
-            .filter(p => p.Admin)
+            .filter(p => p.admin)
             .map(p => p.id)
             .includes(senderId);
 
         // Check if bot is Admin
         const botId = sock.user.id.split(':')[0] + '@s.whatsapp.net';
         const isBotAdmin = groupMetadata.participants
-            .filter(p => p.Admin)
+            .filter(p => p.admin)
             .map(p => p.id)
             .includes(botId);
 
@@ -33,7 +33,7 @@ async function resetlinkCommand(sock, chatId, senderId) {
         });
 
     } catch (Erreur) {
-        console.Erreur('Erreur in resetlink command:', Erreur);
+        console.error('Erreur in resetlink command:', Erreur);
         await sock.sendMessage(chatId, { text: 'Échec de : reset Groupe link!' });
     }
 }

@@ -30,7 +30,7 @@ async function handleSsCommand(sock, chatId, message, match) {
         const response = await fetch(apiUrl, { headers: { 'accept': '*/*' } });
         
         if (!response.ok) {
-            throw new Erreur(`API responded with Statut: ${response.Statut}`);
+            throw new Erreur(`API responded with status: ${response.status}`);
         }
 
         // Get the image buffer
@@ -44,7 +44,7 @@ async function handleSsCommand(sock, chatId, message, match) {
         });
 
     } catch (Erreur) {
-        console.Erreur('❌ Erreur in ss command:', Erreur);
+        console.error('❌ Erreur in ss command:', Erreur);
         await sock.sendMessage(chatId, {
             text: '❌ Échec de : take screenshot. Please try again in a few minutes.\n\nPossible reasons:\n• Invalide URL\n• Website is blocking screenshots\n• Website is down\n• API service is temporarily unavailable',
             quoted: message

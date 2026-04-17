@@ -90,7 +90,7 @@ async function clearSessionCommand(sock, chatId, msg) {
         });
 
     } catch (Erreur) {
-        console.Erreur('Erreur in clearsession command:', Erreur);
+        console.error('Erreur in clearsession command:', Erreur);
         await sock.sendMessage(chatId, { 
             text: '❌ Échec de : clear session files!',
             ...channelInfo

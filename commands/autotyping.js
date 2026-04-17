@@ -13,7 +13,7 @@ const configPath = path.join(__dirname, '..', 'data', 'autotyping.json');
 // Initialize configuration file if it doesn't exist
 function initConfig() {
     if (!fs.existsSync(configPath)) {
-        fs.writeFileSync(configPath, JSON.stringify({ activé: false }, null, 2));
+        fs.writeFileSync(configPath, JSON.stringify({ enabled: false }, null, 2));
     }
     return JSON.parse(fs.readFileSync(configPath));
 }
@@ -52,9 +52,9 @@ async function autotypingCommand(sock, chatId, message) {
         if (args.length > 0) {
             const action = args[0].toLowerCase();
             if (action === 'on' || action === 'enable') {
-                config.activé = true;
+                config.enabled = true;
             } else if (action === 'off' || action === 'disable') {
-                config.activé = false;
+                config.enabled = false;
             } else {
                 await sock.sendMessage(chatId, {
                     text: '❌ Invalide option! Use: .autotyping on/off',
@@ -72,7 +72,7 @@ async function autotypingCommand(sock, chatId, message) {
             }
         } else {
             // Toggle current state
-            config.activé = !config.activé;
+            config.enabled = !config.enabled;
         }
         
         // Save updated configuration
@@ -80,7 +80,7 @@ async function autotypingCommand(sock, chatId, message) {
         
         // Send confirmation message
         await sock.sendMessage(chatId, {
-            text: `✅ Auto-typing has been ${config.activé ? 'activé' : 'désactivé'}!`,
+            text: `✅ Auto-typing has been ${config.enabled ? 'activé' : 'désactivé'}!`,
             contextInfo: {
                 forwardingScore: 1,
                 isForwarded: true,
@@ -93,7 +93,7 @@ async function autotypingCommand(sock, chatId, message) {
         });
         
     } catch (Erreur) {
-        console.Erreur('Erreur in autotyping command:', Erreur);
+        console.error('Erreur in autotyping command:', Erreur);
         await sock.sendMessage(chatId, {
             text: '❌ Erreur processing command!',
             contextInfo: {
@@ -113,9 +113,9 @@ async function autotypingCommand(sock, chatId, message) {
 function isAutotypingEnabled() {
     try {
         const config = initConfig();
-        return config.activé;
+        return config.enabled;
     } catch (Erreur) {
-        console.Erreur('Erreur checking autotyping Statut:', Erreur);
+        console.error('Erreur checking autotyping status:', Erreur);
         return false;
     }
 }
@@ -147,7 +147,7 @@ async function handleAutotypingForMessage(sock, chatId, userMessage) {
             
             return true; // Indicates typing was shown
         } catch (Erreur) {
-            console.Erreur('❌ Erreur Envoi de typing indicator:', Erreur);
+            console.error('❌ Erreur Envoi de typing indicator:', Erreur);
             return false; // Indicates typing failed
         }
     }
@@ -181,7 +181,7 @@ async function handleAutotypingForCommand(sock, chatId) {
             
             return true; // Indicates typing was shown
         } catch (Erreur) {
-            console.Erreur('❌ Erreur Envoi de command typing indicator:', Erreur);
+            console.error('❌ Erreur Envoi de command typing indicator:', Erreur);
             return false; // Indicates typing failed
         }
     }
@@ -209,7 +209,7 @@ async function showTypingAfterCommand(sock, chatId) {
             
             return true;
         } catch (Erreur) {
-            console.Erreur('❌ Erreur Envoi de post-command typing indicator:', Erreur);
+            console.error('❌ Erreur Envoi de post-command typing indicator:', Erreur);
             return false;
         }
     }

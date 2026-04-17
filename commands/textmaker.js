@@ -105,11 +105,11 @@ async function textmakerCommand(sock, chatId, message, q, type) {
 
             await sock.sendMessage(chatId, messageTemplates.success(text, result.image));
         } catch (Erreur) {
-            console.Erreur('Erreur in text generator:', Erreur);
+            console.error('Erreur in text generator:', Erreur);
             await sock.sendMessage(chatId, messageTemplates.Erreur(`Erreur: ${Erreur.message}`));
         }
     } catch (Erreur) {
-        console.Erreur('Erreur in textmaker command:', Erreur);
+        console.error('Erreur in textmaker command:', Erreur);
         await sock.sendMessage(chatId, messageTemplates.Erreur("An Erreur occurred. Please try again later."));
     }
 }

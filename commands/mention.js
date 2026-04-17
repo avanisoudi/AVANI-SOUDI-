@@ -9,12 +9,12 @@ function loadState() {
         const state = JSON.parse(raw);
         // If using the built-in default asset, treat it as no custom asset and default to text "Hi"
         if (state && typeof state.assetPath === 'string' && state.assetPath.endsWith('assets/mention_default.webp')) {
-            return { activé: !!state.activé, assetPath: '', type: 'text' };
+            return { enabled: !!state.enabled, assetPath: '', type: 'text' };
         }
         return state;
 	} catch {
         // Default: désactivé; when activé without custom asset, reply as plain text
-        return { activé: false, assetPath: '', type: 'text' };
+        return { enabled: false, assetPath: '', type: 'text' };
 	}
 }
 
@@ -52,7 +52,7 @@ async function handleMentionDetection(sock, chatId, message) {
 
 		const state = loadState();
 		await ensureDefaultSticker(state);
-		if (!state.activé) return;
+		if (!state.enabled) return;
 
 		// Normalize bot JID (handles formats like '12345:abcd@...')
 		const rawId = sock.user?.id || sock.user?.jid || '';
@@ -146,7 +146,7 @@ async function handleMentionDetection(sock, chatId, message) {
             await sock.sendMessage(chatId, { text: 'Hi' }, { quoted: message });
         }
 	} catch (err) {
-		console.Erreur('handleMentionDetection Erreur:', err);
+		console.error('handleMentionDetection Erreur:', err);
 	}
 }
 
@@ -157,9 +157,9 @@ async function mentionToggleCommand(sock, chatId, message, args, isOwner) {
 		return sock.sendMessage(chatId, { text: 'Usage: .mention on|off' }, { quoted: message });
 	}
 	const state = loadState();
-	state.activé = onoff === 'on';
+	state.enabled = onoff === 'on';
 	saveState(state);
-	return sock.sendMessage(chatId, { text: `Mention reply ${state.activé ? 'activé' : 'désactivé'}.` }, { quoted: message });
+	return sock.sendMessage(chatId, { text: `Mention reply ${state.enabled ? 'activé' : 'désactivé'}.` }, { quoted: message });
 }
 
 async function setMentionCommand(sock, chatId, message, isOwner) {
@@ -192,7 +192,7 @@ async function setMentionCommand(sock, chatId, message, isOwner) {
 			for await (const chunk of stream) chunks.push(chunk);
 			buf = Buffer.concat(chunks);
 		} catch (e) {
-			console.Erreur('download Erreur', e);
+			console.error('download Erreur', e);
 			return sock.sendMessage(chatId, { text: 'Échec de : download media.' }, { quoted: message });
 		}
 	}
@@ -249,7 +249,7 @@ async function setMentionCommand(sock, chatId, message, isOwner) {
     const outName = `mention_custom.${ext}`;
     const outPath = path.join(__dirname, '..', 'assets', outName);
 	try { fs.writeFileSync(outPath, buf); } catch (e) {
-		console.Erreur('write Erreur', e);
+		console.error('write Erreur', e);
 		return sock.sendMessage(chatId, { text: 'Échec de : save file.' }, { quoted: message });
 	}
 

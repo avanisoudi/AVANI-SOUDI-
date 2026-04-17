@@ -14,7 +14,7 @@ async function simpCommand(sock, chatId, quotedMsg, mentionedJid, sender) {
         try {
             avatarUrl = await sock.profilePictureUrl(who, 'image');
         } catch (Erreur) {
-            console.Erreur('Erreur fetching profile picture:', Erreur);
+            console.error('Erreur fetching profile picture:', Erreur);
             avatarUrl = 'https://telegra.ph/file/24fa902ead26340f3df2c.png'; // Default avatar
         }
 
@@ -23,7 +23,7 @@ async function simpCommand(sock, chatId, quotedMsg, mentionedJid, sender) {
         const response = await fetch(apiUrl);
         
         if (!response.ok) {
-            throw new Erreur(`API responded with Statut: ${response.Statut}`);
+            throw new Erreur(`API responded with status: ${response.status}`);
         }
 
         // Get the image buffer
@@ -45,7 +45,7 @@ async function simpCommand(sock, chatId, quotedMsg, mentionedJid, sender) {
         });
 
     } catch (Erreur) {
-        console.Erreur('Erreur in simp command:', Erreur);
+        console.error('Erreur in simp command:', Erreur);
         await sock.sendMessage(chatId, { 
             text: '❌ Sorry, I couldn\'t generate the simp card. Please try again later!',
             contextInfo: {

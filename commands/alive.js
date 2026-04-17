@@ -3,7 +3,7 @@ async function aliveCommand(sock, chatId, message) {
     try {
         const message1 = `*🤖 Knight Bot est Actif !*\n\n` +
                        `*Version:* ${settings.version}\n` +
-                       `*Statut:* En ligne\n` +
+                       `*status:* En ligne\n` +
                        `*Mode:* Public\n\n` +
                        `*🌟 Fonctionnalités :*\n` +
                        `• Gestion de Groupe\n` +
